@@ -13,7 +13,6 @@ export function ListItems() {
   return (
     <>
       {/* Dashboar */}
-
       <ListItemButton
         onClick={() => {
           navigate("/dashboard");
@@ -23,6 +22,16 @@ export function ListItems() {
           <DashboardOutlinedIcon />
         </ListItemIcon>
         <ListItemText primary="Dashboard" />
+      </ListItemButton>
+      <ListItemButton
+        onClick={() => {
+          navigate("/users");
+        }}
+      >
+        <ListItemIcon>
+          <DashboardOutlinedIcon />
+        </ListItemIcon>
+        <ListItemText primary="Usuarios" />
       </ListItemButton>
     </>
   );

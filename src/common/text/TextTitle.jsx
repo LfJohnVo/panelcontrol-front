@@ -11,3 +11,14 @@ export const titleTextAdmin = {
 export const titleDashboard = {
   text: "Dashboard",
 };
+
+export const titleUser = {
+  text: "Users",
+};
+export const titleUserTitle = {
+  text: "Users > Vista general",
+};
+
+export const titleUserDetail = {
+  text: "Users > Detalle",
+};
