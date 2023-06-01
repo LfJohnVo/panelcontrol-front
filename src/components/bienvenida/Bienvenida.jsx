@@ -14,7 +14,7 @@ import Loading from "../../components/loading/Loading";
 import TitleModul from "./TitleModul";
 
 function Bienvenida(props) {
-  const { navigateLink, title, text } = props;
+  const { navigateLink, title, text, textCard } = props;
   const props2 = { navigateLink, title, text };
   const dispatch = useDispatch();
   const loading = useSelector(selectLoading);
@@ -99,10 +99,10 @@ function Bienvenida(props) {
                   mb="7px"
                   fontSize={"20px"}
                 >
-                  Bienvenido
+                  {textCard.text1}
                 </Typography>
                 <Typography component="p" variant="subtitle1" fontSize={"17px"}>
-                  Aquí podrás encontrar los datos mas relevantes de tus casos
+                  {textCard.text2}
                 </Typography>
                 <Typography
                   component="p"
@@ -113,11 +113,7 @@ function Bienvenida(props) {
                   mb={"18px"}
                   fontSize={"13px"}
                 >
-                  En este panel de administración, podrás ver una visión general
-                  de todos los tickets abiertos, asignados y cerrados. Podrás
-                  realizar búsquedas, filtrar por diferentes criterios y obtener
-                  informes detallados sobre el rendimiento del equipo de
-                  soporte.
+                  {textCard.text3}
                 </Typography>
               </Grid>
             </Paper>
