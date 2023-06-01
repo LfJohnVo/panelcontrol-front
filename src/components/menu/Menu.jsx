@@ -13,6 +13,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import { Outlet } from "react-router-dom";
 import { ListItems } from "./ListItems";
+import logoOrganizacion from "../../assets/organizacion/logo-s4b.png";
 
 const drawerWidth = 240;
 
@@ -111,7 +112,7 @@ export default function Menu() {
           >
             {/* Nombre de la organizacion */}
             <img
-              src="/organizacion/logo-s4b.png"
+              src={logoOrganizacion}
               alt=""
               style={{ height: "65px", width: "100px" }}
             />
