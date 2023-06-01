@@ -1,6 +1,6 @@
 import React from "react";
 import { colorsTable } from "../../common/color/color";
-import { Grid, Paper, Typography, Box } from "@mui/material";
+import { Grid, Typography, Box } from "@mui/material";
 import { DataGrid, GridToolbarQuickFilter } from "@mui/x-data-grid";
 
 function QuickSearchToolbar() {
@@ -80,7 +80,7 @@ function TableDasboard() {
   return (
     <>
       <Grid item xs={12} md={12} lg={12}>
-        <Paper
+        <Box
           component={"div"}
           sx={{
             height: 737,
@@ -107,7 +107,7 @@ function TableDasboard() {
               background: colorsTable.colorFondo,
             }}
           />
-        </Paper>
+        </Box>
       </Grid>
     </>
   );
