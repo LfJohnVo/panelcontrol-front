@@ -4,6 +4,8 @@ import ProtectedRoutes from "../components/ProtectedRoutes";
 import Menu from "../components/menu/Menu";
 import Dashboard from "../views/dashboard/Dashboard";
 import Error from "../views/error/Error";
+import User from "../views/user/User";
+import UserCreate from "../views/user/UserCreate";
 
 export const indexRoute = createBrowserRouter([
   {
@@ -19,6 +21,17 @@ export const indexRoute = createBrowserRouter([
           {
             path: "/dashboard",
             element: <Dashboard />,
+            errorElement: <Error />,
+          },
+          {
+            path: "/users",
+            element: <User />,
+            errorElement: <Error />,
+          },
+          {
+            path: "/userCreate",
+            element: <UserCreate />,
+            errorElement: <Error />,
           },
           {
             path: "*",
