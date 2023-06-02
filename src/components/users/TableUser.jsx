@@ -1,10 +1,18 @@
 import React from "react";
 import { colorsTable } from "../../common/color/color";
-import { Grid, Typography, Box, Button } from "@mui/material";
+import {
+  Grid,
+  Typography,
+  Box,
+  Button,
+  Stack,
+  IconButton,
+} from "@mui/material";
 import { DataGrid, GridToolbarQuickFilter } from "@mui/x-data-grid";
-import { useNavigate } from "react-router-dom";
 import AddIcon from "@mui/icons-material/Add";
-import { Link as linkrouter } from "react-router-dom";
+import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
+import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
+import { Link as linkrouter, useNavigate } from "react-router-dom";
 import Link from "@mui/material/Link";
 
 function QuickSearchToolbar() {
@@ -93,6 +101,7 @@ function QuickSearchToolbar() {
 }
 
 function TableUser() {
+  const navigate = useNavigate();
   //variables
   const rows = [
     { id: 1, col1: "Hello", col2: "World" },
@@ -139,7 +148,34 @@ function TableUser() {
       width: 150,
       headerClassName: "super-app-theme--header",
     },
+    {
+      field: "Opciones",
+      headerClassName: "super-app-theme--header",
+      renderCell: (cellValues) => {
+        return (
+          <>
+            <Stack direction="row" spacing={0.5}>
+              <IconButton
+                aria-label="edit"
+                onClick={async (e) => {
+                  handleClickEditUser(e, cellValues);
+                }}
+              >
+                <EditOutlinedIcon />
+              </IconButton>
+            </Stack>
+          </>
+        );
+      },
+    },
   ];
+
+  //functions
+
+  const handleClickEditUser = async (e, cellValues) => {
+    const id = cellValues.row.id;
+    navigate(`/user/${id}/edit`);
+  };
 
   return (
     <>
