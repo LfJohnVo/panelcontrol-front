@@ -6,6 +6,7 @@ import Dashboard from "../views/dashboard/Dashboard";
 import Error from "../views/error/Error";
 import User from "../views/user/User";
 import UserCreate from "../views/user/UserCreate";
+import DetailUser from "../views/user/DetailUser";
 
 export const indexRoute = createBrowserRouter([
   {
@@ -31,6 +32,11 @@ export const indexRoute = createBrowserRouter([
           {
             path: "/userCreate",
             element: <UserCreate />,
+            errorElement: <Error />,
+          },
+          {
+            path: "/user/:id/Details",
+            element: <DetailUser />,
             errorElement: <Error />,
           },
           {

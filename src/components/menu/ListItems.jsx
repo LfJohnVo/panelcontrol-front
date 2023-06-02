@@ -3,9 +3,7 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
-import CategoryOutlinedIcon from "@mui/icons-material/CategoryOutlined";
-import ConfirmationNumberOutlinedIcon from "@mui/icons-material/ConfirmationNumberOutlined";
-import BookmarkBorderOutlinedIcon from "@mui/icons-material/BookmarkBorderOutlined";
+import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 
 import { useNavigate } from "react-router-dom";
 export function ListItems() {
@@ -29,7 +27,7 @@ export function ListItems() {
         }}
       >
         <ListItemIcon>
-          <DashboardOutlinedIcon />
+          <PersonOutlineOutlinedIcon />
         </ListItemIcon>
         <ListItemText primary="Usuarios" />
       </ListItemButton>
