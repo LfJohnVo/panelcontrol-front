@@ -22,3 +22,8 @@ export const titleUserTitle = {
 export const titleUserDetail = {
   text: "Users > Detalle",
 };
+
+export const titleModulUser = {
+  titleUserCreate: { text: "Crear usuario" },
+  descriptionUserCreate: { text: "Users > Crear Usuario" },
+};
