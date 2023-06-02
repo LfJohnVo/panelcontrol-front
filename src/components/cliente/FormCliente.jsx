@@ -17,7 +17,7 @@ import { colorsTable } from "../../common/color/color";
 import { useForm } from "react-hook-form";
 import { inputValidate } from "../../common/text/Validation";
 
-function FormUser(props) {
+function FormCliente(props) {
   const loading = useSelector(selectLoading);
   const {
     register,
@@ -266,4 +266,4 @@ function FormUser(props) {
   );
 }
 
-export default FormUser;
+export default FormCliente;

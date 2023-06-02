@@ -8,6 +8,8 @@ import User from "../views/user/User";
 import UserCreate from "../views/user/UserCreate";
 import DetailUser from "../views/user/DetailUser";
 import EditUser from "../views/user/EditUser";
+import Cliente from "../views/cliente/Cliente";
+import ClienteCreate from "../views/cliente/ClienteCreate";
 
 export const indexRoute = createBrowserRouter([
   {
@@ -25,6 +27,8 @@ export const indexRoute = createBrowserRouter([
             element: <Dashboard />,
             errorElement: <Error />,
           },
+
+          /*users*/
           {
             path: "/users",
             element: <User />,
@@ -45,6 +49,19 @@ export const indexRoute = createBrowserRouter([
             element: <EditUser />,
             errorElement: <Error />,
           },
+
+          /*clientes*/
+          {
+            path: "/clientes",
+            element: <Cliente />,
+            errorElement: <Error />,
+          },
+          {
+            path: "/clienteCreate",
+            element: <ClienteCreate />,
+            errorElement: <Error />,
+          },
+
           {
             path: "*",
             element: <p>Not found</p>,
