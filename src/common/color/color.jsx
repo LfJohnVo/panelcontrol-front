@@ -9,4 +9,5 @@ export const logincolor = { colorh1: "#2567AE" };
 export const colorsTable = {
   colorCellHeader: "#EFEFEF",
   colorFondo: white,
+  borderColor: "#D1D1D1",
 };
