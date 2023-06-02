@@ -7,6 +7,7 @@ import Error from "../views/error/Error";
 import User from "../views/user/User";
 import UserCreate from "../views/user/UserCreate";
 import DetailUser from "../views/user/DetailUser";
+import EditUser from "../views/user/EditUser";
 
 export const indexRoute = createBrowserRouter([
   {
@@ -37,6 +38,11 @@ export const indexRoute = createBrowserRouter([
           {
             path: "/user/:id/Details",
             element: <DetailUser />,
+            errorElement: <Error />,
+          },
+          {
+            path: "/user/:id/edit",
+            element: <EditUser />,
             errorElement: <Error />,
           },
           {

@@ -28,4 +28,6 @@ export const titleModulUser = {
   descriptionUserCreate: { text: "Usuario > Crear Usuario" },
   titleUserDetail: { text: "Detalle Usuario" },
   descriptionUserDetail: { text: "Usuario > Detalle" },
+  titleUserEdit: { text: "Editar Usuario" },
+  descriptionUserEdit: { text: "Usuario > Editar" },
 };
