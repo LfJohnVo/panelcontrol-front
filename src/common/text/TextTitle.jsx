@@ -31,3 +31,14 @@ export const titleModulUser = {
   titleUserEdit: { text: "Editar Usuario" },
   descriptionUserEdit: { text: "Usuario > Editar" },
 };
+
+export const titleModulCliente = {
+  titleClienteList: { text: "Clientes" },
+  descriptionClienteList: { text: "Cliente > Vista general" },
+  titleClienteCreate: { text: "Crear Cliente" },
+  descriptionClienteCreate: { text: "Cliente > Crear Cliente" },
+  titleClienteDetail: { text: "Detalle Cliente" },
+  descriptionClienteDetail: { text: "Cliente > Detalle" },
+  titleClienteEdit: { text: "Editar Cliente" },
+  descriptionClienteEdit: { text: "Cliente > Editar" },
+};

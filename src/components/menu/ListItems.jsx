@@ -21,6 +21,8 @@ export function ListItems() {
         </ListItemIcon>
         <ListItemText primary="Dashboard" />
       </ListItemButton>
+
+      {/* Users */}
       <ListItemButton
         onClick={() => {
           navigate("/users");
@@ -30,6 +32,18 @@ export function ListItems() {
           <PersonOutlineOutlinedIcon />
         </ListItemIcon>
         <ListItemText primary="Usuarios" />
+      </ListItemButton>
+
+      {/* Clientes */}
+      <ListItemButton
+        onClick={() => {
+          navigate("/clientes");
+        }}
+      >
+        <ListItemIcon>
+          <PersonOutlineOutlinedIcon />
+        </ListItemIcon>
+        <ListItemText primary="Clientes" />
       </ListItemButton>
     </>
   );
