@@ -4,6 +4,8 @@ import { Grid, Typography, Box, Button } from "@mui/material";
 import { DataGrid, GridToolbarQuickFilter } from "@mui/x-data-grid";
 import { useNavigate } from "react-router-dom";
 import AddIcon from "@mui/icons-material/Add";
+import { Link as linkrouter } from "react-router-dom";
+import Link from "@mui/material/Link";
 
 function QuickSearchToolbar() {
   const navigate = useNavigate();
@@ -104,6 +106,20 @@ function TableUser() {
       headerName: "ID",
       width: 150,
       headerClassName: "super-app-theme--header2",
+      renderCell: (cellValues) => {
+        return (
+          <>
+            <Link
+              component={linkrouter}
+              to={`/user/${cellValues.row.id}/Details`}
+              underline="none"
+              sx={{ ml: "30px", textAlign: "left" }}
+            >
+              {cellValues.row.id}
+            </Link>
+          </>
+        );
+      },
     },
     {
       field: "col1",
