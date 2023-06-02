@@ -163,6 +163,14 @@ function TableUser() {
               >
                 <EditOutlinedIcon />
               </IconButton>
+              <IconButton
+                aria-label="edit"
+                onClick={async (e) => {
+                  handleClickDeleteUser(e, cellValues);
+                }}
+              >
+                <DeleteOutlinedIcon />
+              </IconButton>
             </Stack>
           </>
         );
@@ -175,6 +183,10 @@ function TableUser() {
   const handleClickEditUser = async (e, cellValues) => {
     const id = cellValues.row.id;
     navigate(`/user/${id}/edit`);
+  };
+
+  const handleClickDeleteUser = async (e, cellValues) => {
+    console.log(cellValues);
   };
 
   return (
