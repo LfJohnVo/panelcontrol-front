@@ -17,7 +17,7 @@ import { colorsTable } from "../../common/color/color";
 import { useForm } from "react-hook-form";
 import { inputValidate } from "../../common/text/Validation";
 
-function FormCliente(props) {
+function FormEditCliente(props) {
   const loading = useSelector(selectLoading);
   const {
     register,
@@ -32,7 +32,7 @@ function FormCliente(props) {
 
   //functions
 
-  const createUser = () => {
+  const editUser = () => {
     try {
       setTimeout(() => {
         dispatch(changeTrue());
@@ -51,13 +51,10 @@ function FormCliente(props) {
 
     // validateUserCreate(values);
   };
-  const clearForm = (data, e) => {
-    e.target.reset();
-  };
 
   //Effects
   useEffect(() => {
-    createUser();
+    editUser();
   }, []);
 
   return (
@@ -266,4 +263,4 @@ function FormCliente(props) {
   );
 }
 
-export default FormCliente;
+export default FormEditCliente;
