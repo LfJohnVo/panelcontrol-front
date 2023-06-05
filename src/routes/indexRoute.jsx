@@ -11,6 +11,7 @@ import EditUser from "../views/user/EditUser";
 import Cliente from "../views/cliente/Cliente";
 import ClienteCreate from "../views/cliente/ClienteCreate";
 import EditCliente from "../views/cliente/EditCliente";
+import DetailCliente from "../views/cliente/DetailCliente";
 
 export const indexRoute = createBrowserRouter([
   {
@@ -65,6 +66,11 @@ export const indexRoute = createBrowserRouter([
           {
             path: "/cliente/:id/edit",
             element: <EditCliente />,
+            errorElement: <Error />,
+          },
+          {
+            path: "/cliente/:id/details",
+            element: <DetailCliente />,
             errorElement: <Error />,
           },
 
