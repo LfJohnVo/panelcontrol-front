@@ -42,3 +42,16 @@ export const titleModulCliente = {
   titleClienteEdit: { text: "Editar Cliente" },
   descriptionClienteEdit: { text: "Cliente > Editar" },
 };
+
+export const titleModulCatalogo = {
+  titleCatalogoList: { text: "Servicios" },
+  descriptionCatalogoList: { text: "Servicio > Vista general" },
+  titleCatalogoCreate: { text: "Crear Servicio" },
+  descriptionCatalogoCreate: {
+    text: "Servicio > Crear Servicio",
+  },
+  titleCatalogoDetail: { text: "Detalle Servicio" },
+  descriptionCatalogoDetail: { text: "Servicio > Detalle" },
+  titleCatalogoEdit: { text: "Editar Servicio" },
+  descriptionCatalogoEdit: { text: "Servicio > Editar" },
+};

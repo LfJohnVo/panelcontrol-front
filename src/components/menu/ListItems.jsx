@@ -4,6 +4,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
+import CategoryOutlinedIcon from "@mui/icons-material/CategoryOutlined";
 
 import { useNavigate } from "react-router-dom";
 export function ListItems() {
@@ -44,6 +45,18 @@ export function ListItems() {
           <PersonOutlineOutlinedIcon />
         </ListItemIcon>
         <ListItemText primary="Clientes" />
+      </ListItemButton>
+
+      {/* Catalogo */}
+      <ListItemButton
+        onClick={() => {
+          navigate("/catalogo");
+        }}
+      >
+        <ListItemIcon>
+          <CategoryOutlinedIcon />
+        </ListItemIcon>
+        <ListItemText primary="Catalogo" />
       </ListItemButton>
     </>
   );
