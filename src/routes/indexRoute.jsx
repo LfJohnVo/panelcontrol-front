@@ -12,6 +12,10 @@ import Cliente from "../views/cliente/Cliente";
 import ClienteCreate from "../views/cliente/ClienteCreate";
 import EditCliente from "../views/cliente/EditCliente";
 import DetailCliente from "../views/cliente/DetailCliente";
+import Catalogo from "../views/catalogo/Catalogo";
+import CatalogoCreate from "../views/catalogo/CatalogoCreate";
+import EditCatalogo from "../views/catalogo/EditCatalogo";
+import DetailCatalogo from "../views/catalogo/DetailCatalogo";
 
 export const indexRoute = createBrowserRouter([
   {
@@ -71,6 +75,28 @@ export const indexRoute = createBrowserRouter([
           {
             path: "/cliente/:id/details",
             element: <DetailCliente />,
+            errorElement: <Error />,
+          },
+
+          /*catalogo*/
+          {
+            path: "/catalogo",
+            element: <Catalogo />,
+            errorElement: <Error />,
+          },
+          {
+            path: "/catalogoCreate",
+            element: <CatalogoCreate />,
+            errorElement: <Error />,
+          },
+          {
+            path: "/catalogo/:id/edit",
+            element: <EditCatalogo />,
+            errorElement: <Error />,
+          },
+          {
+            path: "/catalogo/:id/details",
+            element: <DetailCatalogo />,
             errorElement: <Error />,
           },
 
