@@ -55,3 +55,20 @@ export const titleModulCatalogo = {
   titleCatalogoEdit: { text: "Editar Servicio" },
   descriptionCatalogoEdit: { text: "Servicio > Editar" },
 };
+
+export const titleModulAdquisicionServicio = {
+  titleAdquisicionServicioList: { text: "Servicios Adquiridos" },
+  descriptionAdquisicionServicioList: {
+    text: "Servicio Adquirido > Vista general",
+  },
+  titleAdquisicionServicioCreate: { text: "Crear Servicio Adquirido" },
+  descriptionAdquisicionServicioCreate: {
+    text: "Servicio Adquirido > Crear Servicio",
+  },
+  titleAdquisicionServicioDetail: { text: "Detalle Servicio Adquirido" },
+  descriptionAdquisicionServicioDetail: {
+    text: "Servicio Adquirido > Detalle",
+  },
+  titleAdquisicionServicioEdit: { text: "Editar Servicio Adquirido" },
+  descriptionAdquisicionServicioEdit: { text: "Servicio Adquirido > Editar" },
+};
