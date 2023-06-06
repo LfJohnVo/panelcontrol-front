@@ -16,6 +16,10 @@ import Catalogo from "../views/catalogo/Catalogo";
 import CatalogoCreate from "../views/catalogo/CatalogoCreate";
 import EditCatalogo from "../views/catalogo/EditCatalogo";
 import DetailCatalogo from "../views/catalogo/DetailCatalogo";
+import AdquisicionServicio from "../views/adquisicion-servicio/AdquisicionServicio";
+import AdquisicionServicioCreate from "../views/adquisicion-servicio/AdquisicionServicioCreate";
+import EditAdquisicionServicio from "../views/adquisicion-servicio/EditAdquisicionServicio";
+import DetailAdquisicionServicio from "../views/adquisicion-servicio/DetailAdquisicionServicio";
 
 export const indexRoute = createBrowserRouter([
   {
@@ -97,6 +101,28 @@ export const indexRoute = createBrowserRouter([
           {
             path: "/catalogo/:id/details",
             element: <DetailCatalogo />,
+            errorElement: <Error />,
+          },
+
+          /*adquisicion servicio*/
+          {
+            path: "/adquisiciones",
+            element: <AdquisicionServicio />,
+            errorElement: <Error />,
+          },
+          {
+            path: "/adquisicionCreate",
+            element: <AdquisicionServicioCreate />,
+            errorElement: <Error />,
+          },
+          {
+            path: "/adquisicion/:id/edit",
+            element: <EditAdquisicionServicio />,
+            errorElement: <Error />,
+          },
+          {
+            path: "/adquisicion/:id/details",
+            element: <DetailAdquisicionServicio />,
             errorElement: <Error />,
           },
 
