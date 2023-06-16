@@ -1,4 +1,5 @@
 import React from "react";
+import { useEffect, useState } from "react";
 import { colorsTable } from "../../common/color/color";
 import {
   Grid,
@@ -7,6 +8,7 @@ import {
   Button,
   Stack,
   IconButton,
+  Paper,
 } from "@mui/material";
 import { DataGrid, GridToolbarQuickFilter } from "@mui/x-data-grid";
 import AddIcon from "@mui/icons-material/Add";
@@ -14,6 +16,16 @@ import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { Link as linkrouter, useNavigate } from "react-router-dom";
 import Link from "@mui/material/Link";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  changeFalse,
+  changeTrue,
+  selectLoading,
+} from "../../features/loading/loadingSlice";
+import { getAllUsers } from "../../services/users/users";
+import { selectUser } from "../../features/login/loginSlice";
+import { sf } from "../../common/text/SF";
+import Loading from "../loading/Loading";
 
 function QuickSearchToolbar() {
   const navigate = useNavigate();
@@ -101,13 +113,12 @@ function QuickSearchToolbar() {
 }
 
 function TableUser() {
-  const navigate = useNavigate();
   //variables
-  const rows = [
-    { id: 1, col1: "Hello", col2: "World" },
-    { id: 2, col1: "DataGridPro", col2: "is Awesome" },
-    { id: 3, col1: "MUI", col2: "is Amazing" },
-  ];
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const token = useSelector(selectUser);
+  const [data, setData] = useState([]);
+  const loading = useSelector(selectLoading);
 
   const columns = [
     {
@@ -131,22 +142,37 @@ function TableUser() {
       },
     },
     {
-      field: "col1",
+      field: "name",
       headerName: "Nombre",
       width: 150,
       headerClassName: "super-app-theme--header",
     },
     {
-      field: "col2",
+      field: "email",
       headerName: "Correo",
       width: 150,
       headerClassName: "super-app-theme--header",
     },
     {
-      field: "col3",
+      field: "razon_social",
       headerName: "Razon social",
       width: 150,
       headerClassName: "super-app-theme--header",
+    },
+    {
+      field: "contacto",
+      headerName: "Contacto",
+      width: 150,
+      headerClassName: "super-app-theme--header",
+    },
+    {
+      field: "domicilio",
+      headerName: "Domicilio",
+      width: 350,
+      headerClassName: "super-app-theme--header",
+      renderCell: (cellValues) => {
+        return cellValues.direccion ? cellValues.direccion : sf;
+      },
     },
     {
       field: "Opciones",
@@ -189,44 +215,67 @@ function TableUser() {
     console.log(cellValues);
   };
 
+  const getUsers = async () => {
+    try {
+      dispatch(changeTrue());
+      const response = await getAllUsers(token.token);
+      setData(response);
+      dispatch(changeFalse());
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  //useEffect
+
+  useEffect(() => {
+    getUsers();
+  }, []);
+
   return (
     <>
-      <Grid item xs={12} md={12} lg={12}>
-        <Box
-          component={"div"}
-          sx={{
-            height: 737,
-            mb: "40px",
-            width: "100%",
-            "& .super-app-theme--header2": {
-              backgroundColor: colorsTable.colorCellHeader,
-              pl: "39px",
-            },
-            "& .super-app-theme--header": {
-              backgroundColor: colorsTable.colorCellHeader,
-            },
-          }}
-        >
-          <DataGrid
-            rows={rows}
-            columns={columns}
-            disableColumnMenu
-            initialState={{
-              pagination: { paginationModel: { pageSize: 10 } },
-            }}
-            pageSizeOptions={[5, 10, 25]}
-            slots={{ toolbar: QuickSearchToolbar }}
-            slotProps={{
-              toolbar: {
-                showQuickFilter: true,
-              },
-            }}
-            style={{
-              background: colorsTable.colorFondo,
-            }}
-          />
-        </Box>
-      </Grid>
+      {loading ? (
+        <Loading />
+      ) : (
+        <>
+          <Grid item xs={12} md={12} lg={12}>
+            <Box
+              component={"div"}
+              sx={{
+                height: 737,
+                mb: "40px",
+                width: "100%",
+                "& .super-app-theme--header2": {
+                  backgroundColor: colorsTable.colorCellHeader,
+                  pl: "39px",
+                },
+                "& .super-app-theme--header": {
+                  backgroundColor: colorsTable.colorCellHeader,
+                },
+              }}
+            >
+              <DataGrid
+                rows={data}
+                columns={columns}
+                disableColumnMenu
+                initialState={{
+                  pagination: { paginationModel: { pageSize: 10 } },
+                }}
+                pageSizeOptions={[5, 10, 25]}
+                slots={{ toolbar: QuickSearchToolbar }}
+                slotProps={{
+                  toolbar: {
+                    showQuickFilter: true,
+                  },
+                }}
+                style={{
+                  background: colorsTable.colorFondo,
+                }}
+              />
+            </Box>
+          </Grid>
+        </>
+      )}
     </>
   );
 }
