@@ -12,11 +12,13 @@ import img from "/src/assets/login/logo-s4b.png";
 import img2 from "/src/assets/login/5143312.png";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
+import { addUser } from "../../features/login/loginSlice";
 import { useNavigate } from "react-router";
 import { ToastContainer, toast } from "react-toastify";
 import { logincolor } from "../../common/color/color";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
+import { isAuthenticate } from "../../services/login/login";
 
 const theme = createTheme({
   components: {
@@ -43,13 +45,21 @@ export default function Login() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      setTimeout(() => {
-        setOpen(true);
-        setTimeout(() => {
-          setOpen(false);
-        }, 3000);
-      }, 1000);
-      navigate("/dashboard");
+      setOpen(true);
+      const resp = await isAuthenticate(data);
+      setOpen(false);
+      if (resp.status === 200) {
+        dispatch(addUser(resp.data));
+        navigate("/dashboard");
+      }
+
+      if (resp.status === 401) {
+        notifyError();
+      }
+
+      if (resp.status === 999) {
+        notifyErrorSistem(resp.message);
+      }
     } catch (error) {
       setOpen(false);
     }
