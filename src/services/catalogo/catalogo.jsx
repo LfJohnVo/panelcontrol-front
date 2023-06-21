@@ -1,8 +1,8 @@
 import { panel_control } from "../index";
 
-const route = "api/users";
+const route = "api/projects";
 
-export const getAllUsers = async (token) => {
+export const getAllCatalogo = async (token) => {
   try {
     const response = await panel_control.get(route, {
       headers: { Authorization: `Bearer ${token}` },
@@ -14,7 +14,7 @@ export const getAllUsers = async (token) => {
   }
 };
 
-export const createUser = async (body, token) => {
+export const createCatalogo = async (body, token) => {
   try {
     const response = await panel_control.post(route, body, {
       headers: {
@@ -27,7 +27,7 @@ export const createUser = async (body, token) => {
   }
 };
 
-export const getOneUser = async (id, token) => {
+export const getOneCatalogo = async (id, token) => {
   try {
     const response = await panel_control.get(`${route}/${id}`, {
       headers: {
@@ -40,7 +40,7 @@ export const getOneUser = async (id, token) => {
   }
 };
 
-export const updateUser = async (data, id, token) => {
+export const updateCatalogo = async (data, id, token) => {
   try {
     const response = await panel_control.put(`${route}/${id}`, data, {
       headers: {
@@ -53,7 +53,7 @@ export const updateUser = async (data, id, token) => {
   }
 };
 
-export const deleteUser = async (id, token) => {
+export const deleteCatalogo = async (id, token) => {
   try {
     const response = await panel_control.delete(`${route}/${id}`, {
       headers: {

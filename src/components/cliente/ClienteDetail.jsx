@@ -1,5 +1,5 @@
 import React from "react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { colorsTable } from "../../common/color/color";
 import { Grid, Paper, Typography, Divider, Box } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
@@ -10,10 +10,18 @@ import {
 } from "../../features/loading/loadingSlice";
 import { useDispatch, useSelector } from "react-redux";
 import TitleModul from "../../components/bienvenida/TitleModul";
+import { useParams } from "react-router-dom";
+import Loading from "../loading/Loading";
+import { selectUser } from "../../features/login/loginSlice";
+import { getOneCliente } from "../../services/clientes/clientes";
+import { sf } from "../../common/text/SF";
 
 function ClienteDetail(props) {
+  const { id } = useParams();
+  const token = useSelector(selectUser);
   const loading = useSelector(selectLoading);
   const dispatch = useDispatch();
+  const [data, setData] = useState();
 
   //theme
 
@@ -32,14 +40,12 @@ function ClienteDetail(props) {
   });
 
   //functions
-  const getDetailCliente = () => {
+  const getDetailCliente = async () => {
     try {
-      setTimeout(() => {
-        dispatch(changeTrue());
-        setTimeout(() => {
-          dispatch(changeFalse());
-        }, 2000);
-      }, 100);
+      dispatch(changeTrue());
+      const response = await getOneCliente(id, token.token);
+      setData(response);
+      dispatch(changeFalse());
     } catch (error) {
       setErr(true);
       setErrorMessage(error.message);
@@ -54,9 +60,7 @@ function ClienteDetail(props) {
   return (
     <>
       {loading ? (
-        <Grid item xs={12} md={12} lg={12} sx={{ paddingTop: "50vh" }}>
-          <></>
-        </Grid>
+        <Loading />
       ) : (
         <>
           <Grid item md={12} sm={12} xs={12}>
@@ -92,7 +96,9 @@ function ClienteDetail(props) {
                   sm={12}
                   sx={{ m: "27px 44px 136px 34px", textAlign: "justify" }}
                 >
-                  <Typography component="h1" variant="h3"></Typography>
+                  <Typography component="h1" variant="h3">
+                    {data && data.name ? data.name : sf}
+                  </Typography>
                 </Grid>
                 <Divider sx={{ mb: "21px" }} />
                 <Grid
@@ -108,21 +114,17 @@ function ClienteDetail(props) {
                     <Typography component="h1" variant="h2">
                       ID
                     </Typography>
-                    <Typography
-                      component="p"
-                      variant="h3"
-                      sx={{ pt: "16px" }}
-                    ></Typography>
+                    <Typography component="p" variant="h3" sx={{ pt: "16px" }}>
+                      {data && data.id ? data.id : sf}
+                    </Typography>
                   </Grid>
                   <Grid item md={2} sm={4} xs={12} sx={{ pt: "16px" }}>
                     <Typography component="h1" variant="h2">
                       CREADO
                     </Typography>
-                    <Typography
-                      component="p"
-                      variant="h3"
-                      sx={{ pt: "16px" }}
-                    ></Typography>
+                    <Typography component="p" variant="h3" sx={{ pt: "16px" }}>
+                      {data && data.create_date ? data.create_date : sf}
+                    </Typography>
                   </Grid>
                 </Grid>
                 <Grid
@@ -137,31 +139,25 @@ function ClienteDetail(props) {
                     <Typography component="h1" variant="h2">
                       CORREO
                     </Typography>
-                    <Typography
-                      component="p"
-                      variant="h3"
-                      sx={{ pt: "16px" }}
-                    ></Typography>
+                    <Typography component="p" variant="h3" sx={{ pt: "16px" }}>
+                      {data && data.email ? data.email : sf}
+                    </Typography>
                   </Grid>
                   <Grid item md={2} sm={4} xs={12}>
                     <Typography component="h1" variant="h2">
                       RAZÓN SOCIAL
                     </Typography>
-                    <Typography
-                      component="p"
-                      variant="h3"
-                      sx={{ pt: "16px" }}
-                    ></Typography>
+                    <Typography component="p" variant="h3" sx={{ pt: "16px" }}>
+                      {data && data.razon_social ? data.razon_social : sf}
+                    </Typography>
                   </Grid>
                   <Grid item md={2} sm={4} xs={12}>
                     <Typography component="h1" variant="h2">
                       CONTACTO
                     </Typography>
-                    <Typography
-                      component="p"
-                      variant="h3"
-                      sx={{ pt: "16px" }}
-                    ></Typography>
+                    <Typography component="p" variant="h3" sx={{ pt: "16px" }}>
+                      {data && data.contacto ? data.contacto : sf}
+                    </Typography>
                   </Grid>
                 </Grid>
                 <Grid
@@ -176,11 +172,9 @@ function ClienteDetail(props) {
                     <Typography component="h1" variant="h2">
                       DIRECCIÓN
                     </Typography>
-                    <Typography
-                      component="p"
-                      variant="h3"
-                      sx={{ pt: "16px" }}
-                    ></Typography>
+                    <Typography component="p" variant="h3" sx={{ pt: "16px" }}>
+                      {data && data.domicilio ? data.domicilio : sf}
+                    </Typography>
                   </Grid>
                 </Grid>
               </Paper>

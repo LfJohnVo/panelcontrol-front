@@ -1,4 +1,5 @@
 import React from "react";
+import { useState, useEffect } from "react";
 import { colorsTable } from "../../common/color/color";
 import {
   Grid,
@@ -14,6 +15,18 @@ import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { Link as linkrouter, useNavigate } from "react-router-dom";
 import Link from "@mui/material/Link";
+import { deleteCliente, getAllClients } from "../../services/clientes/clientes";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  changeTrue,
+  changeFalse,
+  selectLoading,
+} from "../../features/loading/loadingSlice";
+import { selectUser } from "../../features/login/loginSlice";
+import Loading from "../loading/Loading";
+import NotifyContainer from "../notify/NotifyContainer";
+import { cliente } from "../../common/text/Notify";
+import { notifyMessage } from "../notify/NotifyMessage";
 
 function QuickSearchToolbar() {
   const navigate = useNavigate();
@@ -103,11 +116,10 @@ function QuickSearchToolbar() {
 function TableCliente() {
   const navigate = useNavigate();
   //variables
-  const rows = [
-    { id: 1, col1: "Hello", col2: "World" },
-    { id: 2, col1: "DataGridPro", col2: "is Awesome" },
-    { id: 3, col1: "MUI", col2: "is Amazing" },
-  ];
+  const [data, setData] = useState([]);
+  const dispatch = useDispatch();
+  const loading = useSelector(selectLoading);
+  const token = useSelector(selectUser);
 
   const columns = [
     {
@@ -132,13 +144,13 @@ function TableCliente() {
     },
 
     {
-      field: "col1",
+      field: "name",
       headerName: "Nombre",
       width: 150,
       headerClassName: "super-app-theme--header",
     },
     {
-      field: "col2",
+      field: "email",
       headerName: "Correo",
       width: 150,
       headerClassName: "super-app-theme--header",
@@ -187,47 +199,70 @@ function TableCliente() {
   };
 
   const handleClickDeleteCliente = async (e, cellValues) => {
-    console.log(cellValues);
+    const id = cellValues.row.id;
+    await deleteCliente(id, token.token);
+    notifyMessage(cliente.delete);
+    getClients();
   };
+
+  const getClients = async () => {
+    try {
+      dispatch(changeTrue());
+      const response = await getAllClients(token.token);
+      setData(response);
+      dispatch(changeFalse());
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getClients();
+  }, []);
 
   return (
     <>
-      <Grid item xs={12} md={12} lg={12}>
-        <Box
-          component={"div"}
-          sx={{
-            height: 737,
-            mb: "40px",
-            width: "100%",
-            "& .super-app-theme--header2": {
-              backgroundColor: colorsTable.colorCellHeader,
-              pl: "39px",
-            },
-            "& .super-app-theme--header": {
-              backgroundColor: colorsTable.colorCellHeader,
-            },
-          }}
-        >
-          <DataGrid
-            rows={rows}
-            columns={columns}
-            disableColumnMenu
-            initialState={{
-              pagination: { paginationModel: { pageSize: 10 } },
-            }}
-            pageSizeOptions={[5, 10, 25]}
-            slots={{ toolbar: QuickSearchToolbar }}
-            slotProps={{
-              toolbar: {
-                showQuickFilter: true,
+      <NotifyContainer />
+      {loading ? (
+        <Loading />
+      ) : (
+        <Grid item xs={12} md={12} lg={12}>
+          <Box
+            component={"div"}
+            sx={{
+              height: 737,
+              mb: "40px",
+              width: "100%",
+              "& .super-app-theme--header2": {
+                backgroundColor: colorsTable.colorCellHeader,
+                pl: "39px",
+              },
+              "& .super-app-theme--header": {
+                backgroundColor: colorsTable.colorCellHeader,
               },
             }}
-            style={{
-              background: colorsTable.colorFondo,
-            }}
-          />
-        </Box>
-      </Grid>
+          >
+            <DataGrid
+              rows={data}
+              columns={columns}
+              disableColumnMenu
+              initialState={{
+                pagination: { paginationModel: { pageSize: 10 } },
+              }}
+              pageSizeOptions={[5, 10, 25]}
+              slots={{ toolbar: QuickSearchToolbar }}
+              slotProps={{
+                toolbar: {
+                  showQuickFilter: true,
+                },
+              }}
+              style={{
+                background: colorsTable.colorFondo,
+              }}
+            />
+          </Box>
+        </Grid>
+      )}
     </>
   );
 }

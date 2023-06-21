@@ -1,6 +1,14 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { Grid, Paper, TextField, Button } from "@mui/material";
+import {
+  Grid,
+  Paper,
+  TextField,
+  Button,
+  InputAdornment,
+  IconButton,
+  Chip,
+} from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import {
   changeFalse,
@@ -16,30 +24,52 @@ import TitleModul from "../../components/bienvenida/TitleModul";
 import { colorsTable } from "../../common/color/color";
 import { useForm } from "react-hook-form";
 import { inputValidate } from "../../common/text/Validation";
+import { useParams } from "react-router-dom";
+import { selectUser } from "../../features/login/loginSlice";
+import {
+  getOneCatalogo,
+  updateCatalogo,
+} from "../../services/catalogo/catalogo";
+import { redirectClient } from "../../common/text/RedirectRoute";
+import { cliente } from "../../common/text/Notify";
+import { notifyMessage } from "../notify/NotifyMessage";
+import { useNavigate } from "react-router-dom";
+import NotifyContainer from "../notify/NotifyContainer";
+import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
 
 function FormEditCatalogo(props) {
+  const { id } = useParams();
+  const token = useSelector(selectUser);
   const loading = useSelector(selectLoading);
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
+    setValue,
   } = useForm();
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const [err, setErr] = useState(null);
   const [errorMessage, setErrorMessage] = useState([]);
+  const navigate = useNavigate();
+  const [moduls, setModuls] = useState([]);
+  const [inputValue, setInputValue] = useState("");
 
   //functions
 
-  const editUser = () => {
+  const setValuesData = (data) => {
+    setValue("title", data.title);
+    setModuls(data.modulo);
+    console.log(data.modulo);
+  };
+
+  const editCatalogo = async () => {
     try {
-      setTimeout(() => {
-        dispatch(changeTrue());
-        setTimeout(() => {
-          dispatch(changeFalse());
-        }, 2000);
-      }, 100);
+      dispatch(changeTrue());
+      const response = await getOneCatalogo(id, token.token);
+      setValuesData(response);
+      dispatch(changeFalse());
     } catch (error) {
       setErr(true);
       setErrorMessage(error.message);
@@ -47,16 +77,32 @@ function FormEditCatalogo(props) {
   };
 
   const submitForm = (data, e) => {
+    data.moduls = moduls;
     console.log(data);
+  };
+
+  const handleDelete = (chipToDelete) => () => {
+    setModuls((texto) => texto.filter((texto) => texto !== chipToDelete));
+  };
+
+  const handleAddChip = () => {
+    if (inputValue.trim() !== "") {
+      const newModul = {
+        title: inputValue,
+      };
+      setModuls([...moduls, newModul]);
+      setInputValue("");
+    }
   };
 
   //Effects
   useEffect(() => {
-    editUser();
+    editCatalogo();
   }, []);
 
   return (
     <>
+      <NotifyContainer />
       <Backdrop
         sx={{ color: "blue", zIndex: (theme) => theme.zIndex.drawer + 1 }}
         open={open}
@@ -65,34 +111,7 @@ function FormEditCatalogo(props) {
       </Backdrop>
 
       {loading ? (
-        <Grid
-          item
-          xs={12}
-          md={12}
-          lg={12}
-          sx={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Paper
-            elevation={1}
-            sx={{
-              p: 2,
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "center",
-              alignItems: "center",
-              height: 60,
-              width: 600,
-              background: "#FFFFF",
-            }}
-          >
-            <Loading />
-          </Paper>
-        </Grid>
+        <Loading />
       ) : (
         <>
           <Grid item md={12}>
@@ -135,31 +154,44 @@ function FormEditCatalogo(props) {
                 <Grid item xs={12} sm={6} md={6} lg={6}>
                   <TextField
                     label="Nombre"
-                    name="nombre"
+                    name="title"
                     variant="outlined"
                     fullWidth
-                    {...register("nombre", {
+                    {...register("title", {
                       required: inputValidate.required,
                     })}
-                    error={!!errors?.nombre}
-                    helperText={errors?.nombre ? errors.nombre.message : null}
+                    error={!!errors?.title}
+                    helperText={errors?.title ? errors.title.message : null}
                   />
                 </Grid>
 
                 <Grid item xs={12} sm={6} md={6} lg={6}>
                   <TextField
-                    label="Descripcion"
-                    name="descripcion"
-                    variant="outlined"
+                    label="Modulo"
+                    value={inputValue}
                     fullWidth
-                    {...register("descripcion", {
-                      required: inputValidate.required,
-                    })}
-                    error={!!errors?.descripcion}
-                    helperText={
-                      errors?.descripcion ? errors.descripcion.message : null
-                    }
+                    onChange={(e) => setInputValue(e.target.value)}
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <IconButton onClick={handleAddChip}>
+                            <AddCircleOutlineOutlinedIcon />
+                          </IconButton>
+                        </InputAdornment>
+                      ),
+                    }}
                   />
+                  {moduls.map((modulo, index) => (
+                    <Chip
+                      key={index}
+                      label={modulo.title}
+                      style={{
+                        marginTop: "10px",
+                        marginRight: "5px",
+                      }}
+                      onDelete={handleDelete(modulo)}
+                    />
+                  ))}
                 </Grid>
               </Grid>
 
