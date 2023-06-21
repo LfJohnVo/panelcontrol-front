@@ -17,7 +17,7 @@ function User() {
       <Container maxWidth="lg">
         <Grid container spacing={2} rowSpacing={2}>
           <Bienvenida {...props} />
-          <TableUser />
+          <TableUser {...props} />
         </Grid>
       </Container>
     </>
