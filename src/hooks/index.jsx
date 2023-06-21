@@ -1,5 +1,5 @@
 import { useCallback, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { notify } from "../lib/notify";
 import { addUser } from "../features/login/loginSlice";
@@ -36,7 +36,6 @@ export const useLogin = () => {
     }
   });
 
-<<<<<<< HEAD
   const handleEmail = useCallback((e) => {
     setEmail(e.target.value);
   });
@@ -47,14 +46,4 @@ export const useLogin = () => {
 
   return [handleSubmit, handleEmail, handlePassword, email, password, open];
 };
-=======
-    return [
-        handleSubmit, 
-        handleEmail, 
-        handlePassword, 
-        email, 
-        password,
-        open
-    ];
-}
->>>>>>> d8762f7 (P360 42 consumo de api de la aplicacion)
+
