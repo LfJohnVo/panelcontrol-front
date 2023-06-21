@@ -17,6 +17,8 @@ import { colorsTable } from "../../common/color/color";
 import { useForm } from "react-hook-form";
 import { inputValidate } from "../../common/text/Validation";
 
+import { useState } from "react";
+
 function FormCatalogo(props) {
   const loading = useSelector(selectLoading);
   const {

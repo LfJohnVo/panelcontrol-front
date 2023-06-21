@@ -10,15 +10,11 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import "./Login.css";
 import img from "/src/assets/login/logo-s4b.png";
 import img2 from "/src/assets/login/5143312.png";
-import { useDispatch } from "react-redux";
-import { useState } from "react";
-import { addUser } from "../../features/login/loginSlice";
-import { useNavigate } from "react-router";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import { logincolor } from "../../common/color/color";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
-import { isAuthenticate } from "../../services/login/login";
+import { useLogin } from "../../hooks";
 
 const theme = createTheme({
   components: {
@@ -33,68 +29,15 @@ const theme = createTheme({
 });
 
 export default function Login() {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const [open, setOpen] = useState(false);
+  const [
+    handleSubmit, 
+    handleEmail, 
+    handlePassword, 
+    email, 
+    password,
+    open
+  ] = useLogin();
 
-  const [data, setData] = useState({
-    email: "",
-    password: "",
-  });
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    try {
-      setOpen(true);
-      const resp = await isAuthenticate(data);
-      setOpen(false);
-      if (resp.status === 200) {
-        dispatch(addUser(resp.data));
-        navigate("/dashboard");
-      }
-
-      if (resp.status === 401) {
-        notifyError();
-      }
-
-      if (resp.status === 999) {
-        notifyErrorSistem(resp.message);
-      }
-    } catch (error) {
-      setOpen(false);
-    }
-  };
-
-  const handelInputChange = (e) => {
-    setData({
-      ...data,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const notifyError = () =>
-    toast.error("Credenciales incorrectas", {
-      position: "top-center",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: false,
-      draggable: false,
-      progress: undefined,
-      theme: "colored",
-    });
-
-  const notifyErrorSistem = (title) =>
-    toast.error(title, {
-      position: "top-center",
-      autoClose: false,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: false,
-      draggable: false,
-      progress: undefined,
-      theme: "colored",
-    });
 
   return (
     <>
@@ -200,7 +143,8 @@ export default function Login() {
                   autoComplete="email"
                   autoFocus
                   variant="filled"
-                  onChange={handelInputChange}
+                  value={email}
+                  onChange={handleEmail}
                 />
                 <TextField
                   margin="normal"
@@ -212,7 +156,8 @@ export default function Login() {
                   id="password"
                   autoComplete="current-password"
                   variant="filled"
-                  onChange={handelInputChange}
+                  value={password}
+                  onChange={handlePassword}
                 />
                 <Button
                   type="submit"
