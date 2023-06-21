@@ -22,10 +22,13 @@ import {
   changeTrue,
   selectLoading,
 } from "../../features/loading/loadingSlice";
-import { getAllUsers } from "../../services/users/users";
+import { deleteUser, getAllUsers } from "../../services/users/users";
 import { selectUser } from "../../features/login/loginSlice";
 import { sf } from "../../common/text/SF";
 import Loading from "../loading/Loading";
+import NotifyContainer from "../notify/NotifyContainer";
+import { user } from "../../common/text/Notify";
+import { notifyMessage } from "../notify/NotifyMessage";
 
 function QuickSearchToolbar() {
   const navigate = useNavigate();
@@ -212,7 +215,10 @@ function TableUser() {
   };
 
   const handleClickDeleteUser = async (e, cellValues) => {
-    console.log(cellValues);
+    const id = cellValues.row.id;
+    await deleteUser(id, token.token);
+    notifyMessage(user.delete);
+    getUsers();
   };
 
   const getUsers = async () => {
@@ -234,6 +240,8 @@ function TableUser() {
 
   return (
     <>
+      <NotifyContainer />
+
       {loading ? (
         <Loading />
       ) : (

@@ -16,6 +16,13 @@ import TitleModul from "../../components/bienvenida/TitleModul";
 import { colorsTable } from "../../common/color/color";
 import { useForm } from "react-hook-form";
 import { inputValidate } from "../../common/text/Validation";
+import { createCliente } from "../../services/clientes/clientes";
+import NotifyContainer from "../notify/NotifyContainer";
+import { notifyMessage } from "../notify/NotifyMessage";
+import { cliente } from "../../common/text/Notify";
+import { redirectClient } from "../../common/text/RedirectRoute";
+import { useNavigate } from "react-router-dom";
+import { selectUser } from "../../features/login/loginSlice";
 
 function FormCliente(props) {
   const loading = useSelector(selectLoading);
@@ -29,39 +36,43 @@ function FormCliente(props) {
   const [open, setOpen] = useState(false);
   const [err, setErr] = useState(null);
   const [errorMessage, setErrorMessage] = useState([]);
+  const navigate = useNavigate();
+  const token = useSelector(selectUser);
 
   //functions
 
-  const createUser = () => {
-    try {
+  const createCliente = async () => {
+    setTimeout(() => {
+      dispatch(changeTrue());
       setTimeout(() => {
-        dispatch(changeTrue());
-        setTimeout(() => {
-          dispatch(changeFalse());
-        }, 2000);
-      }, 100);
+        dispatch(changeFalse());
+      }, 2000);
+    }, 100);
+  };
+
+  const submitForm = async (data, e) => {
+    try {
+      setOpen(true);
+      await createCliente(data, token.token);
+      setOpen(false);
+      notifyMessage(cliente.add);
+      setTimeout(() => {
+        navigate(redirectClient.index);
+      }, 6000);
     } catch (error) {
-      setErr(true);
-      setErrorMessage(error.message);
+      setOpen(false);
+      console.log(error);
     }
-  };
-
-  const submitForm = (data, e) => {
-    console.log(data);
-
-    // validateUserCreate(values);
-  };
-  const clearForm = (data, e) => {
-    e.target.reset();
   };
 
   //Effects
   useEffect(() => {
-    createUser();
+    createCliente();
   }, []);
 
   return (
     <>
+      <NotifyContainer />
       <Backdrop
         sx={{ color: "blue", zIndex: (theme) => theme.zIndex.drawer + 1 }}
         open={open}
@@ -70,34 +81,7 @@ function FormCliente(props) {
       </Backdrop>
 
       {loading ? (
-        <Grid
-          item
-          xs={12}
-          md={12}
-          lg={12}
-          sx={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Paper
-            elevation={1}
-            sx={{
-              p: 2,
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "center",
-              alignItems: "center",
-              height: 60,
-              width: 600,
-              background: "#FFFFF",
-            }}
-          >
-            <Loading />
-          </Paper>
-        </Grid>
+        <Loading />
       ) : (
         <>
           <Grid item md={12}>
@@ -140,44 +124,46 @@ function FormCliente(props) {
                 <Grid item xs={12} sm={6} md={6} lg={6}>
                   <TextField
                     label="Nombre"
-                    name="nombre"
+                    name="name"
                     variant="outlined"
                     fullWidth
-                    {...register("nombre", {
+                    {...register("name", {
                       required: inputValidate.required,
                     })}
-                    error={!!errors?.nombre}
-                    helperText={errors?.nombre ? errors.nombre.message : null}
+                    error={!!errors?.name}
+                    helperText={errors?.name ? errors.name.message : null}
                   />
                 </Grid>
                 <Grid item xs={12} sm={6} md={6} lg={6}>
                   <TextField
                     label="Correo"
-                    name="correo"
+                    name="email"
                     variant="outlined"
                     fullWidth
-                    {...register("correo", {
+                    {...register("email", {
                       required: inputValidate.required,
                       pattern: {
                         value: /^\S+@\S+$/i,
                         message: inputValidate.email,
                       },
                     })}
-                    error={!!errors?.correo}
-                    helperText={errors?.correo ? errors.correo.message : null}
+                    error={!!errors?.email}
+                    helperText={errors?.email ? errors.email.message : null}
                   />
                 </Grid>
                 <Grid item xs={12} sm={6} md={6} lg={6}>
                   <TextField
                     label="Razón Social"
-                    name="razon"
+                    name="razon_social"
                     variant="outlined"
                     fullWidth
-                    {...register("razon", {
+                    {...register("razon_social", {
                       required: inputValidate.required,
                     })}
-                    error={!!errors?.razon}
-                    helperText={errors?.razon ? errors.razon.message : null}
+                    error={!!errors?.razon_social}
+                    helperText={
+                      errors?.razon_social ? errors.razon_social.message : null
+                    }
                   />
                 </Grid>
                 <Grid item xs={12} sm={6} md={6} lg={6}>
@@ -198,15 +184,15 @@ function FormCliente(props) {
                 <Grid item xs={12} sm={6} md={6} lg={7}>
                   <TextField
                     label="Direccion"
-                    name="direccion"
+                    name="domicilio"
                     variant="outlined"
                     fullWidth
-                    {...register("direccion", {
+                    {...register("domicilio", {
                       required: inputValidate.required,
                     })}
-                    error={!!errors?.direccion}
+                    error={!!errors?.domicilio}
                     helperText={
-                      errors?.direccion ? errors.direccion.message : null
+                      errors?.domicilio ? errors.domicilio.message : null
                     }
                   />
                 </Grid>
