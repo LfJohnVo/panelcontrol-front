@@ -191,6 +191,21 @@ function TableCliente() {
     getInfo();
   }, []);
 
+  const getClients = async () => {
+    try {
+      dispatch(changeTrue());
+      const response = await getAllClients(token.token);
+      setData(response);
+      dispatch(changeFalse());
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getClients();
+  }, []);
+
   return (
     <>
       <NotifyContainer />

@@ -36,6 +36,7 @@ export const useLogin = () => {
     }
   });
 
+<<<<<<< HEAD
   const handleEmail = useCallback((e) => {
     setEmail(e.target.value);
   });
@@ -46,3 +47,14 @@ export const useLogin = () => {
 
   return [handleSubmit, handleEmail, handlePassword, email, password, open];
 };
+=======
+    return [
+        handleSubmit, 
+        handleEmail, 
+        handlePassword, 
+        email, 
+        password,
+        open
+    ];
+}
+>>>>>>> d8762f7 (P360 42 consumo de api de la aplicacion)
