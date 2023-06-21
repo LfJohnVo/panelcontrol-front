@@ -1,6 +1,14 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { Grid, Paper, TextField, Button } from "@mui/material";
+import {
+  Grid,
+  Paper,
+  TextField,
+  Button,
+  InputAdornment,
+  IconButton,
+  Chip,
+} from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import {
   changeFalse,
@@ -16,51 +24,88 @@ import TitleModul from "../../components/bienvenida/TitleModul";
 import { colorsTable } from "../../common/color/color";
 import { useForm } from "react-hook-form";
 import { inputValidate } from "../../common/text/Validation";
+import { createCatalogo } from "../../services/catalogo/catalogo";
+import NotifyContainer from "../notify/NotifyContainer";
+import { notifyMessage } from "../notify/NotifyMessage";
+import { catalogo } from "../../common/text/Notify";
+import { redirectCatalogo } from "../../common/text/RedirectRoute";
+import { useNavigate } from "react-router-dom";
+import { selectUser } from "../../features/login/loginSlice";
+import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
 
 import { useState } from "react";
 
 function FormCatalogo(props) {
   const loading = useSelector(selectLoading);
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm();
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const [err, setErr] = useState(null);
   const [errorMessage, setErrorMessage] = useState([]);
+  const navigate = useNavigate();
+  const token = useSelector(selectUser);
+  const [moduls, setModuls] = useState([]);
+  const [inputValue, setInputValue] = useState("");
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    control,
+    setValue,
+  } = useForm({
+    defaultValues: {
+      moduls: moduls,
+    },
+  });
 
   //functions
 
-  const createUser = () => {
-    try {
+  const crearCatalogo = () => {
+    setTimeout(() => {
+      dispatch(changeTrue());
       setTimeout(() => {
-        dispatch(changeTrue());
-        setTimeout(() => {
-          dispatch(changeFalse());
-        }, 2000);
-      }, 100);
+        dispatch(changeFalse());
+      }, 2000);
+    }, 100);
+  };
+
+  const submitForm = async (data, e) => {
+    try {
+      data.moduls = moduls;
+      setOpen(true);
+      await createCatalogo(data, token.token);
+      setOpen(false);
+      notifyMessage(catalogo.add);
+      setTimeout(() => {
+        navigate(redirectCatalogo.index);
+      }, 6000);
     } catch (error) {
-      setErr(true);
-      setErrorMessage(error.message);
+      setOpen(false);
+      console.log(error);
     }
   };
 
-  const submitForm = (data, e) => {
-    console.log(data);
+  const handleDelete = (chipToDelete) => () => {
+    setModuls((texto) => texto.filter((texto) => texto !== chipToDelete));
+  };
 
-    // validateUserCreate(values);
+  const handleAddChip = () => {
+    if (inputValue.trim() !== "") {
+      const newModul = {
+        title: inputValue,
+      };
+      setModuls([...moduls, newModul]);
+      setInputValue("");
+    }
   };
 
   //Effects
   useEffect(() => {
-    createUser();
+    crearCatalogo();
   }, []);
 
   return (
     <>
+      <NotifyContainer />
       <Backdrop
         sx={{ color: "blue", zIndex: (theme) => theme.zIndex.drawer + 1 }}
         open={open}
@@ -69,34 +114,7 @@ function FormCatalogo(props) {
       </Backdrop>
 
       {loading ? (
-        <Grid
-          item
-          xs={12}
-          md={12}
-          lg={12}
-          sx={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Paper
-            elevation={1}
-            sx={{
-              p: 2,
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "center",
-              alignItems: "center",
-              height: 60,
-              width: 600,
-              background: "#FFFFF",
-            }}
-          >
-            <Loading />
-          </Paper>
-        </Grid>
+        <Loading />
       ) : (
         <>
           <Grid item md={12}>
@@ -139,31 +157,43 @@ function FormCatalogo(props) {
                 <Grid item xs={12} sm={6} md={6} lg={6}>
                   <TextField
                     label="Nombre"
-                    name="nombre"
+                    name="title"
                     variant="outlined"
                     fullWidth
-                    {...register("nombre", {
+                    {...register("title", {
                       required: inputValidate.required,
                     })}
-                    error={!!errors?.nombre}
-                    helperText={errors?.nombre ? errors.nombre.message : null}
+                    error={!!errors?.title}
+                    helperText={errors?.title ? errors.title.message : null}
                   />
                 </Grid>
-
                 <Grid item xs={12} sm={6} md={6} lg={6}>
                   <TextField
-                    label="Descripcion"
-                    name="descripcion"
-                    variant="outlined"
+                    label="Modulo"
+                    value={inputValue}
                     fullWidth
-                    {...register("descripcion", {
-                      required: inputValidate.required,
-                    })}
-                    error={!!errors?.descripcion}
-                    helperText={
-                      errors?.descripcion ? errors.descripcion.message : null
-                    }
+                    onChange={(e) => setInputValue(e.target.value)}
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <IconButton onClick={handleAddChip}>
+                            <AddCircleOutlineOutlinedIcon />
+                          </IconButton>
+                        </InputAdornment>
+                      ),
+                    }}
                   />
+                  {moduls.map((modulo, index) => (
+                    <Chip
+                      key={index}
+                      label={modulo.title}
+                      style={{
+                        marginTop: "10px",
+                        marginRight: "5px",
+                      }}
+                      onDelete={handleDelete(modulo)}
+                    />
+                  ))}
                 </Grid>
               </Grid>
 
@@ -200,17 +230,6 @@ function FormCatalogo(props) {
                       Enviar Servicio
                     </Button>
                   </Grid>
-                  <Grid item xs={12} sm={6} md={4}>
-                    <Button
-                      fullWidth
-                      variant="outlined"
-                      sx={{ mt: 3, mb: 2 }}
-                      type="button"
-                      onClick={() => reset()}
-                    >
-                      Limpiar
-                    </Button>
-                  </Grid>
                 </Grid>
               </Grid>
             </Grid>
@@ -222,3 +241,86 @@ function FormCatalogo(props) {
 }
 
 export default FormCatalogo;
+
+// import React from "react";
+// import { useForm, Controller } from "react-hook-form";
+// import {
+//   TextField,
+//   Button,
+//   Chip,
+//   InputAdornment,
+//   IconButton,
+// } from "@mui/material";
+// import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
+
+// export default function FormCatalogo(props) {
+//   const {
+//     control,
+//     handleSubmit,
+//     setValue,
+//     formState: { errors },
+//   } = useForm();
+//   const [moduls, setModuls] = React.useState([]);
+
+//   const onSubmit = (data) => {
+//     setModuls([...moduls, data.texto]);
+//     setValue("texto", "");
+//   };
+
+//   const handleEnviar = () => {
+//     console.log(moduls);
+//   };
+
+//   const handleDelete = (chipToDelete) => () => {
+//     setModuls((texto) => texto.filter((texto) => texto !== chipToDelete));
+//   };
+
+//   return (
+//     <div>
+//       <form onSubmit={handleSubmit(onSubmit)}>
+//         <Controller
+//           name="texto"
+//           control={control}
+//           defaultValue=""
+//           rules={{ required: "El campo de texto es requerido" }}
+//           render={({ field }) => (
+//             <TextField
+//               {...field}
+//               label="Modulo"
+//               variant="outlined"
+//               fullWidth
+//               error={!!errors.texto}
+//               helperText={errors.texto?.message}
+//               margin="normal"
+//               InputProps={{
+//                 endAdornment: (
+//                   <InputAdornment position="end">
+//                     <IconButton type="submit">
+//                       <AddCircleOutlineOutlinedIcon />
+//                     </IconButton>
+//                   </InputAdornment>
+//                 ),
+//               }}
+//             />
+//           )}
+//         />
+//         {moduls.map((texto, index) => (
+//           <Chip
+//             key={index}
+//             label={texto}
+//             style={{ marginTop: "10px", marginRight: "5px" }}
+//             onDelete={handleDelete(texto)}
+//           />
+//         ))}
+//       </form>
+//       <Button
+//         onClick={handleEnviar}
+//         variant="contained"
+//         color="primary"
+//         disabled={!moduls.length}
+//       >
+//         Enviar
+//       </Button>
+//     </div>
+//   );
+// }

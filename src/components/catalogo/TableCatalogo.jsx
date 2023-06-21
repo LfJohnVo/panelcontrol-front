@@ -1,4 +1,5 @@
 import React from "react";
+import { useState, useEffect } from "react";
 import { colorsTable } from "../../common/color/color";
 import {
   Grid,
@@ -14,6 +15,21 @@ import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { Link as linkrouter, useNavigate } from "react-router-dom";
 import Link from "@mui/material/Link";
+import {
+  deleteCatalogo,
+  getAllCatalogo,
+} from "../../services/catalogo/catalogo";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  changeTrue,
+  changeFalse,
+  selectLoading,
+} from "../../features/loading/loadingSlice";
+import { selectUser } from "../../features/login/loginSlice";
+import Loading from "../loading/Loading";
+import NotifyContainer from "../notify/NotifyContainer";
+import { catalogo } from "../../common/text/Notify";
+import { notifyMessage } from "../notify/NotifyMessage";
 
 function QuickSearchToolbar() {
   const navigate = useNavigate();
@@ -103,11 +119,10 @@ function QuickSearchToolbar() {
 function TableCatalogo() {
   const navigate = useNavigate();
   //variables
-  const rows = [
-    { id: 1, title: "Hello", description: "World" },
-    { id: 2, title: "DataGridPro", description: "is Awesome" },
-    { id: 3, title: "MUI", description: "is Amazing" },
-  ];
+  const [data, setData] = useState([]);
+  const dispatch = useDispatch();
+  const loading = useSelector(selectLoading);
+  const token = useSelector(selectUser);
 
   const columns = [
     {
@@ -134,12 +149,6 @@ function TableCatalogo() {
       field: "title",
       headerName: "Nombre",
       width: 350,
-      headerClassName: "super-app-theme--header",
-    },
-    {
-      field: "description",
-      headerName: "Description",
-      width: 550,
       headerClassName: "super-app-theme--header",
     },
     {
@@ -180,47 +189,70 @@ function TableCatalogo() {
   };
 
   const handleClickDeleteCatalogo = async (e, cellValues) => {
-    console.log(cellValues);
+    const id = cellValues.row.id;
+    await deleteCatalogo(id, token.token);
+    notifyMessage(catalogo.delete);
+    getCatalogo();
   };
+
+  const getCatalogo = async () => {
+    try {
+      dispatch(changeTrue());
+      const response = await getAllCatalogo(token.token);
+      setData(response);
+      dispatch(changeFalse());
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getCatalogo();
+  }, []);
 
   return (
     <>
-      <Grid item xs={12} md={12} lg={12}>
-        <Box
-          component={"div"}
-          sx={{
-            height: 737,
-            mb: "40px",
-            width: "100%",
-            "& .super-app-theme--header2": {
-              backgroundColor: colorsTable.colorCellHeader,
-              pl: "39px",
-            },
-            "& .super-app-theme--header": {
-              backgroundColor: colorsTable.colorCellHeader,
-            },
-          }}
-        >
-          <DataGrid
-            rows={rows}
-            columns={columns}
-            disableColumnMenu
-            initialState={{
-              pagination: { paginationModel: { pageSize: 10 } },
-            }}
-            pageSizeOptions={[5, 10, 25]}
-            slots={{ toolbar: QuickSearchToolbar }}
-            slotProps={{
-              toolbar: {
-                showQuickFilter: true,
+      <NotifyContainer />
+      {loading ? (
+        <Loading />
+      ) : (
+        <Grid item xs={12} md={12} lg={12}>
+          <Box
+            component={"div"}
+            sx={{
+              height: 737,
+              mb: "40px",
+              width: "100%",
+              "& .super-app-theme--header2": {
+                backgroundColor: colorsTable.colorCellHeader,
+                pl: "39px",
+              },
+              "& .super-app-theme--header": {
+                backgroundColor: colorsTable.colorCellHeader,
               },
             }}
-            style={{
-              background: colorsTable.colorFondo,
-            }}
-          />
-        </Box>
-      </Grid>
+          >
+            <DataGrid
+              rows={data}
+              columns={columns}
+              disableColumnMenu
+              initialState={{
+                pagination: { paginationModel: { pageSize: 10 } },
+              }}
+              pageSizeOptions={[5, 10, 25]}
+              slots={{ toolbar: QuickSearchToolbar }}
+              slotProps={{
+                toolbar: {
+                  showQuickFilter: true,
+                },
+              }}
+              style={{
+                background: colorsTable.colorFondo,
+              }}
+            />
+          </Box>
+        </Grid>
+      )}
     </>
   );
 }

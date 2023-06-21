@@ -1,5 +1,5 @@
 import React from "react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { colorsTable } from "../../common/color/color";
 import { Grid, Paper, Typography, Divider } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
@@ -10,10 +10,18 @@ import {
 } from "../../features/loading/loadingSlice";
 import { useDispatch, useSelector } from "react-redux";
 import TitleModul from "../../components/bienvenida/TitleModul";
+import { useParams } from "react-router-dom";
+import Loading from "../loading/Loading";
+import { selectUser } from "../../features/login/loginSlice";
+import { getOneCatalogo } from "../../services/catalogo/catalogo";
+import { sf } from "../../common/text/SF";
 
 function CatalogoDetail(props) {
+  const { id } = useParams();
+  const token = useSelector(selectUser);
   const loading = useSelector(selectLoading);
   const dispatch = useDispatch();
+  const [data, setData] = useState();
 
   //theme
 
@@ -32,14 +40,12 @@ function CatalogoDetail(props) {
   });
 
   //functions
-  const getDetailUser = () => {
+  const getDetailCatalogo = async () => {
     try {
-      setTimeout(() => {
-        dispatch(changeTrue());
-        setTimeout(() => {
-          dispatch(changeFalse());
-        }, 2000);
-      }, 100);
+      dispatch(changeTrue());
+      const response = await getOneCatalogo(id, token.token);
+      setData(response);
+      dispatch(changeFalse());
     } catch (error) {
       setErr(true);
       setErrorMessage(error.message);
@@ -48,15 +54,13 @@ function CatalogoDetail(props) {
 
   //Effects
   useEffect(() => {
-    getDetailUser();
+    getDetailCatalogo();
   }, []);
 
   return (
     <>
       {loading ? (
-        <Grid item xs={12} md={12} lg={12} sx={{ paddingTop: "50vh" }}>
-          <></>
-        </Grid>
+        <Loading />
       ) : (
         <>
           <Grid item md={12}>
@@ -83,7 +87,7 @@ function CatalogoDetail(props) {
                     mt={"25px"}
                     ml={"35px"}
                   >
-                    Usuario
+                    Servicio
                   </Typography>
                 </Grid>
                 <Divider />
@@ -92,7 +96,9 @@ function CatalogoDetail(props) {
                   sm={12}
                   sx={{ m: "27px 44px 136px 34px", textAlign: "justify" }}
                 >
-                  <Typography component="h1" variant="h3"></Typography>
+                  <Typography component="h1" variant="h3">
+                    {data && data.title ? data.title : sf}
+                  </Typography>
                 </Grid>
                 <Divider sx={{ mb: "21px" }} />
                 <Grid
@@ -108,79 +114,34 @@ function CatalogoDetail(props) {
                     <Typography component="h1" variant="h2">
                       ID
                     </Typography>
-                    <Typography
-                      component="p"
-                      variant="h3"
-                      sx={{ pt: "16px" }}
-                    ></Typography>
+                    <Typography component="p" variant="h3" sx={{ pt: "16px" }}>
+                      {" "}
+                      {data && data.id ? data.id : sf}
+                    </Typography>
                   </Grid>
                   <Grid item md={2} sm={4} xs={12} sx={{ pt: "16px" }}>
                     <Typography component="h1" variant="h2">
-                      CREADO
+                      Modulos
                     </Typography>
                     <Typography
                       component="p"
                       variant="h3"
                       sx={{ pt: "16px" }}
                     ></Typography>
-                  </Grid>
-                </Grid>
-                <Grid
-                  container
-                  item
-                  spacing={3}
-                  direction="row"
-                  justifyContent="flex-start"
-                  sx={{ mb: "80px", pl: "39px" }}
-                >
-                  <Grid item md={2} sm={4} xs={12}>
-                    <Typography component="h1" variant="h2">
-                      CORREO
-                    </Typography>
-                    <Typography
-                      component="p"
-                      variant="h3"
-                      sx={{ pt: "16px" }}
-                    ></Typography>
-                  </Grid>
-                  <Grid item md={2} sm={4} xs={12}>
-                    <Typography component="h1" variant="h2">
-                      RAZÓN SOCIAL
-                    </Typography>
-                    <Typography
-                      component="p"
-                      variant="h3"
-                      sx={{ pt: "16px" }}
-                    ></Typography>
-                  </Grid>
-                  <Grid item md={2} sm={4} xs={12}>
-                    <Typography component="h1" variant="h2">
-                      CONTACTO
-                    </Typography>
-                    <Typography
-                      component="p"
-                      variant="h3"
-                      sx={{ pt: "16px" }}
-                    ></Typography>
-                  </Grid>
-                </Grid>
-                <Grid
-                  container
-                  item
-                  spacing={3}
-                  direction="row"
-                  justifyContent="flex-start"
-                  sx={{ pl: "39px" }}
-                >
-                  <Grid item md={3} sm={4} xs={12}>
-                    <Typography component="h1" variant="h2">
-                      DIRECCIÓN
-                    </Typography>
-                    <Typography
-                      component="p"
-                      variant="h3"
-                      sx={{ pt: "16px" }}
-                    ></Typography>
+                    {data
+                      ? data.modulo.map((modulo) => {
+                          return (
+                            <Typography
+                              component="h1"
+                              variant="h3"
+                              key={modulo.id}
+                              mb={"2px"}
+                            >
+                              {modulo.title}
+                            </Typography>
+                          );
+                        })
+                      : sf}
                   </Grid>
                 </Grid>
               </Paper>
