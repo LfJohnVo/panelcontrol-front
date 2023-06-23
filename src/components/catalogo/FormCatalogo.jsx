@@ -18,7 +18,7 @@ import { catalogo } from "../../common/text/Notify";
 import { redirectCatalogo } from "../../common/text/RedirectRoute";
 import { useNavigate } from "react-router-dom";
 import { selectUser } from "../../features/login/loginSlice";
-import { useGetClients } from "../../hooks";
+import { useCreateProyect, useGetClients } from "../../hooks";
 import { MultiSelect, SelectInput, TextInput } from "../common/inputs";
 import { BackdropCustom, PaperLayout } from "../common/layouts";
 
@@ -39,9 +39,7 @@ function FormCatalogo(props) {
     },
   ];
 
-  const [open, setOpen] = useState(false);
-  const navigate = useNavigate();
-  const token = useSelector(selectUser);
+  // const [open, setOpen] = useState(false);
   const [moduls, setModuls] = useState([]);
   const [clientsSelected, setClientsSelected] = useState("");
   const [clients, loading] = useGetClients();
@@ -55,24 +53,26 @@ function FormCatalogo(props) {
     },
   });
 
+  const [handleSubmitProyect, open] = useCreateProyect(moduls, clientsSelected);
+
   //functions
 
-  const submitForm = async (data, e) => {
-    try {
-      data.moduls = moduls;
-      console.log(data);
-      setOpen(true);
-      await createCatalogo(data, token.token);
-      setOpen(false);
-      notifyMessage(catalogo.add);
-      setTimeout(() => {
-        navigate(redirectCatalogo.index);
-      }, 6000);
-    } catch (error) {
-      setOpen(false);
-      console.log(error);
-    }
-  };
+  // const submitForm = async (data, e) => {
+  //   try {
+  //     data.moduls = moduls;
+  //     console.log(data);
+  //     setOpen(true);
+  //     await createCatalogo(data, token.token);
+  //     setOpen(false);
+  //     notifyMessage(catalogo.add);
+  //     setTimeout(() => {
+  //       navigate(redirectCatalogo.index);
+  //     }, 6000);
+  //   } catch (error) {
+  //     setOpen(false);
+  //     console.log(error);
+  //   }
+  // };
 
   const handleDelete = (chipToDelete) => () => {
     setModuls((texto) => texto.filter((texto) => texto !== chipToDelete));
@@ -92,7 +92,7 @@ function FormCatalogo(props) {
           <Grid
             container
             component="form"
-            onSubmit={handleSubmit(submitForm)}
+            onSubmit={handleSubmit(handleSubmitProyect)}
             direction="row"
             justifyContent="flex-start"
             alignItems="flex-start"
@@ -122,19 +122,6 @@ function FormCatalogo(props) {
                   />
                 )}
               </Grid>
-              {/* <Grid item xs={12} sm={6} md={6} lg={6}>
-                <TextField
-                  label="Nombre"
-                  name="title"
-                  variant="outlined"
-                  fullWidth
-                  {...register("title", {
-                    required: inputValidate.required,
-                  })}
-                  error={!!errors?.title}
-                  helperText={errors?.title ? errors.title.message : null}
-                />
-              </Grid> */}
 
               <Grid item xs={12} sm={6} md={6} lg={6}>
                 <TextInput

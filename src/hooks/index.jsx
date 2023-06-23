@@ -6,6 +6,7 @@ import { isAuthenticate } from "../services/login/login";
 import { selectUser } from "../features/login/loginSlice";
 import { getAllClients } from "../services/clientes/clientes";
 import { useDispatch, useSelector } from "react-redux";
+import { createCatalogo } from "../services/catalogo/catalogo";
 
 export const useLogin = () => {
   const navigate = useNavigate();
@@ -70,4 +71,25 @@ export const useGetClients = () => {
   }, []);
 
   return [clients, loading, getClients];
+};
+
+export const useCreateProyect = (moduls, clientsSelected) => {
+  const token = useSelector(selectUser);
+  const navigate = useNavigate();
+  const [open, setOpen] = useState(false);
+
+  const handleSubmitProyect = useCallback(async (data) => {
+    data.moduls = moduls;
+    data.cliente = clientsSelected;
+    console.log(data);
+    setOpen(true);
+    const response = await createCatalogo(data, token.token);
+    setOpen(false);
+    notify("Catalogo creado exitosamente");
+    setTimeout(() => {
+      navigate("/catalogo");
+    }, 2000);
+  });
+
+  return [handleSubmitProyect, open];
 };
