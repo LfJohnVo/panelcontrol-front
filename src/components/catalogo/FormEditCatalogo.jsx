@@ -8,6 +8,11 @@ import {
   InputAdornment,
   IconButton,
   Chip,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
 } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -29,9 +34,10 @@ import { selectUser } from "../../features/login/loginSlice";
 import {
   getOneCatalogo,
   updateCatalogo,
+  deleteCatalogoModul,
 } from "../../services/catalogo/catalogo";
-import { redirectClient } from "../../common/text/RedirectRoute";
-import { cliente } from "../../common/text/Notify";
+import { redirectCatalogo } from "../../common/text/RedirectRoute";
+import { catalogo } from "../../common/text/Notify";
 import { notifyMessage } from "../notify/NotifyMessage";
 import { useNavigate } from "react-router-dom";
 import NotifyContainer from "../notify/NotifyContainer";
@@ -55,13 +61,14 @@ function FormEditCatalogo(props) {
   const navigate = useNavigate();
   const [moduls, setModuls] = useState([]);
   const [inputValue, setInputValue] = useState("");
+  const [dialog, setDialog] = useState(false);
+  const [changeTitle, setChangeTitle] = useState("");
 
   //functions
 
   const setValuesData = (data) => {
     setValue("title", data.title);
     setModuls(data.modulo);
-    console.log(data.modulo);
   };
 
   const editCatalogo = async () => {
@@ -76,13 +83,32 @@ function FormEditCatalogo(props) {
     }
   };
 
-  const submitForm = (data, e) => {
-    data.moduls = moduls;
-    console.log(data);
+  const submitForm = async (data, e) => {
+    try {
+      data.moduls = moduls;
+      setOpen(true);
+      await updateCatalogo(data, id, token.token);
+      setOpen(false);
+      notifyMessage(catalogo.edit);
+      setTimeout(() => {
+        navigate(redirectCatalogo.index);
+      }, 6000);
+    } catch (error) {
+      setOpen(false);
+      console.log(error);
+    }
   };
 
-  const handleDelete = (chipToDelete) => () => {
-    setModuls((texto) => texto.filter((texto) => texto !== chipToDelete));
+  const handleDelete = (chipToDelete) => async () => {
+    chipToDelete && chipToDelete.id
+      ? (await deleteCatalogoModul(chipToDelete.id, token.token),
+        setModuls((texto) => texto.filter((texto) => texto !== chipToDelete)))
+      : setModuls((texto) => texto.filter((texto) => texto !== chipToDelete));
+  };
+
+  const handleOpenDialog = (modulo) => {
+    setChangeTitle(modulo);
+    setDialog(true);
   };
 
   const handleAddChip = () => {
@@ -93,6 +119,26 @@ function FormEditCatalogo(props) {
       setModuls([...moduls, newModul]);
       setInputValue("");
     }
+  };
+
+  const handleCloseDialog = () => {
+    setDialog(false);
+  };
+
+  const handleChangeTitle = (e) => {
+    setChangeTitle({ ...changeTitle, title: e.target.value });
+  };
+
+  const updateChip = (modulo) => {
+    console.log(modulo);
+    const updatedArray = moduls.map((obj) => {
+      if (obj.id === modulo.id) {
+        return { ...obj, title: modulo.title };
+      }
+      return obj;
+    });
+    setModuls(updatedArray);
+    setDialog(false);
   };
 
   //Effects
@@ -109,6 +155,29 @@ function FormEditCatalogo(props) {
       >
         <CircularProgress color="inherit" />
       </Backdrop>
+
+      <Dialog
+        open={dialog}
+        onClose={handleCloseDialog}
+        aria-describedby="alert-dialog-slide-description"
+      >
+        <DialogTitle>Cambiar nombre del modulo</DialogTitle>
+        <DialogContent sx={{ display: "flex", justifyContent: "center" }}>
+          <TextField
+            label="Titulo"
+            name="changetitle"
+            variant="outlined"
+            fullWidth
+            value={changeTitle.title}
+            onChange={handleChangeTitle}
+            sx={{ m: "10px" }}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseDialog}>Cancelar</Button>
+          <Button onClick={() => updateChip(changeTitle)}>Cambiar</Button>
+        </DialogActions>
+      </Dialog>
 
       {loading ? (
         <Loading />
@@ -190,6 +259,7 @@ function FormEditCatalogo(props) {
                         marginRight: "5px",
                       }}
                       onDelete={handleDelete(modulo)}
+                      onClick={() => handleOpenDialog(modulo)}
                     />
                   ))}
                 </Grid>
@@ -228,17 +298,7 @@ function FormEditCatalogo(props) {
                       Enviar Usuario
                     </Button>
                   </Grid>
-                  <Grid item xs={12} sm={6} md={4}>
-                    <Button
-                      fullWidth
-                      variant="outlined"
-                      sx={{ mt: 3, mb: 2 }}
-                      type="button"
-                      onClick={() => reset()}
-                    >
-                      Limpiar
-                    </Button>
-                  </Grid>
+                  <Grid item xs={12} sm={6} md={4}></Grid>
                 </Grid>
               </Grid>
             </Grid>

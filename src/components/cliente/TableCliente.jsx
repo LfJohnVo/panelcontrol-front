@@ -17,16 +17,13 @@ import { Link as linkrouter, useNavigate } from "react-router-dom";
 import Link from "@mui/material/Link";
 import { deleteCliente, getAllClients } from "../../services/clientes/clientes";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  changeTrue,
-  changeFalse,
-  selectLoading,
-} from "../../features/loading/loadingSlice";
+
 import { selectUser } from "../../features/login/loginSlice";
 import Loading from "../loading/Loading";
 import NotifyContainer from "../notify/NotifyContainer";
 import { cliente } from "../../common/text/Notify";
 import { notifyMessage } from "../notify/NotifyMessage";
+import { useGetClients } from "../../hooks";
 
 function QuickSearchToolbar() {
   const navigate = useNavigate();
@@ -115,11 +112,9 @@ function QuickSearchToolbar() {
 
 function TableCliente() {
   const navigate = useNavigate();
-  //variables
-  const [data, setData] = useState([]);
-  const dispatch = useDispatch();
-  const loading = useSelector(selectLoading);
+
   const token = useSelector(selectUser);
+  const [clients, loading, getClients] = useGetClients();
 
   const columns = [
     {
@@ -142,7 +137,6 @@ function TableCliente() {
         );
       },
     },
-
     {
       field: "name",
       headerName: "Nombre",
@@ -156,7 +150,7 @@ function TableCliente() {
       headerClassName: "super-app-theme--header",
     },
     {
-      field: "col3",
+      field: "razon_social",
       headerName: "Razon social",
       width: 150,
       headerClassName: "super-app-theme--header",
@@ -205,21 +199,6 @@ function TableCliente() {
     getClients();
   };
 
-  const getClients = async () => {
-    try {
-      dispatch(changeTrue());
-      const response = await getAllClients(token.token);
-      setData(response);
-      dispatch(changeFalse());
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    getClients();
-  }, []);
-
   return (
     <>
       <NotifyContainer />
@@ -243,7 +222,7 @@ function TableCliente() {
             }}
           >
             <DataGrid
-              rows={data}
+              rows={clients}
               columns={columns}
               disableColumnMenu
               initialState={{

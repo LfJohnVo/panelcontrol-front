@@ -1,9 +1,11 @@
-import { useCallback, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useCallback, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { notify } from "../lib/notify";
 import { addUser } from "../features/login/loginSlice";
 import { isAuthenticate } from "../services/login/login";
+import { selectUser } from "../features/login/loginSlice";
+import { getAllClients } from "../services/clientes/clientes";
+import { useDispatch, useSelector } from "react-redux";
 
 export const useLogin = () => {
   const navigate = useNavigate();
@@ -19,7 +21,7 @@ export const useLogin = () => {
       const resp = await isAuthenticate({ email, password });
       setOpen(false);
       if (resp.status === 200) {
-        dispatch(addUser(resp.data));
+        dispatch(addUser(resp.data.data));
         navigate("/dashboard");
       }
 
@@ -44,4 +46,28 @@ export const useLogin = () => {
   });
 
   return [handleSubmit, handleEmail, handlePassword, email, password, open];
+};
+
+export const useGetClients = () => {
+  const [clients, setClients] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const token = useSelector(selectUser);
+
+  const getClients = useCallback(async () => {
+    try {
+      setLoading(true);
+      const response = await getAllClients(token.token);
+      setClients(response);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      console.log(error);
+    }
+  });
+
+  useEffect(() => {
+    getClients();
+  }, []);
+
+  return [clients, loading, getClients];
 };

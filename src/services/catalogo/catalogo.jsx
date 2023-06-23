@@ -1,6 +1,7 @@
 import { panel_control } from "../index";
 
 const route = "api/projects";
+const route2 = "api/modul";
 
 export const getAllCatalogo = async (token) => {
   try {
@@ -56,6 +57,19 @@ export const updateCatalogo = async (data, id, token) => {
 export const deleteCatalogo = async (id, token) => {
   try {
     const response = await panel_control.delete(`${route}/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const deleteCatalogoModul = async (id, token) => {
+  try {
+    const response = await panel_control.delete(`${route2}/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
