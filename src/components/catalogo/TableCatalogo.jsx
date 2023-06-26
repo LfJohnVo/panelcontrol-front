@@ -30,6 +30,11 @@ import Loading from "../loading/Loading";
 import NotifyContainer from "../notify/NotifyContainer";
 import { catalogo } from "../../common/text/Notify";
 import { notifyMessage } from "../notify/NotifyMessage";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 
 function QuickSearchToolbar() {
   const navigate = useNavigate();
@@ -123,6 +128,8 @@ function TableCatalogo() {
   const dispatch = useDispatch();
   const loading = useSelector(selectLoading);
   const token = useSelector(selectUser);
+  const [open, setOpen] = useState(false);
+  const [id, setId] = useState("");
 
   const columns = [
     {
@@ -169,7 +176,8 @@ function TableCatalogo() {
               <IconButton
                 aria-label="edit"
                 onClick={async (e) => {
-                  handleClickDeleteCatalogo(e, cellValues);
+                  // handleClickDeleteCatalogo(e, cellValues);
+                  handleClickOpen(e, cellValues);
                 }}
               >
                 <DeleteOutlinedIcon />
@@ -188,11 +196,22 @@ function TableCatalogo() {
     navigate(`/catalogo/${id}/edit`);
   };
 
-  const handleClickDeleteCatalogo = async (e, cellValues) => {
-    const id = cellValues.row.id;
+  const handleClickDeleteCatalogo = async () => {
     await deleteCatalogo(id, token.token);
     notifyMessage(catalogo.delete);
     getCatalogo();
+    handleClose();
+  };
+
+  const handleClickOpen = (e, cellValues) => {
+    const id = cellValues.row.id;
+    setId(id);
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setId("");
+    setOpen(false);
   };
 
   const getCatalogo = async () => {
@@ -213,6 +232,24 @@ function TableCatalogo() {
   return (
     <>
       <NotifyContainer />
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            ¿Esta seguro que desea eliminar el servicio del catalogo?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Cancelar</Button>
+          <Button onClick={handleClickDeleteCatalogo} autoFocus>
+            Aceptar
+          </Button>
+        </DialogActions>
+      </Dialog>
       {loading ? (
         <Loading />
       ) : (

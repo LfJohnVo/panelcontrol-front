@@ -8,6 +8,10 @@ import {
   InputAdornment,
   IconButton,
   Chip,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
 } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -27,11 +31,12 @@ import { inputValidate } from "../../common/text/Validation";
 import { useParams } from "react-router-dom";
 import { selectUser } from "../../features/login/loginSlice";
 import {
+  deleteModulo,
   getOneCatalogo,
   updateCatalogo,
 } from "../../services/catalogo/catalogo";
-import { redirectClient } from "../../common/text/RedirectRoute";
-import { cliente } from "../../common/text/Notify";
+import { redirectCatalogo } from "../../common/text/RedirectRoute";
+import { catalogo } from "../../common/text/Notify";
 import { notifyMessage } from "../notify/NotifyMessage";
 import { useNavigate } from "react-router-dom";
 import NotifyContainer from "../notify/NotifyContainer";
@@ -55,6 +60,8 @@ function FormEditCatalogo(props) {
   const navigate = useNavigate();
   const [moduls, setModuls] = useState([]);
   const [inputValue, setInputValue] = useState("");
+  const [dialog, setDialog] = useState(false);
+  const [changeModul, setChangeModul] = useState("");
 
   //functions
 
@@ -76,13 +83,30 @@ function FormEditCatalogo(props) {
     }
   };
 
-  const submitForm = (data, e) => {
+  const submitForm = async (data, e) => {
     data.moduls = moduls;
-    console.log(data);
+    try {
+      setOpen(true);
+      // await updateCatalogo(data, id, token.token);
+      notifyMessage(catalogo.edit);
+      setTimeout(() => {
+        navigate(redirectCatalogo.index);
+        setOpen(false);
+      }, 6000);
+    } catch (error) {
+      console.log(err);
+    }
   };
 
-  const handleDelete = (chipToDelete) => () => {
-    setModuls((texto) => texto.filter((texto) => texto !== chipToDelete));
+  const handleDelete = (chipToDelete) => async () => {
+    if (chipToDelete.hasOwnProperty("id")) {
+      setOpen(true);
+      await deleteModulo(id, token.token);
+      setOpen(false);
+      setModuls((item) => item.filter((item) => item !== chipToDelete));
+    } else {
+      setModuls((item) => item.filter((item) => item !== chipToDelete));
+    }
   };
 
   const handleAddChip = () => {
@@ -93,6 +117,27 @@ function FormEditCatalogo(props) {
       setModuls([...moduls, newModul]);
       setInputValue("");
     }
+  };
+
+  const handleChangeChip = (ChipEdit) => {
+    setDialog(true);
+    setChangeModul(ChipEdit);
+  };
+
+  const handleCloseDialog = () => {
+    setDialog(false);
+  };
+
+  const handleEditTitleChip = (e) => {
+    setChangeModul({ ...changeModul, [e.target.name]: e.target.value });
+  };
+
+  const handleChangeTitleChip = () => {
+    const cp = moduls.filter((item) => {
+      return item.id == changeModul.id;
+    });
+    cp[0].title = changeModul.title;
+    setDialog(false);
   };
 
   //Effects
@@ -109,6 +154,36 @@ function FormEditCatalogo(props) {
       >
         <CircularProgress color="inherit" />
       </Backdrop>
+
+      <Dialog
+        open={dialog}
+        onClose={handleCloseDialog}
+        aria-labelledby="responsive-dialog-title"
+      >
+        <DialogTitle id="responsive-dialog-title">
+          Cambiar nombre de modulo
+        </DialogTitle>
+        <DialogContent>
+          <TextField
+            label="Nombre"
+            name="title"
+            variant="outlined"
+            autoFocus
+            fullWidth
+            value={changeModul.title}
+            onChange={handleEditTitleChip}
+            sx={{ mt: "5px" }}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button autoFocus onClick={handleCloseDialog}>
+            Cancelar
+          </Button>
+          <Button onClick={handleChangeTitleChip} autoFocus>
+            Aceptar
+          </Button>
+        </DialogActions>
+      </Dialog>
 
       {loading ? (
         <Loading />
@@ -190,6 +265,7 @@ function FormEditCatalogo(props) {
                         marginRight: "5px",
                       }}
                       onDelete={handleDelete(modulo)}
+                      onClick={() => handleChangeChip(modulo)}
                     />
                   ))}
                 </Grid>

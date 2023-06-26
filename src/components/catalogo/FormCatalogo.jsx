@@ -33,8 +33,6 @@ import { useNavigate } from "react-router-dom";
 import { selectUser } from "../../features/login/loginSlice";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
 
-import { useState } from "react";
-
 function FormCatalogo(props) {
   const loading = useSelector(selectLoading);
   const dispatch = useDispatch();
@@ -73,10 +71,10 @@ function FormCatalogo(props) {
       data.moduls = moduls;
       setOpen(true);
       await createCatalogo(data, token.token);
-      setOpen(false);
       notifyMessage(catalogo.add);
       setTimeout(() => {
         navigate(redirectCatalogo.index);
+        setOpen(false);
       }, 6000);
     } catch (error) {
       setOpen(false);
