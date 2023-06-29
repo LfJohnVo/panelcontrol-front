@@ -1,34 +1,23 @@
 import React from "react";
-import { useEffect, useState } from "react";
-import { colorsTable } from "../../common/color/color";
-import {
-  Grid,
-  Typography,
-  Box,
-  Button,
-  Stack,
-  IconButton,
-  Paper,
-} from "@mui/material";
-import { DataGrid, GridToolbarQuickFilter } from "@mui/x-data-grid";
+import { useEffect } from "react";
+import { Grid, Box, Stack, IconButton } from "@mui/material";
+import { GridToolbarQuickFilter } from "@mui/x-data-grid";
 import AddIcon from "@mui/icons-material/Add";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { Link as linkrouter, useNavigate } from "react-router-dom";
 import Link from "@mui/material/Link";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  changeFalse,
-  changeTrue,
-  selectLoading,
-} from "../../features/loading/loadingSlice";
-import { deleteUser, getAllUsers } from "../../services/users/users";
-import { selectUser } from "../../features/login/loginSlice";
 import { sf } from "../../common/text/SF";
 import Loading from "../loading/Loading";
 import NotifyContainer from "../notify/NotifyContainer";
-import { user } from "../../common/text/Notify";
-import { notifyMessage } from "../notify/NotifyMessage";
+import { useGetAllUser } from "../../hooks/useUser";
+import { BoxTableLayout, DataGridLayout } from "../common/layouts";
+import { ButtonCustom } from "../common/buttons";
+import { TypographyCustom } from "../common/Typographys";
+import { deleteRecord } from "../../common/text/Notify";
+import { DialogCustom } from "../common/dialogs";
+
+DialogCustom;
 
 function QuickSearchToolbar() {
   const navigate = useNavigate();
@@ -54,21 +43,20 @@ function QuickSearchToolbar() {
               alignItems: "flex-start",
             }}
           >
-            <Typography
+            <TypographyCustom
+              title="Usuarios creados"
               component="h1"
               variant="h5"
-              fontSize={"20px"}
-              ml={"35px"}
-              mt={"26px"}
-            >
-              Usuarios creados
-            </Typography>
+              fontSize="20px"
+              sx={{ ml: "35px", mt: "26px" }}
+            />
           </Box>
         </Grid>
       </Grid>
       <Grid
         item
         xs={12}
+        sm={12}
         md={12}
         lg={12}
         sx={{
@@ -78,7 +66,7 @@ function QuickSearchToolbar() {
           background: "#FFFFF",
         }}
       >
-        <Grid item md={6} mt={"33px"} ml={"22px"} mb={"16px"}>
+        <Grid item md={6} xs={12} mt={"33px"} ml={"22px"} mb={"16px"}>
           <Box
             sx={{
               display: "flex",
@@ -89,7 +77,7 @@ function QuickSearchToolbar() {
             <GridToolbarQuickFilter />
           </Box>
         </Grid>
-        <Grid item md={6}>
+        <Grid item md={6} xs={12}>
           <Box
             sx={{
               p: 1,
@@ -97,17 +85,17 @@ function QuickSearchToolbar() {
               display: "flex",
               flexDirection: "column",
               alignItems: "flex-end",
+              background: "#FFFFF",
             }}
           >
-            <Button
-              variant="contained"
-              startIcon={<AddIcon />}
+            <ButtonCustom
+              title="Crear usuario"
+              type="button"
               onClick={() => {
                 navigate("/userCreate");
               }}
-            >
-              Crear usuario
-            </Button>
+              startIcon={<AddIcon />}
+            />
           </Box>
         </Grid>
       </Grid>
@@ -116,12 +104,16 @@ function QuickSearchToolbar() {
 }
 
 function TableUser() {
-  //variables
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const token = useSelector(selectUser);
-  const [data, setData] = useState([]);
-  const loading = useSelector(selectLoading);
+  const [
+    getUsers,
+    loading,
+    data,
+    handleClickDeleteUser,
+    handleClickEditUser,
+    open,
+    handleClose,
+    handleOpen,
+  ] = useGetAllUser();
 
   const columns = [
     {
@@ -193,9 +185,9 @@ function TableUser() {
                 <EditOutlinedIcon />
               </IconButton>
               <IconButton
-                aria-label="edit"
+                aria-label="delete"
                 onClick={async (e) => {
-                  handleClickDeleteUser(e, cellValues);
+                  handleOpen(e, cellValues);
                 }}
               >
                 <DeleteOutlinedIcon />
@@ -207,33 +199,6 @@ function TableUser() {
     },
   ];
 
-  //functions
-
-  const handleClickEditUser = async (e, cellValues) => {
-    const id = cellValues.row.id;
-    navigate(`/user/${id}/edit`);
-  };
-
-  const handleClickDeleteUser = async (e, cellValues) => {
-    const id = cellValues.row.id;
-    await deleteUser(id, token.token);
-    notifyMessage(user.delete);
-    getUsers();
-  };
-
-  const getUsers = async () => {
-    try {
-      dispatch(changeTrue());
-      const response = await getAllUsers(token.token);
-      setData(response);
-      dispatch(changeFalse());
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  //useEffect
-
   useEffect(() => {
     getUsers();
   }, []);
@@ -241,46 +206,25 @@ function TableUser() {
   return (
     <>
       <NotifyContainer />
+      <DialogCustom
+        open={open}
+        handleClose={handleClose}
+        handleClickDelete={handleClickDeleteUser}
+        text={deleteRecord}
+      />
 
       {loading ? (
         <Loading />
       ) : (
         <>
           <Grid item xs={12} md={12} lg={12}>
-            <Box
-              component={"div"}
-              sx={{
-                height: 737,
-                mb: "40px",
-                width: "100%",
-                "& .super-app-theme--header2": {
-                  backgroundColor: colorsTable.colorCellHeader,
-                  pl: "39px",
-                },
-                "& .super-app-theme--header": {
-                  backgroundColor: colorsTable.colorCellHeader,
-                },
-              }}
-            >
-              <DataGrid
-                rows={data}
+            <BoxTableLayout>
+              <DataGridLayout
+                data={data}
                 columns={columns}
-                disableColumnMenu
-                initialState={{
-                  pagination: { paginationModel: { pageSize: 10 } },
-                }}
-                pageSizeOptions={[5, 10, 25]}
-                slots={{ toolbar: QuickSearchToolbar }}
-                slotProps={{
-                  toolbar: {
-                    showQuickFilter: true,
-                  },
-                }}
-                style={{
-                  background: colorsTable.colorFondo,
-                }}
+                quickSearchToolbar={QuickSearchToolbar}
               />
-            </Box>
+            </BoxTableLayout>
           </Grid>
         </>
       )}

@@ -1,32 +1,24 @@
-import React from "react";
-import { useState, useEffect } from "react";
-import { colorsTable } from "../../common/color/color";
-import {
-  Grid,
-  Typography,
-  Box,
-  Button,
-  Stack,
-  IconButton,
-} from "@mui/material";
-import { DataGrid, GridToolbarQuickFilter } from "@mui/x-data-grid";
 import AddIcon from "@mui/icons-material/Add";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
-import { Link as linkrouter, useNavigate } from "react-router-dom";
-import Link from "@mui/material/Link";
-import { deleteCliente, getAllClients } from "../../services/clientes/clientes";
-import { useDispatch, useSelector } from "react-redux";
 import {
-  changeTrue,
-  changeFalse,
-  selectLoading,
-} from "../../features/loading/loadingSlice";
-import { selectUser } from "../../features/login/loginSlice";
+  Box,
+  Button,
+  Grid,
+  IconButton,
+  Stack,
+  Typography,
+} from "@mui/material";
+import Link from "@mui/material/Link";
+import { GridToolbarQuickFilter } from "@mui/x-data-grid";
+import React, { useEffect } from "react";
+import { Link as linkrouter, useNavigate } from "react-router-dom";
+import { deleteRecord } from "../../common/text/Notify";
+import { useGetAllClients } from "../../hooks/useClient";
+import { DialogCustom } from "../common/dialogs";
+import { BoxTableLayout, DataGridLayout } from "../common/layouts";
 import Loading from "../loading/Loading";
 import NotifyContainer from "../notify/NotifyContainer";
-import { cliente } from "../../common/text/Notify";
-import { notifyMessage } from "../notify/NotifyMessage";
 
 function QuickSearchToolbar() {
   const navigate = useNavigate();
@@ -114,12 +106,16 @@ function QuickSearchToolbar() {
 }
 
 function TableCliente() {
-  const navigate = useNavigate();
-  //variables
-  const [data, setData] = useState([]);
-  const dispatch = useDispatch();
-  const loading = useSelector(selectLoading);
-  const token = useSelector(selectUser);
+  const [
+    getInfo,
+    loading,
+    data,
+    handleClickDelete,
+    handleClickEdit,
+    open,
+    handleClose,
+    handleOpen,
+  ] = useGetAllClients();
 
   const columns = [
     {
@@ -171,15 +167,15 @@ function TableCliente() {
               <IconButton
                 aria-label="edit"
                 onClick={async (e) => {
-                  handleClickEditCliente(e, cellValues);
+                  handleClickEdit(e, cellValues);
                 }}
               >
                 <EditOutlinedIcon />
               </IconButton>
               <IconButton
-                aria-label="edit"
+                aria-label="delete"
                 onClick={async (e) => {
-                  handleClickDeleteCliente(e, cellValues);
+                  handleOpen(e, cellValues);
                 }}
               >
                 <DeleteOutlinedIcon />
@@ -191,76 +187,31 @@ function TableCliente() {
     },
   ];
 
-  //functions
-
-  const handleClickEditCliente = async (e, cellValues) => {
-    const id = cellValues.row.id;
-    navigate(`/cliente/${id}/edit`);
-  };
-
-  const handleClickDeleteCliente = async (e, cellValues) => {
-    const id = cellValues.row.id;
-    await deleteCliente(id, token.token);
-    notifyMessage(cliente.delete);
-    getClients();
-  };
-
-  const getClients = async () => {
-    try {
-      dispatch(changeTrue());
-      const response = await getAllClients(token.token);
-      setData(response);
-      dispatch(changeFalse());
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   useEffect(() => {
-    getClients();
+    getInfo();
   }, []);
 
   return (
     <>
       <NotifyContainer />
+      <DialogCustom
+        open={open}
+        handleClose={handleClose}
+        handleClickDelete={handleClickDelete}
+        text={deleteRecord}
+      />
+
       {loading ? (
         <Loading />
       ) : (
         <Grid item xs={12} md={12} lg={12}>
-          <Box
-            component={"div"}
-            sx={{
-              height: 737,
-              mb: "40px",
-              width: "100%",
-              "& .super-app-theme--header2": {
-                backgroundColor: colorsTable.colorCellHeader,
-                pl: "39px",
-              },
-              "& .super-app-theme--header": {
-                backgroundColor: colorsTable.colorCellHeader,
-              },
-            }}
-          >
-            <DataGrid
-              rows={data}
+          <BoxTableLayout>
+            <DataGridLayout
+              data={data}
               columns={columns}
-              disableColumnMenu
-              initialState={{
-                pagination: { paginationModel: { pageSize: 10 } },
-              }}
-              pageSizeOptions={[5, 10, 25]}
-              slots={{ toolbar: QuickSearchToolbar }}
-              slotProps={{
-                toolbar: {
-                  showQuickFilter: true,
-                },
-              }}
-              style={{
-                background: colorsTable.colorFondo,
-              }}
+              quickSearchToolbar={QuickSearchToolbar}
             />
-          </Box>
+          </BoxTableLayout>
         </Grid>
       )}
     </>
