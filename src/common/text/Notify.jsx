@@ -15,3 +15,8 @@ export const catalogo = {
   edit: "Catalogo editado exitosamente",
   delete: "Catalogo eliminado exitosamente",
 };
+<<<<<<< HEAD
+=======
+
+export const deleteRecord = "¿Esta seguro que desea eliminar este registro?";
+>>>>>>> P360-43-correccion-de-vista-del-modulo-de-catalogo-servicios

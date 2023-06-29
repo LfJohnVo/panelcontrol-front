@@ -1,21 +1,8 @@
+import { Grid } from "@mui/material";
 import React from "react";
-import { useState, useEffect } from "react";
-import { Grid, Paper, TextField, Button } from "@mui/material";
-import { useSelector, useDispatch } from "react-redux";
-import {
-  changeFalse,
-  changeTrue,
-  selectLoading,
-} from "../../features/loading/loadingSlice";
 import "react-toastify/dist/ReactToastify.css";
-import Loading from "../loading/Loading";
-import "react-toastify/dist/ReactToastify.css";
-import Backdrop from "@mui/material/Backdrop";
-import CircularProgress from "@mui/material/CircularProgress";
-import TitleModul from "../../components/bienvenida/TitleModul";
-import { colorsTable } from "../../common/color/color";
-import { useForm } from "react-hook-form";
 import { inputValidate } from "../../common/text/Validation";
+<<<<<<< HEAD
 import { createCliente } from "../../services/clientes/clientes";
 import NotifyContainer from "../notify/NotifyContainer";
 import { notifyMessage } from "../notify/NotifyMessage";
@@ -69,10 +56,23 @@ function FormCliente(props) {
   useEffect(() => {
     createCliente();
   }, []);
+=======
+import TitleModul from "../../components/bienvenida/TitleModul";
+import { useCreateClient } from "../../hooks/useClient";
+import { ButtonCustom } from "../common/buttons";
+import { TextInput } from "../common/inputs";
+import { BackdropCustom, PaperLayout } from "../common/layouts";
+import NotifyContainer from "../notify/NotifyContainer";
+
+function FormCliente(props) {
+  const [open, submitForm, register, handleSubmit, reset, errors] =
+    useCreateClient();
+>>>>>>> P360-43-correccion-de-vista-del-modulo-de-catalogo-servicios
 
   return (
     <>
       <NotifyContainer />
+<<<<<<< HEAD
       <Backdrop
         sx={{ color: "blue", zIndex: (theme) => theme.zIndex.drawer + 1 }}
         open={open}
@@ -86,20 +86,92 @@ function FormCliente(props) {
         <>
           <Grid item md={12}>
             <TitleModul {...props} />
-          </Grid>
+=======
+      <BackdropCustom open={open} />
 
-          <Paper
-            elevation={0}
-            sx={{
-              p: "61px 51px 64px 27px",
-              display: "flex",
-              flexDirection: "row",
-              height: "auto",
-              background: colorsTable.white,
-              mb: "125px",
-              border: `1px solid ${colorsTable.borderColor}`,
-            }}
+      <Grid item md={12}>
+        <TitleModul {...props} />
+      </Grid>
+
+      <PaperLayout>
+        <Grid
+          container
+          component="form"
+          onSubmit={handleSubmit(submitForm)}
+          direction="row"
+          justifyContent="flex-start"
+          alignItems="flex-start"
+          spacing={3}
+        >
+          <Grid item xs={12} sm={6} md={6} lg={6}>
+            <TextInput
+              title="Nombre"
+              name="name"
+              variant="outlined"
+              register={register}
+              errors={errors}
+              options={{ required: inputValidate.required }}
+            />
+>>>>>>> P360-43-correccion-de-vista-del-modulo-de-catalogo-servicios
+          </Grid>
+          <Grid item xs={12} sm={6} md={6} lg={6}>
+            <TextInput
+              title="Correo"
+              name="email"
+              variant="outlined"
+              register={register}
+              errors={errors}
+              options={{
+                required: inputValidate.required,
+                pattern: {
+                  value: /^\S+@\S+$/i,
+                  message: inputValidate.email,
+                },
+              }}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6} md={6} lg={6}>
+            <TextInput
+              title="Razón Social"
+              name="razon_social"
+              variant="outlined"
+              register={register}
+              errors={errors}
+              options={{ required: inputValidate.required }}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6} md={6} lg={6}>
+            <TextInput
+              title="Contacto"
+              name="contacto"
+              variant="outlined"
+              register={register}
+              errors={errors}
+              options={{ required: inputValidate.required }}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6} md={6} lg={7}>
+            <TextInput
+              title="Dirección"
+              name="domicilio"
+              variant="outlined"
+              register={register}
+              errors={errors}
+              options={{ required: false }}
+            />
+          </Grid>
+          <Grid
+            container
+            item
+            xs={12}
+            sm={12}
+            md={12}
+            spacing={3}
+            direction="row-reverse"
+            justifyContent="flex-start"
+            alignItems="strech"
           >
+<<<<<<< HEAD
             <Grid
               container
               component="form"
@@ -244,10 +316,29 @@ function FormCliente(props) {
                   </Grid>
                 </Grid>
               </Grid>
+=======
+            <Grid item xs={12} sm={6} md={4}>
+              <ButtonCustom
+                title="Enviar usuario"
+                type="submit"
+                sx={{ mt: 3, mb: 2 }}
+                fullWidth
+              />
+>>>>>>> P360-43-correccion-de-vista-del-modulo-de-catalogo-servicios
             </Grid>
-          </Paper>
-        </>
-      )}
+            <Grid item xs={12} sm={6} md={4}>
+              <ButtonCustom
+                title="Limpiar"
+                type="button"
+                variant="outlined"
+                onClick={() => reset()}
+                sx={{ mt: 3, mb: 2 }}
+                fullWidth
+              />
+            </Grid>
+          </Grid>
+        </Grid>
+      </PaperLayout>
     </>
   );
 }

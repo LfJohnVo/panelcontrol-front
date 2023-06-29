@@ -1,15 +1,17 @@
+<<<<<<< HEAD
 import React from "react";
 import { useEffect, useState } from "react";
 import { colorsTable } from "../../common/color/color";
 import { Grid, Paper, Typography, Divider, Box } from "@mui/material";
+=======
+import { Divider, Grid, Paper } from "@mui/material";
+>>>>>>> P360-43-correccion-de-vista-del-modulo-de-catalogo-servicios
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import {
-  changeFalse,
-  changeTrue,
-  selectLoading,
-} from "../../features/loading/loadingSlice";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { colorsTable } from "../../common/color/color";
+import { sf } from "../../common/text/SF";
 import TitleModul from "../../components/bienvenida/TitleModul";
+<<<<<<< HEAD
 import { useParams } from "react-router-dom";
 import Loading from "../loading/Loading";
 import { selectUser } from "../../features/login/loginSlice";
@@ -24,6 +26,14 @@ function ClienteDetail(props) {
   const [data, setData] = useState();
 
   //theme
+=======
+import { useDetailClient } from "../../hooks/useClient";
+import { TypographyCustom } from "../common/Typographys";
+import Loading from "../loading/Loading";
+
+function ClienteDetail(props) {
+  const [data, loading, getDetailInfo] = useDetailClient();
+>>>>>>> P360-43-correccion-de-vista-del-modulo-de-catalogo-servicios
 
   const theme = createTheme({
     typography: {
@@ -39,6 +49,7 @@ function ClienteDetail(props) {
     },
   });
 
+<<<<<<< HEAD
   //functions
   const getDetailCliente = async () => {
     try {
@@ -53,8 +64,10 @@ function ClienteDetail(props) {
   };
 
   //Effects
+=======
+>>>>>>> P360-43-correccion-de-vista-del-modulo-de-catalogo-servicios
   useEffect(() => {
-    getDetailCliente();
+    getDetailInfo();
   }, []);
 
   return (
@@ -77,28 +90,34 @@ function ClienteDetail(props) {
                   height: "auto",
                   background: colorsTable.colorFondo,
                   mb: "105px",
+                  pb: "25px",
                 }}
               >
                 <Grid item sm={12}>
-                  <Typography
+                  <TypographyCustom
+                    title="Cliente"
                     component="h1"
                     variant="h1"
-                    mb={"16px"}
-                    mt={"25px"}
-                    ml={"35px"}
-                  >
-                    Cliente
-                  </Typography>
+                    sx={{ mb: "16px", mt: "25px", ml: "35px" }}
+                  />
                 </Grid>
                 <Divider />
                 <Grid
                   item
                   sm={12}
-                  sx={{ m: "27px 44px 136px 34px", textAlign: "justify" }}
+                  sx={{ m: "27px 44px 25px 34px", textAlign: "justify" }}
                 >
+<<<<<<< HEAD
                   <Typography component="h1" variant="h3">
                     {data && data.name ? data.name : sf}
                   </Typography>
+=======
+                  <TypographyCustom
+                    title={data && data.name ? data.name : sf}
+                    component="h1"
+                    variant="h3"
+                  />
+>>>>>>> P360-43-correccion-de-vista-del-modulo-de-catalogo-servicios
                 </Grid>
                 <Divider sx={{ mb: "21px" }} />
                 <Grid
@@ -111,6 +130,7 @@ function ClienteDetail(props) {
                   sx={{ mb: "80px", pl: "39px", pr: "146px" }}
                 >
                   <Grid item md={2} sm={4} xs={12}>
+<<<<<<< HEAD
                     <Typography component="h1" variant="h2">
                       ID
                     </Typography>
@@ -125,6 +145,28 @@ function ClienteDetail(props) {
                     <Typography component="p" variant="h3" sx={{ pt: "16px" }}>
                       {data && data.create_date ? data.create_date : sf}
                     </Typography>
+=======
+                    <TypographyCustom title="ID" component="h1" variant="h2" />
+                    <TypographyCustom
+                      title={data && data.id ? data.id : sf}
+                      component="p"
+                      variant="h3"
+                      sx={{ pt: "16px" }}
+                    />
+                  </Grid>
+                  <Grid item md={2} sm={4} xs={12} sx={{ pt: "16px" }}>
+                    <TypographyCustom
+                      title="CREADO"
+                      component="h1"
+                      variant="h2"
+                    />
+                    <TypographyCustom
+                      title={data && data.create_date ? data.create_date : sf}
+                      component="p"
+                      variant="h3"
+                      sx={{ pt: "16px" }}
+                    />
+>>>>>>> P360-43-correccion-de-vista-del-modulo-de-catalogo-servicios
                   </Grid>
                 </Grid>
                 <Grid
@@ -136,6 +178,7 @@ function ClienteDetail(props) {
                   sx={{ mb: "80px", pl: "39px" }}
                 >
                   <Grid item md={2} sm={4} xs={12}>
+<<<<<<< HEAD
                     <Typography component="h1" variant="h2">
                       CORREO
                     </Typography>
@@ -158,6 +201,45 @@ function ClienteDetail(props) {
                     <Typography component="p" variant="h3" sx={{ pt: "16px" }}>
                       {data && data.contacto ? data.contacto : sf}
                     </Typography>
+=======
+                    <TypographyCustom
+                      title="CORREO"
+                      component="h1"
+                      variant="h2"
+                    />
+                    <TypographyCustom
+                      title={data && data.email ? data.email : sf}
+                      component="p"
+                      variant="h3"
+                      sx={{ pt: "16px" }}
+                    />
+                  </Grid>
+                  <Grid item md={2} sm={4} xs={12}>
+                    <TypographyCustom
+                      title="RAZON SOCIAL"
+                      component="h1"
+                      variant="h2"
+                    />
+                    <TypographyCustom
+                      title={data && data.razon_social ? data.razon_social : sf}
+                      component="p"
+                      variant="h3"
+                      sx={{ pt: "16px" }}
+                    />
+                  </Grid>
+                  <Grid item md={2} sm={4} xs={12}>
+                    <TypographyCustom
+                      title="CONTACTO"
+                      component="h1"
+                      variant="h2"
+                    />
+                    <TypographyCustom
+                      title={data && data.contacto ? data.contacto : sf}
+                      component="p"
+                      variant="h3"
+                      sx={{ pt: "16px" }}
+                    />
+>>>>>>> P360-43-correccion-de-vista-del-modulo-de-catalogo-servicios
                   </Grid>
                 </Grid>
                 <Grid
@@ -169,12 +251,26 @@ function ClienteDetail(props) {
                   sx={{ pl: "39px" }}
                 >
                   <Grid item md={3} sm={4} xs={12}>
+<<<<<<< HEAD
                     <Typography component="h1" variant="h2">
                       DIRECCIÓN
                     </Typography>
                     <Typography component="p" variant="h3" sx={{ pt: "16px" }}>
                       {data && data.domicilio ? data.domicilio : sf}
                     </Typography>
+=======
+                    <TypographyCustom
+                      title="DIRRECION"
+                      component="h1"
+                      variant="h2"
+                    />
+                    <TypographyCustom
+                      title={data && data.contacto ? data.contacto : sf}
+                      component="p"
+                      variant="h3"
+                      sx={{ pt: "16px" }}
+                    />
+>>>>>>> P360-43-correccion-de-vista-del-modulo-de-catalogo-servicios
                   </Grid>
                 </Grid>
               </Paper>

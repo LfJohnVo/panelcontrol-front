@@ -1,6 +1,10 @@
 import { panel_control } from "../index";
 
 const route = "api/projects";
+<<<<<<< HEAD
+=======
+const route2 = "api/modul";
+>>>>>>> P360-43-correccion-de-vista-del-modulo-de-catalogo-servicios
 
 export const getAllCatalogo = async (token) => {
   try {
@@ -65,3 +69,19 @@ export const deleteCatalogo = async (id, token) => {
     throw error;
   }
 };
+<<<<<<< HEAD
+=======
+
+export const deleteModulo = async (id, token) => {
+  try {
+    const response = await panel_control.delete(`${route2}/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data.data;
+  } catch (error) {
+    throw error;
+  }
+};
+>>>>>>> P360-43-correccion-de-vista-del-modulo-de-catalogo-servicios
