@@ -1,39 +1,15 @@
-<<<<<<< HEAD
-import React from "react";
-import { useEffect, useState } from "react";
-import { colorsTable } from "../../common/color/color";
-import { Grid, Paper, Typography, Divider, Box } from "@mui/material";
-=======
 import { Divider, Grid, Paper } from "@mui/material";
->>>>>>> P360-43-correccion-de-vista-del-modulo-de-catalogo-servicios
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import React, { useEffect } from "react";
 import { colorsTable } from "../../common/color/color";
 import { sf } from "../../common/text/SF";
 import TitleModul from "../../components/bienvenida/TitleModul";
-<<<<<<< HEAD
-import { useParams } from "react-router-dom";
-import Loading from "../loading/Loading";
-import { selectUser } from "../../features/login/loginSlice";
-import { getOneCliente } from "../../services/clientes/clientes";
-import { sf } from "../../common/text/SF";
-
-function ClienteDetail(props) {
-  const { id } = useParams();
-  const token = useSelector(selectUser);
-  const loading = useSelector(selectLoading);
-  const dispatch = useDispatch();
-  const [data, setData] = useState();
-
-  //theme
-=======
 import { useDetailClient } from "../../hooks/useClient";
 import { TypographyCustom } from "../common/Typographys";
 import Loading from "../loading/Loading";
 
 function ClienteDetail(props) {
   const [data, loading, getDetailInfo] = useDetailClient();
->>>>>>> P360-43-correccion-de-vista-del-modulo-de-catalogo-servicios
 
   const theme = createTheme({
     typography: {
@@ -49,23 +25,6 @@ function ClienteDetail(props) {
     },
   });
 
-<<<<<<< HEAD
-  //functions
-  const getDetailCliente = async () => {
-    try {
-      dispatch(changeTrue());
-      const response = await getOneCliente(id, token.token);
-      setData(response);
-      dispatch(changeFalse());
-    } catch (error) {
-      setErr(true);
-      setErrorMessage(error.message);
-    }
-  };
-
-  //Effects
-=======
->>>>>>> P360-43-correccion-de-vista-del-modulo-de-catalogo-servicios
   useEffect(() => {
     getDetailInfo();
   }, []);
@@ -107,17 +66,11 @@ function ClienteDetail(props) {
                   sm={12}
                   sx={{ m: "27px 44px 25px 34px", textAlign: "justify" }}
                 >
-<<<<<<< HEAD
-                  <Typography component="h1" variant="h3">
-                    {data && data.name ? data.name : sf}
-                  </Typography>
-=======
                   <TypographyCustom
                     title={data && data.name ? data.name : sf}
                     component="h1"
                     variant="h3"
                   />
->>>>>>> P360-43-correccion-de-vista-del-modulo-de-catalogo-servicios
                 </Grid>
                 <Divider sx={{ mb: "21px" }} />
                 <Grid
@@ -130,22 +83,6 @@ function ClienteDetail(props) {
                   sx={{ mb: "80px", pl: "39px", pr: "146px" }}
                 >
                   <Grid item md={2} sm={4} xs={12}>
-<<<<<<< HEAD
-                    <Typography component="h1" variant="h2">
-                      ID
-                    </Typography>
-                    <Typography component="p" variant="h3" sx={{ pt: "16px" }}>
-                      {data && data.id ? data.id : sf}
-                    </Typography>
-                  </Grid>
-                  <Grid item md={2} sm={4} xs={12} sx={{ pt: "16px" }}>
-                    <Typography component="h1" variant="h2">
-                      CREADO
-                    </Typography>
-                    <Typography component="p" variant="h3" sx={{ pt: "16px" }}>
-                      {data && data.create_date ? data.create_date : sf}
-                    </Typography>
-=======
                     <TypographyCustom title="ID" component="h1" variant="h2" />
                     <TypographyCustom
                       title={data && data.id ? data.id : sf}
@@ -166,7 +103,6 @@ function ClienteDetail(props) {
                       variant="h3"
                       sx={{ pt: "16px" }}
                     />
->>>>>>> P360-43-correccion-de-vista-del-modulo-de-catalogo-servicios
                   </Grid>
                 </Grid>
                 <Grid
@@ -178,30 +114,6 @@ function ClienteDetail(props) {
                   sx={{ mb: "80px", pl: "39px" }}
                 >
                   <Grid item md={2} sm={4} xs={12}>
-<<<<<<< HEAD
-                    <Typography component="h1" variant="h2">
-                      CORREO
-                    </Typography>
-                    <Typography component="p" variant="h3" sx={{ pt: "16px" }}>
-                      {data && data.email ? data.email : sf}
-                    </Typography>
-                  </Grid>
-                  <Grid item md={2} sm={4} xs={12}>
-                    <Typography component="h1" variant="h2">
-                      RAZÓN SOCIAL
-                    </Typography>
-                    <Typography component="p" variant="h3" sx={{ pt: "16px" }}>
-                      {data && data.razon_social ? data.razon_social : sf}
-                    </Typography>
-                  </Grid>
-                  <Grid item md={2} sm={4} xs={12}>
-                    <Typography component="h1" variant="h2">
-                      CONTACTO
-                    </Typography>
-                    <Typography component="p" variant="h3" sx={{ pt: "16px" }}>
-                      {data && data.contacto ? data.contacto : sf}
-                    </Typography>
-=======
                     <TypographyCustom
                       title="CORREO"
                       component="h1"
@@ -239,7 +151,6 @@ function ClienteDetail(props) {
                       variant="h3"
                       sx={{ pt: "16px" }}
                     />
->>>>>>> P360-43-correccion-de-vista-del-modulo-de-catalogo-servicios
                   </Grid>
                 </Grid>
                 <Grid
@@ -251,14 +162,6 @@ function ClienteDetail(props) {
                   sx={{ pl: "39px" }}
                 >
                   <Grid item md={3} sm={4} xs={12}>
-<<<<<<< HEAD
-                    <Typography component="h1" variant="h2">
-                      DIRECCIÓN
-                    </Typography>
-                    <Typography component="p" variant="h3" sx={{ pt: "16px" }}>
-                      {data && data.domicilio ? data.domicilio : sf}
-                    </Typography>
-=======
                     <TypographyCustom
                       title="DIRRECION"
                       component="h1"
@@ -270,7 +173,6 @@ function ClienteDetail(props) {
                       variant="h3"
                       sx={{ pt: "16px" }}
                     />
->>>>>>> P360-43-correccion-de-vista-del-modulo-de-catalogo-servicios
                   </Grid>
                 </Grid>
               </Paper>

@@ -8,13 +8,10 @@ import {
   InputAdornment,
   IconButton,
   Chip,
-<<<<<<< HEAD
-=======
   Dialog,
   DialogTitle,
   DialogContent,
   DialogActions,
->>>>>>> P360-43-correccion-de-vista-del-modulo-de-catalogo-servicios
 } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -34,20 +31,12 @@ import { inputValidate } from "../../common/text/Validation";
 import { useParams } from "react-router-dom";
 import { selectUser } from "../../features/login/loginSlice";
 import {
-<<<<<<< HEAD
-  getOneCatalogo,
-  updateCatalogo,
-} from "../../services/catalogo/catalogo";
-import { redirectClient } from "../../common/text/RedirectRoute";
-import { cliente } from "../../common/text/Notify";
-=======
   deleteModulo,
   getOneCatalogo,
   updateCatalogo,
 } from "../../services/catalogo/catalogo";
 import { redirectCatalogo } from "../../common/text/RedirectRoute";
 import { catalogo } from "../../common/text/Notify";
->>>>>>> P360-43-correccion-de-vista-del-modulo-de-catalogo-servicios
 import { notifyMessage } from "../notify/NotifyMessage";
 import { useNavigate } from "react-router-dom";
 import NotifyContainer from "../notify/NotifyContainer";
@@ -71,11 +60,8 @@ function FormEditCatalogo(props) {
   const navigate = useNavigate();
   const [moduls, setModuls] = useState([]);
   const [inputValue, setInputValue] = useState("");
-<<<<<<< HEAD
-=======
   const [dialog, setDialog] = useState(false);
   const [changeModul, setChangeModul] = useState("");
->>>>>>> P360-43-correccion-de-vista-del-modulo-de-catalogo-servicios
 
   //functions
 
@@ -97,15 +83,6 @@ function FormEditCatalogo(props) {
     }
   };
 
-<<<<<<< HEAD
-  const submitForm = (data, e) => {
-    data.moduls = moduls;
-    console.log(data);
-  };
-
-  const handleDelete = (chipToDelete) => () => {
-    setModuls((texto) => texto.filter((texto) => texto !== chipToDelete));
-=======
   const submitForm = async (data, e) => {
     data.moduls = moduls;
     try {
@@ -130,7 +107,6 @@ function FormEditCatalogo(props) {
     } else {
       setModuls((item) => item.filter((item) => item !== chipToDelete));
     }
->>>>>>> P360-43-correccion-de-vista-del-modulo-de-catalogo-servicios
   };
 
   const handleAddChip = () => {
@@ -143,8 +119,6 @@ function FormEditCatalogo(props) {
     }
   };
 
-<<<<<<< HEAD
-=======
   const handleChangeChip = (ChipEdit) => {
     setDialog(true);
     setChangeModul(ChipEdit);
@@ -167,7 +141,6 @@ function FormEditCatalogo(props) {
   };
 
 
->>>>>>> P360-43-correccion-de-vista-del-modulo-de-catalogo-servicios
   //Effects
   useEffect(() => {
     editCatalogo();
@@ -293,10 +266,7 @@ function FormEditCatalogo(props) {
                         marginRight: "5px",
                       }}
                       onDelete={handleDelete(modulo)}
-<<<<<<< HEAD
-=======
                       onClick={() => handleChangeChip(modulo)}
->>>>>>> P360-43-correccion-de-vista-del-modulo-de-catalogo-servicios
                     />
                   ))}
                 </Grid>

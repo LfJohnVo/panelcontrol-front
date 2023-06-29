@@ -14,46 +14,13 @@ export const useLogin = () => {
 
   const handleSubmit = useCallback(async (event) => {
     event.preventDefault();
-<<<<<<< HEAD
-    try {
-      setOpen(true);
-      const resp = await isAuthenticate({ email, password });
-      setOpen(false);
-      if (resp.status === 200) {
-        dispatch(addUser(resp.data));
-        navigate("/dashboard");
-      }
-
-      if (resp.status === 401) {
-        notify("Error de acceso");
-      }
-
-      if (resp.status === 999) {
-        notify("Error en el sistema");
-      }
-    } catch (error) {
-      setOpen(false);
-    }
-  });
-
-  const handleEmail = useCallback((e) => {
-    setEmail(e.target.value);
-  });
-
-  const handlePassword = useCallback((e) => {
-    setPassword(e.target.value);
-  });
-
-  return [handleSubmit, handleEmail, handlePassword, email, password, open];
-};
-=======
 
     try {
       setOpen(true);
       const resp = await isAuthenticate({ email, password });
       setOpen(false);
       if (resp.status === 200) {
-        dispatch(addUser(resp.data));
+        dispatch(addUser(resp.data.data));
         navigate("/dashboard");
       }
 
@@ -80,4 +47,3 @@ export const useLogin = () => {
   return [handleSubmit, handleEmail, handlePassword, email, password, open];
 };
 
->>>>>>> P360-43-correccion-de-vista-del-modulo-de-catalogo-servicios

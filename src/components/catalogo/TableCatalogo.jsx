@@ -30,14 +30,11 @@ import Loading from "../loading/Loading";
 import NotifyContainer from "../notify/NotifyContainer";
 import { catalogo } from "../../common/text/Notify";
 import { notifyMessage } from "../notify/NotifyMessage";
-<<<<<<< HEAD
-=======
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
->>>>>>> P360-43-correccion-de-vista-del-modulo-de-catalogo-servicios
 
 function QuickSearchToolbar() {
   const navigate = useNavigate();
@@ -131,11 +128,8 @@ function TableCatalogo() {
   const dispatch = useDispatch();
   const loading = useSelector(selectLoading);
   const token = useSelector(selectUser);
-<<<<<<< HEAD
-=======
   const [open, setOpen] = useState(false);
   const [id, setId] = useState("");
->>>>>>> P360-43-correccion-de-vista-del-modulo-de-catalogo-servicios
 
   const columns = [
     {
@@ -202,15 +196,6 @@ function TableCatalogo() {
     navigate(`/catalogo/${id}/edit`);
   };
 
-<<<<<<< HEAD
-  const handleClickDeleteCatalogo = async (e, cellValues) => {
-    const id = cellValues.row.id;
-    await deleteCatalogo(id, token.token);
-    notifyMessage(catalogo.delete);
-    getCatalogo();
-  };
-
-=======
   const handleClickDeleteCatalogo = async () => {
     await deleteCatalogo(id, token.token);
     notifyMessage(catalogo.delete);
@@ -229,7 +214,6 @@ function TableCatalogo() {
     setOpen(false);
   };
 
->>>>>>> P360-43-correccion-de-vista-del-modulo-de-catalogo-servicios
   const getCatalogo = async () => {
     try {
       dispatch(changeTrue());
@@ -248,8 +232,6 @@ function TableCatalogo() {
   return (
     <>
       <NotifyContainer />
-<<<<<<< HEAD
-=======
       <Dialog
         open={open}
         onClose={handleClose}
@@ -268,7 +250,6 @@ function TableCatalogo() {
           </Button>
         </DialogActions>
       </Dialog>
->>>>>>> P360-43-correccion-de-vista-del-modulo-de-catalogo-servicios
       {loading ? (
         <Loading />
       ) : (

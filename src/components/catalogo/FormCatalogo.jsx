@@ -71,17 +71,10 @@ function FormCatalogo(props) {
       data.moduls = moduls;
       setOpen(true);
       await createCatalogo(data, token.token);
-<<<<<<< HEAD
-      setOpen(false);
-      notifyMessage(catalogo.add);
-      setTimeout(() => {
-        navigate(redirectCatalogo.index);
-=======
       notifyMessage(catalogo.add);
       setTimeout(() => {
         navigate(redirectCatalogo.index);
         setOpen(false);
->>>>>>> P360-43-correccion-de-vista-del-modulo-de-catalogo-servicios
       }, 6000);
     } catch (error) {
       setOpen(false);
