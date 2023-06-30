@@ -13,17 +13,12 @@ const User = () => {
     textCard: textBienvenida,
   };
   return (
-    <>
-      <Container maxWidth="lg">
-        <Grid container spacing={2} rowSpacing={2}>
-          <Bienvenida {...props} />
-          <Divider />
-          <Container>
-            <TableUser {...props} />
-          </Container>
-        </Grid>
+    <Container maxWidth="lg">
+      <Bienvenida {...props} />
+      <Container>
+        <TableUser />
       </Container>
-    </>
+    </Container>
   );
 };
 

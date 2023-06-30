@@ -1,11 +1,12 @@
 import React from 'react';
-import { Container, Grid } from '@mui/material';
+import { Container } from '@mui/material';
+import FormCatalogo from '../../components/catalogo/FormCatalogo';
+import { titleModulCatalogo } from '../../common/text/TextTitle';
 import { titleModulCatalogo } from '../../common/text/TextTitle';
 import { textBienvenida } from '../../common/text/TextCardWellcome';
 import Bienvenida from '../../components/bienvenida/Bienvenida';
-import TableCatalogo from '../../components/catalogo/TableCatalogo';
 
-function Catalogo() {
+const CreateCatalog = () => {
   const props = {
     navigateLink: '/catalogo',
     title: titleModulCatalogo.titleCatalogoList,
@@ -15,13 +16,13 @@ function Catalogo() {
   return (
     <>
       <Container maxWidth="lg">
-        <Grid container spacing={2} rowSpacing={2}>
-          <Bienvenida {...props} />
-          <TableCatalogo />
-        </Grid>
+        <Bienvenida {...props} />
+        <Container>
+          <FormCatalogo {...props} />
+        </Container>
       </Container>
     </>
   );
-}
+};
 
-export default Catalogo;
+export default CreateCatalog;

@@ -1,11 +1,11 @@
 import React from 'react';
-import { Container, Grid } from '@mui/material';
+import { Container } from '@mui/material';
 import { titleModulCliente } from '../../common/text/TextTitle';
 import { textBienvenida } from '../../common/text/TextCardWellcome';
 import Bienvenida from '../../components/bienvenida/Bienvenida';
-import TableCliente from '../../components/cliente/TableCliente';
+import TableCliente from '../../components/tables/clients';
 
-function Cliente() {
+const Client = () => {
   const props = {
     navigateLink: '/clientes',
     title: titleModulCliente.titleClienteList,
@@ -13,15 +13,13 @@ function Cliente() {
     textCard: textBienvenida,
   };
   return (
-    <>
-      <Container maxWidth="lg">
-        <Grid container spacing={2} rowSpacing={2}>
-          <Bienvenida {...props} />
-          <TableCliente />
-        </Grid>
+    <Container maxWidth="lg">
+      <Bienvenida {...props} />
+      <Container>
+        <TableCliente />
       </Container>
-    </>
+    </Container>
   );
-}
+};
 
-export default Cliente;
+export default Client;
