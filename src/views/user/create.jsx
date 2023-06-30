@@ -1,25 +1,27 @@
 import React from 'react';
 import { Container, Grid } from '@mui/material';
-import FormUser from '../../components/users/FormUser';
-import { titleModulUser } from '../../common/text/TextTitle';
+import CreateUserForm from '../../components/forms/createUserForm';
+import { titleUser, titleUserTitle } from '../../common/text/TextTitle';
+import { textBienvenida } from '../../common/text/TextCardWellcome';
+import Bienvenida from '../../components/bienvenida/Bienvenida';
 
-function UserCreate() {
+const UserCreate = () => {
   const props = {
     navigateLink: '/users',
-    title: titleModulUser.titleUserCreate,
-    text: titleModulUser.descriptionUserCreate,
+    title: titleUser,
+    text: titleUserTitle,
+    textCard: textBienvenida,
   };
   return (
-    <>
-      <Container maxWidth="lg">
-        <Grid container spacing={3} rowSpacing={0}>
-          <Grid item xs={12} md={12} lg={12}>
-            <FormUser {...props} />
-          </Grid>
+    <Container maxWidth="lg">
+      <Grid container spacing={3} rowSpacing={0}>
+        <Bienvenida {...props} />
+        <Grid item xs={12} md={12} lg={12}>
+          <CreateUserForm />
         </Grid>
-      </Container>
-    </>
+      </Grid>
+    </Container>
   );
-}
+};
 
 export default UserCreate;

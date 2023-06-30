@@ -8,15 +8,14 @@ import { Link as linkrouter, useNavigate } from 'react-router-dom';
 import Link from '@mui/material/Link';
 import { sf } from '../../common/text/SF';
 import Loading from '../loading/Loading';
-import NotifyContainer from '../notify/NotifyContainer';
-import { BoxTableLayout, DataGridLayout } from '../common/layouts';
+import { BoxTableLayout, DataGridLayout, FormLayout } from '../common/layouts';
 import { ButtonCustom } from '../common/buttons';
 import { TypographyCustom } from '../common/Typographys';
 import { deleteRecord } from '../../common/text/Notify';
 import { DialogCustom } from '../common/dialogs';
-import { useDeleteUser, useGetUsers } from '../../hooks';
+import { useDeleteUser, useGetUsers } from '../../hooks/user';
 
-function QuickSearchToolbar() {
+const QuickSearchToolbar = () => {
   const navigate = useNavigate();
   return (
     <Box component={'div'}>
@@ -95,11 +94,11 @@ function QuickSearchToolbar() {
       </Grid>
     </Box>
   );
-}
+};
 
 function TableUser() {
   const [loading, clients, handleGetClients] = useGetUsers();
-  const [alert, handleOpenAlert, handleCloseAlert, handleDelete] =
+  const [alert, handleOpenAlert, handleCloseAlert, handleDelete, deleted] =
     useDeleteUser();
   const navigate = useNavigate();
 
@@ -162,34 +161,31 @@ function TableUser() {
       headerClassName: 'super-app-theme--header',
       renderCell: cellValues => {
         return (
-          <>
-            <Stack direction="row" spacing={0.5}>
-              <IconButton
-                aria-label="edit"
-                onClick={async e => {
-                  navigate(`/user/${cellValues.row.id}/edit`);
-                }}
-              >
-                <EditOutlinedIcon />
-              </IconButton>
-              <IconButton
-                aria-label="delete"
-                onClick={async e => {
-                  handleOpenAlert(e, cellValues);
-                }}
-              >
-                <DeleteOutlinedIcon />
-              </IconButton>
-            </Stack>
-          </>
+          <Stack direction="row" spacing={0.5}>
+            <IconButton
+              aria-label="edit"
+              onClick={async e => {
+                navigate(`/user/${cellValues.row.id}/edit`);
+              }}
+            >
+              <EditOutlinedIcon />
+            </IconButton>
+            <IconButton
+              aria-label="delete"
+              onClick={async e => {
+                handleOpenAlert(cellValues.row.id);
+              }}
+            >
+              <DeleteOutlinedIcon />
+            </IconButton>
+          </Stack>
         );
       },
     },
   ];
 
   return (
-    <>
-      <NotifyContainer />
+    <FormLayout open={deleted}>
       <DialogCustom
         open={alert}
         handleClose={handleCloseAlert}
@@ -210,7 +206,7 @@ function TableUser() {
           </BoxTableLayout>
         </Grid>
       )}
-    </>
+    </FormLayout>
   );
 }
 

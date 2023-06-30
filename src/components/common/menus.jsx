@@ -6,7 +6,7 @@ import {
   ListItemText,
   Tooltip,
 } from '@mui/material';
-import { FaCogs } from 'react-icons/fa';
+import { FaCogs, FaUsers, FaBookOpen } from 'react-icons/fa';
 import DashboardOutlinedIcon from '@mui/icons-material/DashboardOutlined';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import ConnectWithoutContactOutlinedIcon from '@mui/icons-material/ConnectWithoutContactOutlined';
@@ -52,7 +52,7 @@ export const PrincipalMenu = () => {
           }}
         >
           <ListItemIcon>
-            <PersonOutlineOutlinedIcon />
+            <FaUsers />
           </ListItemIcon>
           <ListItemText primary="Clientes" />
         </ListItemButton>
