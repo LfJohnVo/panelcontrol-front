@@ -1,5 +1,5 @@
-import React from "react";
-import { useState, useEffect } from "react";
+import React from 'react';
+import { useState, useEffect } from 'react';
 import {
   Grid,
   Paper,
@@ -8,30 +8,30 @@ import {
   InputAdornment,
   IconButton,
   Chip,
-} from "@mui/material";
-import { useSelector, useDispatch } from "react-redux";
+} from '@mui/material';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   changeFalse,
   changeTrue,
   selectLoading,
-} from "../../features/loading/loadingSlice";
-import "react-toastify/dist/ReactToastify.css";
-import Loading from "../loading/Loading";
-import "react-toastify/dist/ReactToastify.css";
-import Backdrop from "@mui/material/Backdrop";
-import CircularProgress from "@mui/material/CircularProgress";
-import TitleModul from "../../components/bienvenida/TitleModul";
-import { colorsTable } from "../../common/color/color";
-import { useForm } from "react-hook-form";
-import { inputValidate } from "../../common/text/Validation";
-import { createCatalogo } from "../../services/catalogo/catalogo";
-import NotifyContainer from "../notify/NotifyContainer";
-import { notifyMessage } from "../notify/NotifyMessage";
-import { catalogo } from "../../common/text/Notify";
-import { redirectCatalogo } from "../../common/text/RedirectRoute";
-import { useNavigate } from "react-router-dom";
-import { selectUser } from "../../features/login/loginSlice";
-import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
+} from '../../features/loading/loadingSlice';
+import 'react-toastify/dist/ReactToastify.css';
+import Loading from '../loading/Loading';
+import 'react-toastify/dist/ReactToastify.css';
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
+import TitleModul from '../../components/bienvenida/TitleModul';
+import { colorsTable } from '../../common/color/color';
+import { useForm } from 'react-hook-form';
+import { inputValidate } from '../../common/text/Validation';
+import { createCatalogo } from '../../services/catalogo/catalogo';
+import NotifyContainer from '../notify/NotifyContainer';
+import { notifyMessage } from '../notify/NotifyMessage';
+import { catalogo } from '../../common/text/Notify';
+import { redirectCatalogo } from '../../common/text/RedirectRoute';
+import { useNavigate } from 'react-router-dom';
+import { selectUser } from '../../features/login/loginSlice';
+import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 
 function FormCatalogo(props) {
   const loading = useSelector(selectLoading);
@@ -42,7 +42,7 @@ function FormCatalogo(props) {
   const navigate = useNavigate();
   const token = useSelector(selectUser);
   const [moduls, setModuls] = useState([]);
-  const [inputValue, setInputValue] = useState("");
+  const [inputValue, setInputValue] = useState('');
   const {
     register,
     handleSubmit,
@@ -82,17 +82,17 @@ function FormCatalogo(props) {
     }
   };
 
-  const handleDelete = (chipToDelete) => () => {
-    setModuls((texto) => texto.filter((texto) => texto !== chipToDelete));
+  const handleDelete = chipToDelete => () => {
+    setModuls(texto => texto.filter(texto => texto !== chipToDelete));
   };
 
   const handleAddChip = () => {
-    if (inputValue.trim() !== "") {
+    if (inputValue.trim() !== '') {
       const newModul = {
         title: inputValue,
       };
       setModuls([...moduls, newModul]);
-      setInputValue("");
+      setInputValue('');
     }
   };
 
@@ -105,7 +105,7 @@ function FormCatalogo(props) {
     <>
       <NotifyContainer />
       <Backdrop
-        sx={{ color: "blue", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        sx={{ color: 'blue', zIndex: theme => theme.zIndex.drawer + 1 }}
         open={open}
       >
         <CircularProgress color="inherit" />
@@ -122,12 +122,12 @@ function FormCatalogo(props) {
           <Paper
             elevation={0}
             sx={{
-              p: "61px 51px 64px 27px",
-              display: "flex",
-              flexDirection: "row",
-              height: "auto",
+              p: '61px 51px 64px 27px',
+              display: 'flex',
+              flexDirection: 'row',
+              height: 'auto',
               background: colorsTable.white,
-              mb: "125px",
+              mb: '125px',
               border: `1px solid ${colorsTable.borderColor}`,
             }}
           >
@@ -158,7 +158,7 @@ function FormCatalogo(props) {
                     name="title"
                     variant="outlined"
                     fullWidth
-                    {...register("title", {
+                    {...register('title', {
                       required: inputValidate.required,
                     })}
                     error={!!errors?.title}
@@ -170,7 +170,7 @@ function FormCatalogo(props) {
                     label="Modulo"
                     value={inputValue}
                     fullWidth
-                    onChange={(e) => setInputValue(e.target.value)}
+                    onChange={e => setInputValue(e.target.value)}
                     InputProps={{
                       endAdornment: (
                         <InputAdornment position="end">
@@ -186,8 +186,8 @@ function FormCatalogo(props) {
                       key={index}
                       label={modulo.title}
                       style={{
-                        marginTop: "10px",
-                        marginRight: "5px",
+                        marginTop: '10px',
+                        marginRight: '5px',
                       }}
                       onDelete={handleDelete(modulo)}
                     />

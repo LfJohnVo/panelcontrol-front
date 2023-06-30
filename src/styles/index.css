@@ -1,0 +1,33 @@
+.s4b {
+  width: 174px;
+  height: 129px;
+  margin-bottom: 114px;
+}
+
+.s4b img {
+  object-fit: contain;
+  width: 100%;
+  height: 100%;
+}
+
+.fondo {
+  width: auto;
+  height: auto;
+  position: fixed;
+  z-index: -1;
+  margin-left: 480px;
+  margin-top: 115px;
+}
+
+.fondo img {
+  object-fit: contain;
+  width: 100%;
+  height: 100%;
+}
+
+/* h1 {
+    color: #2567ae;
+  }
+  p {
+    color: #4e4e4e;
+  } */

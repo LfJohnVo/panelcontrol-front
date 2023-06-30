@@ -1,20 +1,20 @@
-import React from "react";
-import { useEffect, useState } from "react";
-import { colorsTable } from "../../common/color/color";
-import { Grid, Paper, Typography, Divider } from "@mui/material";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
+import React from 'react';
+import { useEffect, useState } from 'react';
+import { colorsTable } from '../../common/color/color';
+import { Grid, Paper, Typography, Divider } from '@mui/material';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import {
   changeFalse,
   changeTrue,
   selectLoading,
-} from "../../features/loading/loadingSlice";
-import { useDispatch, useSelector } from "react-redux";
-import TitleModul from "../../components/bienvenida/TitleModul";
-import { useParams } from "react-router-dom";
-import Loading from "../loading/Loading";
-import { selectUser } from "../../features/login/loginSlice";
-import { getOneCatalogo } from "../../services/catalogo/catalogo";
-import { sf } from "../../common/text/SF";
+} from '../../features/loading/loadingSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import TitleModul from '../../components/bienvenida/TitleModul';
+import { useParams } from 'react-router-dom';
+import Loading from '../loading/Loading';
+import { selectUser } from '../../features/login/loginSlice';
+import { getOneCatalogo } from '../../services/catalogo/catalogo';
+import { sf } from '../../common/text/SF';
 
 function CatalogoDetail(props) {
   const { id } = useParams();
@@ -72,20 +72,20 @@ function CatalogoDetail(props) {
               <Paper
                 elevation={1}
                 sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  height: "auto",
+                  display: 'flex',
+                  flexDirection: 'column',
+                  height: 'auto',
                   background: colorsTable.colorFondo,
-                  mb: "105px",
+                  mb: '105px',
                 }}
               >
                 <Grid item sm={12}>
                   <Typography
                     component="h1"
                     variant="h1"
-                    mb={"16px"}
-                    mt={"25px"}
-                    ml={"35px"}
+                    mb={'16px'}
+                    mt={'25px'}
+                    ml={'35px'}
                   >
                     Servicio
                   </Typography>
@@ -94,13 +94,13 @@ function CatalogoDetail(props) {
                 <Grid
                   item
                   sm={12}
-                  sx={{ m: "27px 44px 136px 34px", textAlign: "justify" }}
+                  sx={{ m: '27px 44px 136px 34px', textAlign: 'justify' }}
                 >
                   <Typography component="h1" variant="h3">
                     {data && data.title ? data.title : sf}
                   </Typography>
                 </Grid>
-                <Divider sx={{ mb: "21px" }} />
+                <Divider sx={{ mb: '21px' }} />
                 <Grid
                   container
                   item
@@ -108,34 +108,34 @@ function CatalogoDetail(props) {
                   md={12}
                   direction="row"
                   justifyContent="start"
-                  sx={{ mb: "80px", pl: "39px", pr: "146px" }}
+                  sx={{ mb: '80px', pl: '39px', pr: '146px' }}
                 >
                   <Grid item md={2} sm={4} xs={12}>
                     <Typography component="h1" variant="h2">
                       ID
                     </Typography>
-                    <Typography component="p" variant="h3" sx={{ pt: "16px" }}>
-                      {" "}
+                    <Typography component="p" variant="h3" sx={{ pt: '16px' }}>
+                      {' '}
                       {data && data.id ? data.id : sf}
                     </Typography>
                   </Grid>
-                  <Grid item md={2} sm={4} xs={12} sx={{ pt: "16px" }}>
+                  <Grid item md={2} sm={4} xs={12} sx={{ pt: '16px' }}>
                     <Typography component="h1" variant="h2">
                       Modulos
                     </Typography>
                     <Typography
                       component="p"
                       variant="h3"
-                      sx={{ pt: "16px" }}
+                      sx={{ pt: '16px' }}
                     ></Typography>
                     {data
-                      ? data.modulo.map((modulo) => {
+                      ? data.modulo.map(modulo => {
                           return (
                             <Typography
                               component="h1"
                               variant="h3"
                               key={modulo.id}
-                              mb={"2px"}
+                              mb={'2px'}
                             >
                               {modulo.title}
                             </Typography>

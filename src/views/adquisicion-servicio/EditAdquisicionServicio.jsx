@@ -1,10 +1,10 @@
-import React from "react";
-import { Container, Grid } from "@mui/material";
-import FormEditAdquisicionServicio from "../../components/adquisicion-servicio/FormEditAdquisicionServicio";
-import { titleModulAdquisicionServicio } from "../../common/text/TextTitle";
+import React from 'react';
+import { Container, Grid } from '@mui/material';
+import FormEditAdquisicionServicio from '../../components/adquisicion-servicio/FormEditAdquisicionServicio';
+import { titleModulAdquisicionServicio } from '../../common/text/TextTitle';
 function EditAdquisicionServicio() {
   const props = {
-    navigateLink: "/adquisiciones",
+    navigateLink: '/adquisiciones',
     title: titleModulAdquisicionServicio.titleAdquisicionServicioEdit,
     text: titleModulAdquisicionServicio.descriptionAdquisicionServicioEdit,
   };

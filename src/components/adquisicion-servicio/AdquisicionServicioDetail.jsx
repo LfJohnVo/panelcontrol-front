@@ -1,15 +1,15 @@
-import React from "react";
-import { useEffect } from "react";
-import { colorsTable } from "../../common/color/color";
-import { Grid, Paper, Typography, Divider } from "@mui/material";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
+import React from 'react';
+import { useEffect } from 'react';
+import { colorsTable } from '../../common/color/color';
+import { Grid, Paper, Typography, Divider } from '@mui/material';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import {
   changeFalse,
   changeTrue,
   selectLoading,
-} from "../../features/loading/loadingSlice";
-import { useDispatch, useSelector } from "react-redux";
-import TitleModul from "../../components/bienvenida/TitleModul";
+} from '../../features/loading/loadingSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import TitleModul from '../../components/bienvenida/TitleModul';
 
 function AdquisicionServicioDetail(props) {
   const loading = useSelector(selectLoading);
@@ -54,7 +54,7 @@ function AdquisicionServicioDetail(props) {
   return (
     <>
       {loading ? (
-        <Grid item xs={12} md={12} lg={12} sx={{ paddingTop: "50vh" }}>
+        <Grid item xs={12} md={12} lg={12} sx={{ paddingTop: '50vh' }}>
           <></>
         </Grid>
       ) : (
@@ -68,20 +68,20 @@ function AdquisicionServicioDetail(props) {
               <Paper
                 elevation={1}
                 sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  height: "auto",
+                  display: 'flex',
+                  flexDirection: 'column',
+                  height: 'auto',
                   background: colorsTable.colorFondo,
-                  mb: "105px",
+                  mb: '105px',
                 }}
               >
                 <Grid item sm={12}>
                   <Typography
                     component="h1"
                     variant="h1"
-                    mb={"16px"}
-                    mt={"25px"}
-                    ml={"35px"}
+                    mb={'16px'}
+                    mt={'25px'}
+                    ml={'35px'}
                   >
                     Servicio adquirido
                   </Typography>
@@ -90,11 +90,11 @@ function AdquisicionServicioDetail(props) {
                 <Grid
                   item
                   sm={12}
-                  sx={{ m: "27px 44px 136px 34px", textAlign: "justify" }}
+                  sx={{ m: '27px 44px 136px 34px', textAlign: 'justify' }}
                 >
                   <Typography component="h1" variant="h3"></Typography>
                 </Grid>
-                <Divider sx={{ mb: "21px" }} />
+                <Divider sx={{ mb: '21px' }} />
                 <Grid
                   container
                   item
@@ -102,7 +102,7 @@ function AdquisicionServicioDetail(props) {
                   md={12}
                   direction="row"
                   justifyContent="start"
-                  sx={{ mb: "80px", pl: "39px", pr: "146px" }}
+                  sx={{ mb: '80px', pl: '39px', pr: '146px' }}
                 >
                   <Grid item md={2} sm={4} xs={12}>
                     <Typography component="h1" variant="h2">
@@ -111,17 +111,17 @@ function AdquisicionServicioDetail(props) {
                     <Typography
                       component="p"
                       variant="h3"
-                      sx={{ pt: "16px" }}
+                      sx={{ pt: '16px' }}
                     ></Typography>
                   </Grid>
-                  <Grid item md={2} sm={4} xs={12} sx={{ pt: "16px" }}>
+                  <Grid item md={2} sm={4} xs={12} sx={{ pt: '16px' }}>
                     <Typography component="h1" variant="h2">
                       ADQUISICIÓN
                     </Typography>
                     <Typography
                       component="p"
                       variant="h3"
-                      sx={{ pt: "16px" }}
+                      sx={{ pt: '16px' }}
                     ></Typography>
                   </Grid>
                 </Grid>
@@ -131,7 +131,7 @@ function AdquisicionServicioDetail(props) {
                   spacing={3}
                   direction="row"
                   justifyContent="flex-start"
-                  sx={{ mb: "80px", pl: "39px" }}
+                  sx={{ mb: '80px', pl: '39px' }}
                 >
                   <Grid item md={2} sm={4} xs={12}>
                     <Typography component="h1" variant="h2">
@@ -140,7 +140,7 @@ function AdquisicionServicioDetail(props) {
                     <Typography
                       component="p"
                       variant="h3"
-                      sx={{ pt: "16px" }}
+                      sx={{ pt: '16px' }}
                     ></Typography>
                   </Grid>
                   <Grid item md={2} sm={4} xs={12}>
@@ -150,7 +150,7 @@ function AdquisicionServicioDetail(props) {
                     <Typography
                       component="p"
                       variant="h3"
-                      sx={{ pt: "16px" }}
+                      sx={{ pt: '16px' }}
                     ></Typography>
                   </Grid>
                 </Grid>
@@ -160,7 +160,7 @@ function AdquisicionServicioDetail(props) {
                   spacing={3}
                   direction="row"
                   justifyContent="flex-start"
-                  sx={{ pl: "39px" }}
+                  sx={{ pl: '39px' }}
                 >
                   <Grid item md={3} sm={4} xs={12}>
                     <Typography component="h1" variant="h2">
@@ -169,7 +169,7 @@ function AdquisicionServicioDetail(props) {
                     <Typography
                       component="p"
                       variant="h3"
-                      sx={{ pt: "16px" }}
+                      sx={{ pt: '16px' }}
                     ></Typography>
                   </Grid>
                 </Grid>

@@ -1,11 +1,11 @@
 export const redirectUser = {
-  index: "/users",
+  index: '/users',
 };
 
 export const redirectClient = {
-  index: "/clientes",
+  index: '/clientes',
 };
 
 export const redirectCatalogo = {
-  index: "/catalogo",
+  index: '/catalogo',
 };

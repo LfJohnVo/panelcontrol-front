@@ -1,5 +1,5 @@
-import React from "react";
-import { useState, useEffect } from "react";
+import React from 'react';
+import { useState, useEffect } from 'react';
 import {
   Grid,
   Paper,
@@ -9,23 +9,23 @@ import {
   MenuItem,
   InputLabel,
   FormHelperText,
-} from "@mui/material";
-import { useSelector, useDispatch } from "react-redux";
+} from '@mui/material';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   changeFalse,
   changeTrue,
   selectLoading,
-} from "../../features/loading/loadingSlice";
-import "react-toastify/dist/ReactToastify.css";
-import Loading from "../loading/Loading";
-import "react-toastify/dist/ReactToastify.css";
-import Backdrop from "@mui/material/Backdrop";
-import CircularProgress from "@mui/material/CircularProgress";
-import TitleModul from "../../components/bienvenida/TitleModul";
-import { colorsTable } from "../../common/color/color";
-import { useForm, Controller } from "react-hook-form";
-import { inputValidate } from "../../common/text/Validation";
-import { v4 as uuidv4 } from "uuid";
+} from '../../features/loading/loadingSlice';
+import 'react-toastify/dist/ReactToastify.css';
+import Loading from '../loading/Loading';
+import 'react-toastify/dist/ReactToastify.css';
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
+import TitleModul from '../../components/bienvenida/TitleModul';
+import { colorsTable } from '../../common/color/color';
+import { useForm, Controller } from 'react-hook-form';
+import { inputValidate } from '../../common/text/Validation';
+import { v4 as uuidv4 } from 'uuid';
 
 function FormAdquisicionServicio(props) {
   const loading = useSelector(selectLoading);
@@ -37,8 +37,8 @@ function FormAdquisicionServicio(props) {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      cliente: "",
-      proyecto: "",
+      cliente: '',
+      proyecto: '',
     },
   });
   const dispatch = useDispatch();
@@ -46,12 +46,12 @@ function FormAdquisicionServicio(props) {
   const [err, setErr] = useState(null);
   const [errorMessage, setErrorMessage] = useState([]);
   const [clientes, setClientes] = useState([
-    { id: 1, name: "cliente 1" },
-    { id: 2, name: "cliente 2" },
+    { id: 1, name: 'cliente 1' },
+    { id: 2, name: 'cliente 2' },
   ]);
   const [proyectos, setProyectos] = useState([
-    { id: 1, name: "proyecto 1" },
-    { id: 2, name: "proyecto 2" },
+    { id: 1, name: 'proyecto 1' },
+    { id: 2, name: 'proyecto 2' },
   ]);
 
   //functions
@@ -84,7 +84,7 @@ function FormAdquisicionServicio(props) {
   return (
     <>
       <Backdrop
-        sx={{ color: "blue", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        sx={{ color: 'blue', zIndex: theme => theme.zIndex.drawer + 1 }}
         open={open}
       >
         <CircularProgress color="inherit" />
@@ -97,23 +97,23 @@ function FormAdquisicionServicio(props) {
           md={12}
           lg={12}
           sx={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "center",
-            alignItems: "center",
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center',
           }}
         >
           <Paper
             elevation={1}
             sx={{
               p: 2,
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "center",
-              alignItems: "center",
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'center',
+              alignItems: 'center',
               height: 60,
               width: 600,
-              background: "#FFFFF",
+              background: '#FFFFF',
             }}
           >
             <Loading />
@@ -128,12 +128,12 @@ function FormAdquisicionServicio(props) {
           <Paper
             elevation={0}
             sx={{
-              p: "61px 51px 64px 27px",
-              display: "flex",
-              flexDirection: "row",
-              height: "auto",
+              p: '61px 51px 64px 27px',
+              display: 'flex',
+              flexDirection: 'row',
+              height: 'auto',
               background: colorsTable.white,
-              mb: "125px",
+              mb: '125px',
               border: `1px solid ${colorsTable.borderColor}`,
             }}
           >
@@ -170,7 +170,7 @@ function FormAdquisicionServicio(props) {
                           labelId="select-urgencia-ticket-label"
                           label="Cliente"
                         >
-                          {clientes.map((cliente) => {
+                          {clientes.map(cliente => {
                             return (
                               <MenuItem key={uuidv4()} value={cliente.id}>
                                 {cliente.name}
@@ -200,7 +200,7 @@ function FormAdquisicionServicio(props) {
                           labelId="select-Proyecto"
                           label="Proyecto"
                         >
-                          {proyectos.map((proyecto) => {
+                          {proyectos.map(proyecto => {
                             return (
                               <MenuItem key={uuidv4()} value={proyecto.id}>
                                 {proyecto.name}

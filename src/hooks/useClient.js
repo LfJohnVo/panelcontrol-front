@@ -1,23 +1,23 @@
-import { useCallback, useState } from "react";
-import { useForm } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
-import { cliente } from "../common/text/Notify";
-import { redirectClient } from "../common/text/RedirectRoute";
+import { useCallback, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate, useParams } from 'react-router-dom';
+import { cliente } from '../common/text/Notify';
+import { redirectClient } from '../common/text/RedirectRoute';
 import {
   changeFalse,
   changeTrue,
   selectLoading,
-} from "../features/loading/loadingSlice";
-import { selectUser } from "../features/login/loginSlice";
-import { notify } from "../lib/notify";
+} from '../features/loading/loadingSlice';
+import { selectUser } from '../features/login/loginSlice';
+import { notify } from '../lib/notify';
 import {
   createCliente,
   deleteCliente,
   getAllClients,
   getOneCliente,
   updateCliente,
-} from "../services/clientes/clientes";
+} from '../services/clientes/clientes';
 
 export const useCreateClient = () => {
   const token = useSelector(selectUser);
@@ -34,7 +34,7 @@ export const useCreateClient = () => {
     try {
       setOpen(true);
       await createCliente(data, token.token);
-      notify("success", cliente.add);
+      notify('success', cliente.add);
       setTimeout(() => {
         setOpen(false);
         navigate(redirectClient.index);
@@ -73,19 +73,19 @@ export const useEditClient = () => {
     }
   });
 
-  const setValuesData = useCallback((data) => {
-    setValue("name", data.name);
-    setValue("email", data.email);
-    setValue("domicilio", data.domicilio);
-    setValue("razon_social", data.razon_social);
-    setValue("contacto", data.contacto);
+  const setValuesData = useCallback(data => {
+    setValue('name', data.name);
+    setValue('email', data.email);
+    setValue('domicilio', data.domicilio);
+    setValue('razon_social', data.razon_social);
+    setValue('contacto', data.contacto);
   });
 
   const submitForm = useCallback(async (data, e) => {
     try {
       setOpen(true);
       await updateCliente(data, id, token.token);
-      notify("success", cliente.edit);
+      notify('success', cliente.edit);
       setTimeout(() => {
         setOpen(false);
         navigate(redirectClient.index);
@@ -106,7 +106,7 @@ export const useGetAllClients = () => {
   const loading = useSelector(selectLoading);
   const token = useSelector(selectUser);
   const [open, setOpen] = useState(false);
-  const [id, setId] = useState("");
+  const [id, setId] = useState('');
 
   const handleClickEdit = useCallback(async (e, cellValues) => {
     const id = cellValues.row.id;
@@ -124,10 +124,10 @@ export const useGetAllClients = () => {
     }
   });
 
-  const handleClickDelete = useCallback(async (e) => {
+  const handleClickDelete = useCallback(async e => {
     await deleteCliente(id, token.token);
     setOpen(false);
-    notify("success", cliente.delete);
+    notify('success', cliente.delete);
     getInfo();
   });
 
@@ -138,7 +138,7 @@ export const useGetAllClients = () => {
   });
 
   const handleClose = useCallback(() => {
-    setId("");
+    setId('');
     setOpen(false);
   });
 

@@ -1,5 +1,5 @@
-import React from "react";
-import { colorsTable } from "../../common/color/color";
+import React from 'react';
+import { colorsTable } from '../../common/color/color';
 import {
   Grid,
   Typography,
@@ -7,44 +7,44 @@ import {
   Button,
   Stack,
   IconButton,
-} from "@mui/material";
-import { DataGrid, GridToolbarQuickFilter } from "@mui/x-data-grid";
-import AddIcon from "@mui/icons-material/Add";
-import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
-import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
-import { Link as linkrouter, useNavigate } from "react-router-dom";
-import Link from "@mui/material/Link";
+} from '@mui/material';
+import { DataGrid, GridToolbarQuickFilter } from '@mui/x-data-grid';
+import AddIcon from '@mui/icons-material/Add';
+import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
+import { Link as linkrouter, useNavigate } from 'react-router-dom';
+import Link from '@mui/material/Link';
 
 function QuickSearchToolbar() {
   const navigate = useNavigate();
   return (
-    <Box component={"div"}>
+    <Box component={'div'}>
       <Grid
         item
         xs={12}
         md={12}
         lg={12}
         sx={{
-          display: "flex",
-          flexDirection: "row",
-          height: "auto",
-          background: "#FFFFF",
+          display: 'flex',
+          flexDirection: 'row',
+          height: 'auto',
+          background: '#FFFFF',
         }}
       >
         <Grid item md={6}>
           <Box
             sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "flex-start",
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'flex-start',
             }}
           >
             <Typography
               component="h1"
               variant="h5"
-              fontSize={"20px"}
-              ml={"35px"}
-              mt={"26px"}
+              fontSize={'20px'}
+              ml={'35px'}
+              mt={'26px'}
             >
               Servicios Adquiridos creados
             </Typography>
@@ -57,18 +57,18 @@ function QuickSearchToolbar() {
         md={12}
         lg={12}
         sx={{
-          display: "flex",
-          flexDirection: "row",
-          height: "auto",
-          background: "#FFFFF",
+          display: 'flex',
+          flexDirection: 'row',
+          height: 'auto',
+          background: '#FFFFF',
         }}
       >
-        <Grid item md={6} mt={"33px"} ml={"22px"} mb={"16px"}>
+        <Grid item md={6} mt={'33px'} ml={'22px'} mb={'16px'}>
           <Box
             sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "flex-start",
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'flex-start',
             }}
           >
             <GridToolbarQuickFilter />
@@ -79,16 +79,16 @@ function QuickSearchToolbar() {
             sx={{
               p: 1,
               pb: 0,
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "flex-end",
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'flex-end',
             }}
           >
             <Button
               variant="contained"
               startIcon={<AddIcon />}
               onClick={() => {
-                navigate("/adquisicionCreate");
+                navigate('/adquisicionCreate');
               }}
             >
               Crear Adquisicion
@@ -104,25 +104,25 @@ function TableAdquisicionServicio() {
   const navigate = useNavigate();
   //variables
   const rows = [
-    { id: 1, title: "Hello", description: "World" },
-    { id: 2, title: "DataGridPro", description: "is Awesome" },
-    { id: 3, title: "MUI", description: "is Amazing" },
+    { id: 1, title: 'Hello', description: 'World' },
+    { id: 2, title: 'DataGridPro', description: 'is Awesome' },
+    { id: 3, title: 'MUI', description: 'is Amazing' },
   ];
 
   const columns = [
     {
-      field: "id",
-      headerName: "ID",
+      field: 'id',
+      headerName: 'ID',
       width: 150,
-      headerClassName: "super-app-theme--header2",
-      renderCell: (cellValues) => {
+      headerClassName: 'super-app-theme--header2',
+      renderCell: cellValues => {
         return (
           <>
             <Link
               component={linkrouter}
               to={`/adquisicion/${cellValues.row.id}/details`}
               underline="none"
-              sx={{ ml: "30px", textAlign: "left" }}
+              sx={{ ml: '30px', textAlign: 'left' }}
             >
               {cellValues.row.id}
             </Link>
@@ -131,27 +131,27 @@ function TableAdquisicionServicio() {
       },
     },
     {
-      field: "title",
-      headerName: "Nombre",
+      field: 'title',
+      headerName: 'Nombre',
       width: 350,
-      headerClassName: "super-app-theme--header",
+      headerClassName: 'super-app-theme--header',
     },
     {
-      field: "description",
-      headerName: "Description",
+      field: 'description',
+      headerName: 'Description',
       width: 550,
-      headerClassName: "super-app-theme--header",
+      headerClassName: 'super-app-theme--header',
     },
     {
-      field: "Opciones",
-      headerClassName: "super-app-theme--header",
-      renderCell: (cellValues) => {
+      field: 'Opciones',
+      headerClassName: 'super-app-theme--header',
+      renderCell: cellValues => {
         return (
           <>
             <Stack direction="row" spacing={0.5}>
               <IconButton
                 aria-label="edit"
-                onClick={async (e) => {
+                onClick={async e => {
                   handleClickEditAdquisicionServicio(e, cellValues);
                 }}
               >
@@ -159,7 +159,7 @@ function TableAdquisicionServicio() {
               </IconButton>
               <IconButton
                 aria-label="edit"
-                onClick={async (e) => {
+                onClick={async e => {
                   handleClickDeleteAdquisicionServicio(e, cellValues);
                 }}
               >
@@ -187,16 +187,16 @@ function TableAdquisicionServicio() {
     <>
       <Grid item xs={12} md={12} lg={12}>
         <Box
-          component={"div"}
+          component={'div'}
           sx={{
             height: 737,
-            mb: "40px",
-            width: "100%",
-            "& .super-app-theme--header2": {
+            mb: '40px',
+            width: '100%',
+            '& .super-app-theme--header2': {
               backgroundColor: colorsTable.colorCellHeader,
-              pl: "39px",
+              pl: '39px',
             },
-            "& .super-app-theme--header": {
+            '& .super-app-theme--header': {
               backgroundColor: colorsTable.colorCellHeader,
             },
           }}

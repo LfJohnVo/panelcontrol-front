@@ -1,11 +1,11 @@
-import React from "react";
-import { Container, Grid } from "@mui/material";
-import FormCatalogo from "../../components/catalogo/FormCatalogo";
-import { titleModulCatalogo } from "../../common/text/TextTitle";
+import React from 'react';
+import { Container, Grid } from '@mui/material';
+import FormCatalogo from '../../components/catalogo/FormCatalogo';
+import { titleModulCatalogo } from '../../common/text/TextTitle';
 
 function CatalogoCreate() {
   const props = {
-    navigateLink: "/catalogo",
+    navigateLink: '/catalogo',
     title: titleModulCatalogo.titleCatalogoList,
     text: titleModulCatalogo.descriptionCatalogoList,
   };

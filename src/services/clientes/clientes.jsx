@@ -1,8 +1,8 @@
-import { panel_control } from "../index";
+import { panel_control } from '../index';
 
-const route = "api/clients";
+const route = 'api/clients';
 
-export const getAllClients = async (token) => {
+export const getAllClients = async token => {
   try {
     const response = await panel_control.get(route, {
       headers: { Authorization: `Bearer ${token}` },

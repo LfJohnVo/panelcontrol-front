@@ -1,11 +1,11 @@
-import React from "react";
-import { Container, Grid } from "@mui/material";
-import FormCliente from "../../components/cliente/FormCliente";
-import { titleModulCliente } from "../../common/text/TextTitle";
+import React from 'react';
+import { Container, Grid } from '@mui/material';
+import FormCliente from '../../components/cliente/FormCliente';
+import { titleModulCliente } from '../../common/text/TextTitle';
 
 function ClienteCreate() {
   const props = {
-    navigateLink: "/clientes",
+    navigateLink: '/clientes',
     title: titleModulCliente.titleClienteCreate,
     text: titleModulCliente.descriptionClienteCreate,
   };

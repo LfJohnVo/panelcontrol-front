@@ -1,13 +1,13 @@
 //Global Colors
-export const white = "#FFFFFF";
+export const white = '#FFFFFF';
 
 /*Colors Login*/
 /*Text color login*/
-export const logincolor = { colorh1: "#2567AE" };
+export const logincolor = { colorh1: '#2567AE' };
 
 /*Colors table*/
 export const colorsTable = {
-  colorCellHeader: "#EFEFEF",
+  colorCellHeader: '#EFEFEF',
   colorFondo: white,
-  borderColor: "#D1D1D1",
+  borderColor: '#D1D1D1',
 };
