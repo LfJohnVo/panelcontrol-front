@@ -2,7 +2,6 @@ import React from 'react';
 import { Container } from '@mui/material';
 import FormCatalogo from '../../components/catalogo/FormCatalogo';
 import { titleModulCatalogo } from '../../common/text/TextTitle';
-import { titleModulCatalogo } from '../../common/text/TextTitle';
 import { textBienvenida } from '../../common/text/TextCardWellcome';
 import Bienvenida from '../../components/bienvenida/Bienvenida';
 
