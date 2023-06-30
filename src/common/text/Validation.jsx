@@ -1,4 +1,4 @@
 export const inputValidate = {
-  required: "Este campo es requerido",
-  email: "Correo invaliddo",
+  required: 'Este campo es requerido',
+  email: 'Correo invaliddo',
 };

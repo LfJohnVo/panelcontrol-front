@@ -1,16 +1,16 @@
-import React from "react";
-import { useEffect } from "react";
-import { colorsTable } from "../../common/color/color";
-import { Grid, Paper, Divider } from "@mui/material";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import TitleModul from "../../components/bienvenida/TitleModul";
-import Loading from "../loading/Loading";
-import { sf } from "../../common/text/SF";
-import { useDetailUser } from "../../hooks/useUser";
-import { TypographyCustom } from "../common/Typographys";
+import React from 'react';
+import { useEffect } from 'react';
+import { colorsTable } from '../../common/color/color';
+import { Grid, Paper, Divider } from '@mui/material';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import TitleModul from '../../components/bienvenida/TitleModul';
+import Loading from '../loading/Loading';
+import { sf } from '../../common/text/SF';
+import { useDetailUser } from '../../hooks/useUser';
+import { TypographyCustom } from '../common/Typographys';
 
 function UserDetail(props) {
-  const [data, loading, getDetailUser] = useDetailUser()
+  const [data, loading, getDetailUser] = useDetailUser();
 
   const theme = createTheme({
     typography: {
@@ -46,12 +46,12 @@ function UserDetail(props) {
               <Paper
                 elevation={0}
                 sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  height: "auto",
+                  display: 'flex',
+                  flexDirection: 'column',
+                  height: 'auto',
                   background: colorsTable.colorFondo,
-                  mb: "105px",
-                  pb: "25px",
+                  mb: '105px',
+                  pb: '25px',
                 }}
               >
                 <Grid item sm={12}>
@@ -59,14 +59,14 @@ function UserDetail(props) {
                     title="Usuario"
                     component="h1"
                     variant="h1"
-                    sx={{ mb: "16px", mt: "25px", ml: "35px" }}
+                    sx={{ mb: '16px', mt: '25px', ml: '35px' }}
                   />
                 </Grid>
                 <Divider />
                 <Grid
                   item
                   sm={12}
-                  sx={{ m: "27px 44px 25px 34px", textAlign: "justify" }}
+                  sx={{ m: '27px 44px 25px 34px', textAlign: 'justify' }}
                 >
                   <TypographyCustom
                     title={data && data.name ? data.name : sf}
@@ -74,7 +74,7 @@ function UserDetail(props) {
                     variant="h3"
                   />
                 </Grid>
-                <Divider sx={{ mb: "21px" }} />
+                <Divider sx={{ mb: '21px' }} />
                 <Grid
                   container
                   item
@@ -82,7 +82,7 @@ function UserDetail(props) {
                   md={12}
                   direction="row"
                   justifyContent="start"
-                  sx={{ mb: "80px", pl: "39px", pr: "146px" }}
+                  sx={{ mb: '80px', pl: '39px', pr: '146px' }}
                 >
                   <Grid item md={2} sm={4} xs={12}>
                     <TypographyCustom title="ID" component="h1" variant="h2" />
@@ -90,10 +90,10 @@ function UserDetail(props) {
                       title={data && data.id ? data.id : sf}
                       component="p"
                       variant="h3"
-                      sx={{ pt: "16px" }}
+                      sx={{ pt: '16px' }}
                     />
                   </Grid>
-                  <Grid item md={2} sm={4} xs={12} sx={{ pt: "16px" }}>
+                  <Grid item md={2} sm={4} xs={12} sx={{ pt: '16px' }}>
                     <TypographyCustom
                       title="CREADO"
                       component="h1"
@@ -103,11 +103,10 @@ function UserDetail(props) {
                       title={data && data.create_date ? data.create_date : sf}
                       component="p"
                       variant="h3"
-                      sx={{ pt: "16px" }}
+                      sx={{ pt: '16px' }}
                     />
                   </Grid>
-                  <Grid item md={2} sm={4} xs={12} sx={{ pt: "16px" }}>
-                  </Grid>
+                  <Grid item md={2} sm={4} xs={12} sx={{ pt: '16px' }}></Grid>
                 </Grid>
                 <Grid
                   container
@@ -115,7 +114,7 @@ function UserDetail(props) {
                   spacing={3}
                   direction="row"
                   justifyContent="flex-start"
-                  sx={{ mb: "80px", pl: "39px" }}
+                  sx={{ mb: '80px', pl: '39px' }}
                 >
                   <Grid item md={2} sm={4} xs={12}>
                     <TypographyCustom
@@ -127,7 +126,7 @@ function UserDetail(props) {
                       title={data && data.email ? data.email : sf}
                       component="p"
                       variant="h3"
-                      sx={{ pt: "16px" }}
+                      sx={{ pt: '16px' }}
                     />
                   </Grid>
                   <Grid item md={2} sm={4} xs={12}>
@@ -140,7 +139,7 @@ function UserDetail(props) {
                       title={data && data.razon_social ? data.razon_social : sf}
                       component="p"
                       variant="h3"
-                      sx={{ pt: "16px" }}
+                      sx={{ pt: '16px' }}
                     />
                   </Grid>
                   <Grid item md={2} sm={4} xs={12}>
@@ -153,7 +152,7 @@ function UserDetail(props) {
                       title={data && data.contacto ? data.contacto : sf}
                       component="p"
                       variant="h3"
-                      sx={{ pt: "16px" }}
+                      sx={{ pt: '16px' }}
                     />
                   </Grid>
                 </Grid>
@@ -163,7 +162,7 @@ function UserDetail(props) {
                   spacing={3}
                   direction="row"
                   justifyContent="flex-start"
-                  sx={{ pl: "39px" }}
+                  sx={{ pl: '39px' }}
                 >
                   <Grid item md={3} sm={4} xs={12}>
                     <TypographyCustom
@@ -175,7 +174,7 @@ function UserDetail(props) {
                       title={data && data.contacto ? data.contacto : sf}
                       component="p"
                       variant="h3"
-                      sx={{ pt: "16px" }}
+                      sx={{ pt: '16px' }}
                     />
                   </Grid>
                 </Grid>

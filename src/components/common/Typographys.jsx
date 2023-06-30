@@ -1,4 +1,4 @@
-import Typography from "@mui/material/Typography";
+import Typography from '@mui/material/Typography';
 
 export const TypographyCustom = ({
   title,

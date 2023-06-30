@@ -1,14 +1,14 @@
-import React from "react";
-import { Grid } from "@mui/material";
-import "react-toastify/dist/ReactToastify.css";
-import TitleModul from "../../components/bienvenida/TitleModul";
-import { useForm } from "react-hook-form";
-import { inputValidate } from "../../common/text/Validation";
-import NotifyContainer from "../notify/NotifyContainer";
-import { ButtonCustom } from "../common/buttons";
-import { InputPassword, TextInput } from "../common/inputs";
-import { BackdropCustom, PaperLayout } from "../common/layouts";
-import { useCreateUser } from "../../hooks/useUser";
+import React from 'react';
+import { Grid } from '@mui/material';
+import 'react-toastify/dist/ReactToastify.css';
+import TitleModul from '../../components/bienvenida/TitleModul';
+import { useForm } from 'react-hook-form';
+import { inputValidate } from '../../common/text/Validation';
+import NotifyContainer from '../notify/NotifyContainer';
+import { ButtonCustom } from '../common/buttons';
+import { PasswordInput, TextInput } from '../common/inputs';
+import { BackdropCustom, PaperLayout } from '../common/layouts';
+import { useCreateUser } from '../../hooks/useUser';
 
 function FormUser(props) {
   const {
@@ -63,7 +63,7 @@ function FormUser(props) {
             />
           </Grid>
           <Grid item xs={12} sm={6} md={6} lg={6}>
-            <InputPassword
+            <PasswordInput
               name="password"
               register={register}
               errors={errors}

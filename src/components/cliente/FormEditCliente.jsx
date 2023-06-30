@@ -1,13 +1,13 @@
-import { Button, Grid } from "@mui/material";
-import React, { useEffect } from "react";
-import "react-toastify/dist/ReactToastify.css";
-import { inputValidate } from "../../common/text/Validation";
-import TitleModul from "../../components/bienvenida/TitleModul";
-import { useEditClient } from "../../hooks/useClient";
-import { TextInput } from "../common/inputs";
-import { BackdropCustom, PaperLayout } from "../common/layouts";
-import Loading from "../loading/Loading";
-import NotifyContainer from "../notify/NotifyContainer";
+import { Button, Grid } from '@mui/material';
+import React, { useEffect } from 'react';
+import 'react-toastify/dist/ReactToastify.css';
+import { inputValidate } from '../../common/text/Validation';
+import TitleModul from '../../components/bienvenida/TitleModul';
+import { useEditClient } from '../../hooks/useClient';
+import { TextInput } from '../common/inputs';
+import { BackdropCustom, PaperLayout } from '../common/layouts';
+import Loading from '../loading/Loading';
+import NotifyContainer from '../notify/NotifyContainer';
 
 function FormEditCliente(props) {
   const [loading, open, register, handleSubmit, errors, getInfo, submitForm] =

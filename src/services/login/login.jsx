@@ -1,8 +1,8 @@
-import { panel_control } from "../index";
+import { panel_control } from '../index';
 
-const route = "api/auth/login";
+const route = 'api/auth/login';
 
-export const isAuthenticate = async (body) => {
+export const isAuthenticate = async body => {
   try {
     const response = await panel_control.post(route, body);
     return response;

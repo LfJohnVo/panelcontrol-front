@@ -1,1 +1,1 @@
-export const sf = "Sin información";
+export const sf = 'Sin información';

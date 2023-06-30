@@ -1,11 +1,11 @@
-import React from "react";
-import { Grid, Container } from "@mui/material";
-import UserDetail from "../../components/users/UserDetail";
-import { titleModulUser } from "../../common/text/TextTitle";
+import React from 'react';
+import { Grid, Container } from '@mui/material';
+import UserDetail from '../../components/users/UserDetail';
+import { titleModulUser } from '../../common/text/TextTitle';
 
 function DetailUser() {
   const props = {
-    navigateLink: "/users",
+    navigateLink: '/users',
     title: titleModulUser.titleUserDetail,
     text: titleModulUser.descriptionUserDetail,
   };

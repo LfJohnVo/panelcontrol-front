@@ -1,11 +1,11 @@
-import React from "react";
-import { Grid, Container } from "@mui/material";
-import CatalogoDetail from "../../components/catalogo/CatalogoDetail";
-import { titleModulCatalogo } from "../../common/text/TextTitle";
+import React from 'react';
+import { Grid, Container } from '@mui/material';
+import CatalogoDetail from '../../components/catalogo/CatalogoDetail';
+import { titleModulCatalogo } from '../../common/text/TextTitle';
 
 function DetailCatalogo() {
   const props = {
-    navigateLink: "/catalogo",
+    navigateLink: '/catalogo',
     title: titleModulCatalogo.titleCatalogoList,
     text: titleModulCatalogo.descriptionCatalogoList,
   };

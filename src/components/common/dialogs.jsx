@@ -1,9 +1,9 @@
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import { Button } from "@mui/material";
-import { ButtonCustom } from "./buttons";
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import { Button } from '@mui/material';
+import { ButtonCustom } from './buttons';
 
 export const DialogCustom = ({
   open,

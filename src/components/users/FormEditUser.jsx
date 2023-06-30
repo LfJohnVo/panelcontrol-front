@@ -1,15 +1,15 @@
-import React from "react";
-import { useEffect } from "react";
-import { Grid, Button } from "@mui/material";
-import "react-toastify/dist/ReactToastify.css";
-import Loading from "../loading/Loading";
-import "react-toastify/dist/ReactToastify.css";
-import TitleModul from "../../components/bienvenida/TitleModul";
-import { inputValidate } from "../../common/text/Validation";
-import NotifyContainer from "../notify/NotifyContainer";
-import { useEditUser } from "../../hooks/useUser";
-import { BackdropCustom, PaperLayout } from "../common/layouts";
-import { TextInput, InputPassword } from "../common/inputs";
+import React from 'react';
+import { useEffect } from 'react';
+import { Grid, Button } from '@mui/material';
+import 'react-toastify/dist/ReactToastify.css';
+import Loading from '../loading/Loading';
+import 'react-toastify/dist/ReactToastify.css';
+import TitleModul from '../../components/bienvenida/TitleModul';
+import { inputValidate } from '../../common/text/Validation';
+import NotifyContainer from '../notify/NotifyContainer';
+import { useEditUser } from '../../hooks/useUser';
+import { BackdropCustom, PaperLayout } from '../common/layouts';
+import { TextInput, InputPassword } from '../common/inputs';
 
 function FormEditUser(props) {
   const [

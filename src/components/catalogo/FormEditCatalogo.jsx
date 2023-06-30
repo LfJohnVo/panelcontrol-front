@@ -1,5 +1,5 @@
-import React from "react";
-import { useState, useEffect } from "react";
+import React from 'react';
+import { useState, useEffect } from 'react';
 import {
   Grid,
   Paper,
@@ -12,35 +12,35 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
-} from "@mui/material";
-import { useSelector, useDispatch } from "react-redux";
+} from '@mui/material';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   changeFalse,
   changeTrue,
   selectLoading,
-} from "../../features/loading/loadingSlice";
-import "react-toastify/dist/ReactToastify.css";
-import Loading from "../loading/Loading";
-import "react-toastify/dist/ReactToastify.css";
-import Backdrop from "@mui/material/Backdrop";
-import CircularProgress from "@mui/material/CircularProgress";
-import TitleModul from "../../components/bienvenida/TitleModul";
-import { colorsTable } from "../../common/color/color";
-import { useForm } from "react-hook-form";
-import { inputValidate } from "../../common/text/Validation";
-import { useParams } from "react-router-dom";
-import { selectUser } from "../../features/login/loginSlice";
+} from '../../features/loading/loadingSlice';
+import 'react-toastify/dist/ReactToastify.css';
+import Loading from '../loading/Loading';
+import 'react-toastify/dist/ReactToastify.css';
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
+import TitleModul from '../../components/bienvenida/TitleModul';
+import { colorsTable } from '../../common/color/color';
+import { useForm } from 'react-hook-form';
+import { inputValidate } from '../../common/text/Validation';
+import { useParams } from 'react-router-dom';
+import { selectUser } from '../../features/login/loginSlice';
 import {
   deleteModulo,
   getOneCatalogo,
   updateCatalogo,
-} from "../../services/catalogo/catalogo";
-import { redirectCatalogo } from "../../common/text/RedirectRoute";
-import { catalogo } from "../../common/text/Notify";
-import { notifyMessage } from "../notify/NotifyMessage";
-import { useNavigate } from "react-router-dom";
-import NotifyContainer from "../notify/NotifyContainer";
-import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
+} from '../../services/catalogo/catalogo';
+import { redirectCatalogo } from '../../common/text/RedirectRoute';
+import { catalogo } from '../../common/text/Notify';
+import { notifyMessage } from '../notify/NotifyMessage';
+import { useNavigate } from 'react-router-dom';
+import NotifyContainer from '../notify/NotifyContainer';
+import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 
 function FormEditCatalogo(props) {
   const { id } = useParams();
@@ -59,14 +59,14 @@ function FormEditCatalogo(props) {
   const [errorMessage, setErrorMessage] = useState([]);
   const navigate = useNavigate();
   const [moduls, setModuls] = useState([]);
-  const [inputValue, setInputValue] = useState("");
+  const [inputValue, setInputValue] = useState('');
   const [dialog, setDialog] = useState(false);
-  const [changeModul, setChangeModul] = useState("");
+  const [changeModul, setChangeModul] = useState('');
 
   //functions
 
-  const setValuesData = (data) => {
-    setValue("title", data.title);
+  const setValuesData = data => {
+    setValue('title', data.title);
     setModuls(data.modulo);
     console.log(data.modulo);
   };
@@ -98,28 +98,28 @@ function FormEditCatalogo(props) {
     }
   };
 
-  const handleDelete = (chipToDelete) => async () => {
-    if (chipToDelete.hasOwnProperty("id")) {
+  const handleDelete = chipToDelete => async () => {
+    if (chipToDelete.hasOwnProperty('id')) {
       setOpen(true);
       await deleteModulo(id, token.token);
       setOpen(false);
-      setModuls((item) => item.filter((item) => item !== chipToDelete));
+      setModuls(item => item.filter(item => item !== chipToDelete));
     } else {
-      setModuls((item) => item.filter((item) => item !== chipToDelete));
+      setModuls(item => item.filter(item => item !== chipToDelete));
     }
   };
 
   const handleAddChip = () => {
-    if (inputValue.trim() !== "") {
+    if (inputValue.trim() !== '') {
       const newModul = {
         title: inputValue,
       };
       setModuls([...moduls, newModul]);
-      setInputValue("");
+      setInputValue('');
     }
   };
 
-  const handleChangeChip = (ChipEdit) => {
+  const handleChangeChip = ChipEdit => {
     setDialog(true);
     setChangeModul(ChipEdit);
   };
@@ -128,18 +128,17 @@ function FormEditCatalogo(props) {
     setDialog(false);
   };
 
-  const handleEditTitleChip = (e) => {
+  const handleEditTitleChip = e => {
     setChangeModul({ ...changeModul, [e.target.name]: e.target.value });
   };
 
   const handleChangeTitleChip = () => {
-    const cp = moduls.filter((item) => {
+    const cp = moduls.filter(item => {
       return item.id == changeModul.id;
     });
     cp[0].title = changeModul.title;
     setDialog(false);
   };
-
 
   //Effects
   useEffect(() => {
@@ -150,7 +149,7 @@ function FormEditCatalogo(props) {
     <>
       <NotifyContainer />
       <Backdrop
-        sx={{ color: "blue", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        sx={{ color: 'blue', zIndex: theme => theme.zIndex.drawer + 1 }}
         open={open}
       >
         <CircularProgress color="inherit" />
@@ -173,7 +172,7 @@ function FormEditCatalogo(props) {
             fullWidth
             value={changeModul.title}
             onChange={handleEditTitleChip}
-            sx={{ mt: "5px" }}
+            sx={{ mt: '5px' }}
           />
         </DialogContent>
         <DialogActions>
@@ -197,12 +196,12 @@ function FormEditCatalogo(props) {
           <Paper
             elevation={0}
             sx={{
-              p: "61px 51px 64px 27px",
-              display: "flex",
-              flexDirection: "row",
-              height: "auto",
+              p: '61px 51px 64px 27px',
+              display: 'flex',
+              flexDirection: 'row',
+              height: 'auto',
               background: colorsTable.white,
-              mb: "125px",
+              mb: '125px',
               border: `1px solid ${colorsTable.borderColor}`,
             }}
           >
@@ -233,7 +232,7 @@ function FormEditCatalogo(props) {
                     name="title"
                     variant="outlined"
                     fullWidth
-                    {...register("title", {
+                    {...register('title', {
                       required: inputValidate.required,
                     })}
                     error={!!errors?.title}
@@ -246,7 +245,7 @@ function FormEditCatalogo(props) {
                     label="Modulo"
                     value={inputValue}
                     fullWidth
-                    onChange={(e) => setInputValue(e.target.value)}
+                    onChange={e => setInputValue(e.target.value)}
                     InputProps={{
                       endAdornment: (
                         <InputAdornment position="end">
@@ -262,8 +261,8 @@ function FormEditCatalogo(props) {
                       key={index}
                       label={modulo.title}
                       style={{
-                        marginTop: "10px",
-                        marginRight: "5px",
+                        marginTop: '10px',
+                        marginRight: '5px',
                       }}
                       onDelete={handleDelete(modulo)}
                       onClick={() => handleChangeChip(modulo)}

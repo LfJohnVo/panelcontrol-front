@@ -1,24 +1,24 @@
-import { useCallback, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { notify } from "../lib/notify";
+import { useCallback, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { notify } from '../lib/notify';
 import {
   createUser,
   getOneUser,
   updateUser,
   getAllUsers,
   deleteUser,
-} from "../services/users/users";
-import { user } from "../common/text/Notify";
-import { selectUser } from "../features/login/loginSlice";
-import { redirectUser } from "../common/text/RedirectRoute";
-import { useParams } from "react-router-dom";
+} from '../services/users/users';
+import { user } from '../common/text/Notify';
+import { selectUser } from '../features/login/loginSlice';
+import { redirectUser } from '../common/text/RedirectRoute';
+import { useParams } from 'react-router-dom';
 import {
   changeFalse,
   changeTrue,
   selectLoading,
-} from "../features/loading/loadingSlice";
-import { useForm } from "react-hook-form";
+} from '../features/loading/loadingSlice';
+import { useForm } from 'react-hook-form';
 
 export const useCreateUser = () => {
   const token = useSelector(selectUser);
@@ -29,7 +29,7 @@ export const useCreateUser = () => {
     try {
       setOpen(true);
       await createUser(data, token.token);
-      notify("success", user.add);
+      notify('success', user.add);
       setTimeout(() => {
         setOpen(false);
         navigate(redirectUser.index);
@@ -57,13 +57,13 @@ export const useEditUser = () => {
     formState: { errors },
   } = useForm();
 
-  const setValuesData = useCallback((data) => {
-    setValue("name", data.name);
-    setValue("email", data.email);
-    setValue("domicilio", data.domicilio);
-    setValue("razon_social", data.razon_social);
-    setValue("contacto", data.contacto);
-    setValue("password", data.password);
+  const setValuesData = useCallback(data => {
+    setValue('name', data.name);
+    setValue('email', data.email);
+    setValue('domicilio', data.domicilio);
+    setValue('razon_social', data.razon_social);
+    setValue('contacto', data.contacto);
+    setValue('password', data.password);
   });
 
   const getInfoUser = useCallback(async () => {
@@ -82,7 +82,7 @@ export const useEditUser = () => {
     try {
       setOpen(true);
       await updateUser(data, id, token.token);
-      notify("success", user.edit);
+      notify('success', user.edit);
       setTimeout(() => {
         setOpen(false);
         navigate(redirectUser.index);
@@ -111,7 +111,7 @@ export const useGetAllUser = () => {
   const dispatch = useDispatch();
   const [data, setData] = useState([]);
   const [open, setOpen] = useState(false);
-  const [id, setId] = useState("");
+  const [id, setId] = useState('');
 
   const getUsers = useCallback(async () => {
     try {
@@ -124,10 +124,10 @@ export const useGetAllUser = () => {
     }
   });
 
-  const handleClickDeleteUser = useCallback(async (e) => {
+  const handleClickDeleteUser = useCallback(async e => {
     await deleteUser(id, token.token);
     setOpen(false);
-    notify("success", user.delete);
+    notify('success', user.delete);
     getUsers();
   });
 
@@ -143,7 +143,7 @@ export const useGetAllUser = () => {
   });
 
   const handleClose = useCallback(() => {
-    setId("");
+    setId('');
     setOpen(false);
   });
 

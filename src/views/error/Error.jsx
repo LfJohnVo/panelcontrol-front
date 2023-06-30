@@ -1,7 +1,7 @@
-import React from "react";
-import { Grid, Typography, Box } from "@mui/material";
-import { useRouteError } from "react-router-dom";
-import imgError from "../../assets/error/Grupo1427.png";
+import React from 'react';
+import { Grid, Typography, Box } from '@mui/material';
+import { useRouteError } from 'react-router-dom';
+import imgError from '../../assets/error/Grupo1427.png';
 
 export default function Error() {
   const error = useRouteError();
@@ -11,19 +11,19 @@ export default function Error() {
         item
         md={12}
         sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
         }}
       >
         <Box
           sx={{
-            p: "61px 51px 64px 27px",
-            display: "flex",
-            flexDirection: "row",
-            height: "auto",
-            background: "#FFFFF",
-            mb: "125px",
+            p: '61px 51px 64px 27px',
+            display: 'flex',
+            flexDirection: 'row',
+            height: 'auto',
+            background: '#FFFFF',
+            mb: '125px',
           }}
         >
           <Grid
@@ -46,7 +46,7 @@ export default function Error() {
               alignItems="strech"
             >
               <Grid item md={6}>
-                <Typography variant="h1" component="h1" color={"#86A4CB"}>
+                <Typography variant="h1" component="h1" color={'#86A4CB'}>
                   Error
                 </Typography>
               </Grid>
@@ -54,8 +54,8 @@ export default function Error() {
                 <Typography
                   variant="h1"
                   component="h1"
-                  fontSize={"18px"}
-                  color={"#86A4CB"}
+                  fontSize={'18px'}
+                  color={'#86A4CB'}
                 >
                   {error.message}
                 </Typography>

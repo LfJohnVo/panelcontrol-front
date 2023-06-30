@@ -1,13 +1,13 @@
-import { Grid } from "@mui/material";
-import React from "react";
-import "react-toastify/dist/ReactToastify.css";
-import { inputValidate } from "../../common/text/Validation";
-import TitleModul from "../../components/bienvenida/TitleModul";
-import { useCreateClient } from "../../hooks/useClient";
-import { ButtonCustom } from "../common/buttons";
-import { TextInput } from "../common/inputs";
-import { BackdropCustom, PaperLayout } from "../common/layouts";
-import NotifyContainer from "../notify/NotifyContainer";
+import { Grid } from '@mui/material';
+import React from 'react';
+import 'react-toastify/dist/ReactToastify.css';
+import { inputValidate } from '../../common/text/Validation';
+import TitleModul from '../../components/bienvenida/TitleModul';
+import { useCreateClient } from '../../hooks/useClient';
+import { ButtonCustom } from '../common/buttons';
+import { TextInput } from '../common/inputs';
+import { BackdropCustom, PaperLayout } from '../common/layouts';
+import NotifyContainer from '../notify/NotifyContainer';
 
 function FormCliente(props) {
   const [open, submitForm, register, handleSubmit, reset, errors] =

@@ -1,12 +1,12 @@
-import React from "react";
-import { Grid, Container } from "@mui/material";
-import ClienteDetail from "../../components/cliente/ClienteDetail";
-import { titleModulCliente } from "../../common/text/TextTitle";
-import TitleModul from "../../components/bienvenida/TitleModul";
+import React from 'react';
+import { Grid, Container } from '@mui/material';
+import ClienteDetail from '../../components/cliente/ClienteDetail';
+import { titleModulCliente } from '../../common/text/TextTitle';
+import TitleModul from '../../components/bienvenida/TitleModul';
 
 function DetailCliente() {
   const props = {
-    navigateLink: "/clientes",
+    navigateLink: '/clientes',
     title: titleModulCliente.titleClienteDetail,
     text: titleModulCliente.descriptionClienteDetail,
   };

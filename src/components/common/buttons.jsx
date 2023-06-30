@@ -1,4 +1,4 @@
-import Button from "@mui/material/Button";
+import Button from '@mui/material/Button';
 
 export const ButtonCustom = ({
   title,
@@ -13,7 +13,7 @@ export const ButtonCustom = ({
     <Button
       type={type}
       fullWidth={fullWidth || false}
-      variant={variant || "contained"}
+      variant={variant || 'contained'}
       onClick={onClick || null}
       startIcon={startIcon || null}
       sx={sx}

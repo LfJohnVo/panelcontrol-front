@@ -1,6 +1,6 @@
-import React from "react";
-import { useState, useEffect } from "react";
-import { colorsTable } from "../../common/color/color";
+import React from 'react';
+import { useState, useEffect } from 'react';
+import { colorsTable } from '../../common/color/color';
 import {
   Grid,
   Typography,
@@ -8,64 +8,64 @@ import {
   Button,
   Stack,
   IconButton,
-} from "@mui/material";
-import { DataGrid, GridToolbarQuickFilter } from "@mui/x-data-grid";
-import AddIcon from "@mui/icons-material/Add";
-import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
-import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
-import { Link as linkrouter, useNavigate } from "react-router-dom";
-import Link from "@mui/material/Link";
+} from '@mui/material';
+import { DataGrid, GridToolbarQuickFilter } from '@mui/x-data-grid';
+import AddIcon from '@mui/icons-material/Add';
+import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
+import { Link as linkrouter, useNavigate } from 'react-router-dom';
+import Link from '@mui/material/Link';
 import {
   deleteCatalogo,
   getAllCatalogo,
-} from "../../services/catalogo/catalogo";
-import { useDispatch, useSelector } from "react-redux";
+} from '../../services/catalogo/catalogo';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   changeTrue,
   changeFalse,
   selectLoading,
-} from "../../features/loading/loadingSlice";
-import { selectUser } from "../../features/login/loginSlice";
-import Loading from "../loading/Loading";
-import NotifyContainer from "../notify/NotifyContainer";
-import { catalogo } from "../../common/text/Notify";
-import { notifyMessage } from "../notify/NotifyMessage";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
+} from '../../features/loading/loadingSlice';
+import { selectUser } from '../../features/login/loginSlice';
+import Loading from '../loading/Loading';
+import NotifyContainer from '../notify/NotifyContainer';
+import { catalogo } from '../../common/text/Notify';
+import { notifyMessage } from '../notify/NotifyMessage';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 
 function QuickSearchToolbar() {
   const navigate = useNavigate();
   return (
-    <Box component={"div"}>
+    <Box component={'div'}>
       <Grid
         item
         xs={12}
         md={12}
         lg={12}
         sx={{
-          display: "flex",
-          flexDirection: "row",
-          height: "auto",
-          background: "#FFFFF",
+          display: 'flex',
+          flexDirection: 'row',
+          height: 'auto',
+          background: '#FFFFF',
         }}
       >
         <Grid item md={6}>
           <Box
             sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "flex-start",
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'flex-start',
             }}
           >
             <Typography
               component="h1"
               variant="h5"
-              fontSize={"20px"}
-              ml={"35px"}
-              mt={"26px"}
+              fontSize={'20px'}
+              ml={'35px'}
+              mt={'26px'}
             >
               Servicios creados
             </Typography>
@@ -78,18 +78,18 @@ function QuickSearchToolbar() {
         md={12}
         lg={12}
         sx={{
-          display: "flex",
-          flexDirection: "row",
-          height: "auto",
-          background: "#FFFFF",
+          display: 'flex',
+          flexDirection: 'row',
+          height: 'auto',
+          background: '#FFFFF',
         }}
       >
-        <Grid item md={6} mt={"33px"} ml={"22px"} mb={"16px"}>
+        <Grid item md={6} mt={'33px'} ml={'22px'} mb={'16px'}>
           <Box
             sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "flex-start",
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'flex-start',
             }}
           >
             <GridToolbarQuickFilter />
@@ -100,16 +100,16 @@ function QuickSearchToolbar() {
             sx={{
               p: 1,
               pb: 0,
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "flex-end",
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'flex-end',
             }}
           >
             <Button
               variant="contained"
               startIcon={<AddIcon />}
               onClick={() => {
-                navigate("/catalogoCreate");
+                navigate('/catalogoCreate');
               }}
             >
               Crear servicio
@@ -129,22 +129,22 @@ function TableCatalogo() {
   const loading = useSelector(selectLoading);
   const token = useSelector(selectUser);
   const [open, setOpen] = useState(false);
-  const [id, setId] = useState("");
+  const [id, setId] = useState('');
 
   const columns = [
     {
-      field: "id",
-      headerName: "ID",
+      field: 'id',
+      headerName: 'ID',
       width: 150,
-      headerClassName: "super-app-theme--header2",
-      renderCell: (cellValues) => {
+      headerClassName: 'super-app-theme--header2',
+      renderCell: cellValues => {
         return (
           <>
             <Link
               component={linkrouter}
               to={`/catalogo/${cellValues.row.id}/details`}
               underline="none"
-              sx={{ ml: "30px", textAlign: "left" }}
+              sx={{ ml: '30px', textAlign: 'left' }}
             >
               {cellValues.row.id}
             </Link>
@@ -153,21 +153,21 @@ function TableCatalogo() {
       },
     },
     {
-      field: "title",
-      headerName: "Nombre",
+      field: 'title',
+      headerName: 'Nombre',
       width: 350,
-      headerClassName: "super-app-theme--header",
+      headerClassName: 'super-app-theme--header',
     },
     {
-      field: "Opciones",
-      headerClassName: "super-app-theme--header",
-      renderCell: (cellValues) => {
+      field: 'Opciones',
+      headerClassName: 'super-app-theme--header',
+      renderCell: cellValues => {
         return (
           <>
             <Stack direction="row" spacing={0.5}>
               <IconButton
                 aria-label="edit"
-                onClick={async (e) => {
+                onClick={async e => {
                   handleClickEditCatalogo(e, cellValues);
                 }}
               >
@@ -175,7 +175,7 @@ function TableCatalogo() {
               </IconButton>
               <IconButton
                 aria-label="edit"
-                onClick={async (e) => {
+                onClick={async e => {
                   // handleClickDeleteCatalogo(e, cellValues);
                   handleClickOpen(e, cellValues);
                 }}
@@ -210,7 +210,7 @@ function TableCatalogo() {
   };
 
   const handleClose = () => {
-    setId("");
+    setId('');
     setOpen(false);
   };
 
@@ -255,16 +255,16 @@ function TableCatalogo() {
       ) : (
         <Grid item xs={12} md={12} lg={12}>
           <Box
-            component={"div"}
+            component={'div'}
             sx={{
               height: 737,
-              mb: "40px",
-              width: "100%",
-              "& .super-app-theme--header2": {
+              mb: '40px',
+              width: '100%',
+              '& .super-app-theme--header2': {
                 backgroundColor: colorsTable.colorCellHeader,
-                pl: "39px",
+                pl: '39px',
               },
-              "& .super-app-theme--header": {
+              '& .super-app-theme--header': {
                 backgroundColor: colorsTable.colorCellHeader,
               },
             }}

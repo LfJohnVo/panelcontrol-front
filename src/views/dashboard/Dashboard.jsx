@@ -1,14 +1,14 @@
-import React from "react";
-import Grid from "@mui/material/Grid";
-import Container from "@mui/material/Container";
-import Bienvenida from "../../components/bienvenida/Bienvenida";
-import { titleDashboard, titleText } from "../../common/text/TextTitle";
-import { textBienvenida } from "../../common/text/TextCardWellcome";
-import TableDasboard from "../../components/dashboard/TableDasboard";
+import React from 'react';
+import Grid from '@mui/material/Grid';
+import Container from '@mui/material/Container';
+import Bienvenida from '../../components/bienvenida/Bienvenida';
+import { titleDashboard, titleText } from '../../common/text/TextTitle';
+import { textBienvenida } from '../../common/text/TextCardWellcome';
+import TableDasboard from '../../components/dashboard/TableDasboard';
 
 function Dashboard() {
   const props = {
-    navigateLink: "/dashboard",
+    navigateLink: '/dashboard',
     title: titleDashboard,
     text: titleText,
     textCard: textBienvenida,

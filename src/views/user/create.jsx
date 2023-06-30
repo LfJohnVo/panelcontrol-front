@@ -1,11 +1,11 @@
-import React from "react";
-import { Container, Grid } from "@mui/material";
-import FormUser from "../../components/users/FormUser";
-import { titleModulUser } from "../../common/text/TextTitle";
+import React from 'react';
+import { Container, Grid } from '@mui/material';
+import FormUser from '../../components/users/FormUser';
+import { titleModulUser } from '../../common/text/TextTitle';
 
 function UserCreate() {
   const props = {
-    navigateLink: "/users",
+    navigateLink: '/users',
     title: titleModulUser.titleUserCreate,
     text: titleModulUser.descriptionUserCreate,
   };
