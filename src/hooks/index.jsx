@@ -1,9 +1,8 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { notify } from '../lib/notify';
 import { addUser } from '../features/login/loginSlice';
-import { useFormik } from 'formik';
 import { client } from '../lib/axios';
 import { setCookie, deleteCookie, getCookie } from '../lib/cookies';
 

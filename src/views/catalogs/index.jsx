@@ -1,25 +1,25 @@
 import React from 'react';
 import { Container } from '@mui/material';
-import CreateUserForm from '../../components/forms/createUserForm';
-import { titleUser, titleUserTitle } from '../../common/text/TextTitle';
+import { titleModulCatalogo } from '../../common/text/TextTitle';
 import { textBienvenida } from '../../common/text/TextCardWellcome';
 import Bienvenida from '../../components/bienvenida/Bienvenida';
+import TableCatalogo from '../../components/catalogo/TableCatalogo';
 
-const UserCreate = () => {
+const Catalog = () => {
   const props = {
-    navigateLink: '/users',
-    title: titleUser,
-    text: titleUserTitle,
+    navigateLink: '/catalogo',
+    title: titleModulCatalogo.titleCatalogoList,
+    text: titleModulCatalogo.descriptionCatalogoList,
     textCard: textBienvenida,
   };
   return (
     <Container maxWidth="lg">
       <Bienvenida {...props} />
-      <Container item xs={12} md={12} lg={12}>
-        <CreateUserForm />
+      <Container>
+        <TableCatalogo />
       </Container>
     </Container>
   );
 };
 
-export default UserCreate;
+export default Catalog;

@@ -6,7 +6,7 @@ import { getCookie } from '../lib/cookies';
 
 /**
  * Usa este hook para obtener la lista
- * de todos los clientes
+ * de todos los usuarios
  *
  */
 export const useGetUsers = () => {

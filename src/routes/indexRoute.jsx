@@ -1,24 +1,27 @@
 import { createBrowserRouter } from 'react-router-dom';
 import Login from '../views/login';
-//import ProtectedRoutes from '../components/ProtectedRoutes';
 import Dashboard from '../views/dashboard';
 import Error from '../views/error/Error';
 import User from '../views/user';
 import UserCreate from '../views/user/create';
-import DetailUser from '../views/user/show';
-import EditUser from '../views/user/edit';
-import Cliente from '../views/cliente/Cliente';
-import ClienteCreate from '../views/cliente/ClienteCreate';
-import EditCliente from '../views/cliente/EditCliente';
-import DetailCliente from '../views/cliente/DetailCliente';
-import Catalogo from '../views/catalogo/Catalogo';
-import CatalogoCreate from '../views/catalogo/CatalogoCreate';
-import EditCatalogo from '../views/catalogo/EditCatalogo';
-import DetailCatalogo from '../views/catalogo/DetailCatalogo';
+import ShowUser from '../views/user/show';
+import UpdateUser from '../views/user/update';
+
+import Client from '../views/clients';
+import CreateClient from '../views/clients/create';
+import UpdateClient from '../views/clients/update';
+import ShowClient from '../views/clients/show';
+
+import Catalog from '../views/catalogs';
+import CreateCatalog from '../views/catalogs/create';
+import UpdateCatalog from '../views/catalogs/update';
+import ShowCatalog from '../views/catalogs/show';
+
 import AdquisicionServicio from '../views/adquisicion-servicio/AdquisicionServicio';
 import AdquisicionServicioCreate from '../views/adquisicion-servicio/AdquisicionServicioCreate';
 import EditAdquisicionServicio from '../views/adquisicion-servicio/EditAdquisicionServicio';
 import DetailAdquisicionServicio from '../views/adquisicion-servicio/DetailAdquisicionServicio';
+
 import { PrincipalMenuLayout } from '../components/common/layouts';
 import { useDispatch } from 'react-redux';
 import { addUser } from '../features/login/loginSlice';
@@ -65,56 +68,56 @@ export const indexRoute = createBrowserRouter([
           },
           {
             path: '/user/:id/Details',
-            element: <DetailUser />,
+            element: <ShowUser />,
             errorElement: <Error />,
           },
           {
             path: '/user/:id/edit',
-            element: <EditUser />,
+            element: <UpdateUser />,
             errorElement: <Error />,
           },
 
           /*clientes*/
           {
             path: '/clientes',
-            element: <Cliente />,
+            element: <Client />,
             errorElement: <Error />,
           },
           {
             path: '/clienteCreate',
-            element: <ClienteCreate />,
+            element: <CreateClient />,
             errorElement: <Error />,
           },
           {
             path: '/cliente/:id/edit',
-            element: <EditCliente />,
+            element: <UpdateClient />,
             errorElement: <Error />,
           },
           {
             path: '/cliente/:id/details',
-            element: <DetailCliente />,
+            element: <ShowClient />,
             errorElement: <Error />,
           },
 
           /*catalogo*/
           {
             path: '/catalogo',
-            element: <Catalogo />,
+            element: <Catalog />,
             errorElement: <Error />,
           },
           {
             path: '/catalogoCreate',
-            element: <CatalogoCreate />,
+            element: <CreateCatalog />,
             errorElement: <Error />,
           },
           {
             path: '/catalogo/:id/edit',
-            element: <EditCatalogo />,
+            element: <UpdateCatalog />,
             errorElement: <Error />,
           },
           {
             path: '/catalogo/:id/details',
-            element: <DetailCatalogo />,
+            element: <ShowCatalog />,
             errorElement: <Error />,
           },
 

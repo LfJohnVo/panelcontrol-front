@@ -1,25 +1,28 @@
 import React from 'react';
-import { Container, Grid } from '@mui/material';
+import { Container } from '@mui/material';
 import FormEditCatalogo from '../../components/catalogo/FormEditCatalogo';
 import { titleModulCatalogo } from '../../common/text/TextTitle';
-function EditCatalogo() {
+import { textBienvenida } from '../../common/text/TextCardWellcome';
+import Bienvenida from '../../components/bienvenida/Bienvenida';
+
+const UpdateCatalog = () => {
   const props = {
     navigateLink: '/catalogo',
     title: titleModulCatalogo.titleCatalogoList,
     text: titleModulCatalogo.descriptionCatalogoList,
+    textCard: textBienvenida,
   };
 
   return (
     <>
       <Container maxWidth="lg">
-        <Grid container spacing={3} rowSpacing={0}>
-          <Grid item xs={12} md={12} lg={12}>
-            <FormEditCatalogo {...props} />
-          </Grid>
-        </Grid>
+        <Bienvenida {...props} />
+        <Container>
+          <FormEditCatalogo {...props} />
+        </Container>
       </Container>
     </>
   );
-}
+};
 
-export default EditCatalogo;
+export default UpdateCatalog;
