@@ -18,6 +18,8 @@ export const validateMin = (value, min) => {
 };
 
 export const validatePassword = value => {
+  if (validateRequired(value)) return 'La contraseña es un campo requerido';
+
   if (/\s/.test(value)) {
     return 'La contraseña no puede estar vacia';
   }

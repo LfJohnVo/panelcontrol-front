@@ -20,7 +20,7 @@ export const TextInput = ({
   label,
 }) => {
   return (
-    <FormControl sx={{ m: 1 }}>
+    <FormControl sx={{ m: 1 }} fullWidth>
       <TextField
         id={name}
         label={label}
@@ -45,7 +45,7 @@ export const PasswordInput = ({ value, name, onChange, error }) => {
     setShowPassword(false);
   });
   return (
-    <FormControl sx={{ m: 1 }} variant="standard">
+    <FormControl sx={{ m: 1 }} variant="standard" fullWidth>
       <InputLabel htmlFor="standard-adornment-password">Password</InputLabel>
       <Input
         id={name}
