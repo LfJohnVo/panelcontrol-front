@@ -1,24 +1,19 @@
+import React from 'react';
+import { colorsTable } from '../../common/color/color';
+import {
+  Grid,
+  Typography,
+  Box,
+  Button,
+  Stack,
+  IconButton,
+} from '@mui/material';
+import { DataGrid, GridToolbarQuickFilter } from '@mui/x-data-grid';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
-import {
-  Box,
-  Button,
-  Grid,
-  IconButton,
-  Stack,
-  Typography,
-} from '@mui/material';
-import Link from '@mui/material/Link';
-import { GridToolbarQuickFilter } from '@mui/x-data-grid';
-import React, { useEffect } from 'react';
 import { Link as linkrouter, useNavigate } from 'react-router-dom';
-import { deleteRecord } from '../../common/text/Notify';
-import { useGetAllClients } from '../../hooks/useClient';
-import { DialogCustom } from '../common/dialogs';
-import { BoxTableLayout, DataGridLayout } from '../common/layouts';
-import Loading from '../loading/Loading';
-import NotifyContainer from '../notify/NotifyContainer';
+import Link from '@mui/material/Link';
 
 function QuickSearchToolbar() {
   const navigate = useNavigate();
@@ -51,7 +46,7 @@ function QuickSearchToolbar() {
               ml={'35px'}
               mt={'26px'}
             >
-              Clientes creados
+              Servicios Adquiridos creados
             </Typography>
           </Box>
         </Grid>
@@ -93,10 +88,10 @@ function QuickSearchToolbar() {
               variant="contained"
               startIcon={<AddIcon />}
               onClick={() => {
-                navigate('/clienteCreate');
+                navigate('/adquisicionCreate');
               }}
             >
-              Crear Cliente
+              Crear Adquisicion
             </Button>
           </Box>
         </Grid>
@@ -105,17 +100,14 @@ function QuickSearchToolbar() {
   );
 }
 
-function TableCliente() {
-  const [
-    getInfo,
-    loading,
-    data,
-    handleClickDelete,
-    handleClickEdit,
-    open,
-    handleClose,
-    handleOpen,
-  ] = useGetAllClients();
+function TableAdquisicionServicio() {
+  const navigate = useNavigate();
+  //variables
+  const rows = [
+    { id: 1, title: 'Hello', description: 'World' },
+    { id: 2, title: 'DataGridPro', description: 'is Awesome' },
+    { id: 3, title: 'MUI', description: 'is Amazing' },
+  ];
 
   const columns = [
     {
@@ -125,36 +117,27 @@ function TableCliente() {
       headerClassName: 'super-app-theme--header2',
       renderCell: cellValues => {
         return (
-          <>
-            <Link
-              component={linkrouter}
-              to={`/cliente/${cellValues.row.id}/details`}
-              underline="none"
-              sx={{ ml: '30px', textAlign: 'left' }}
-            >
-              {cellValues.row.id}
-            </Link>
-          </>
+          <Link
+            component={linkrouter}
+            to={`/adquisicion/${cellValues.row.id}/details`}
+            underline="none"
+            sx={{ ml: '30px', textAlign: 'left' }}
+          >
+            {cellValues.row.id}
+          </Link>
         );
       },
     },
-
     {
-      field: 'name',
+      field: 'title',
       headerName: 'Nombre',
-      width: 150,
+      width: 350,
       headerClassName: 'super-app-theme--header',
     },
     {
-      field: 'email',
-      headerName: 'Correo',
-      width: 150,
-      headerClassName: 'super-app-theme--header',
-    },
-    {
-      field: 'col3',
-      headerName: 'Razon social',
-      width: 150,
+      field: 'description',
+      headerName: 'Description',
+      width: 550,
       headerClassName: 'super-app-theme--header',
     },
     {
@@ -167,15 +150,15 @@ function TableCliente() {
               <IconButton
                 aria-label="edit"
                 onClick={async e => {
-                  handleClickEdit(e, cellValues);
+                  handleClickEditAdquisicionServicio(e, cellValues);
                 }}
               >
                 <EditOutlinedIcon />
               </IconButton>
               <IconButton
-                aria-label="delete"
+                aria-label="edit"
                 onClick={async e => {
-                  handleOpen(e, cellValues);
+                  handleClickDeleteAdquisicionServicio(e, cellValues);
                 }}
               >
                 <DeleteOutlinedIcon />
@@ -187,35 +170,57 @@ function TableCliente() {
     },
   ];
 
-  useEffect(() => {
-    getInfo();
-  }, []);
+  //functions
+
+  const handleClickEditAdquisicionServicio = async (e, cellValues) => {
+    const id = cellValues.row.id;
+    navigate(`/adquisicion/${id}/edit`);
+  };
+
+  const handleClickDeleteAdquisicionServicio = async (e, cellValues) => {
+    console.log(cellValues);
+  };
 
   return (
     <>
-      <NotifyContainer />
-      <DialogCustom
-        open={open}
-        handleClose={handleClose}
-        handleClickDelete={handleClickDelete}
-        text={deleteRecord}
-      />
-
-      {loading ? (
-        <Loading />
-      ) : (
-        <Grid item xs={12} md={12} lg={12}>
-          <BoxTableLayout>
-            <DataGridLayout
-              data={data}
-              columns={columns}
-              quickSearchToolbar={QuickSearchToolbar}
-            />
-          </BoxTableLayout>
-        </Grid>
-      )}
+      <Grid item xs={12} md={12} lg={12}>
+        <Box
+          component={'div'}
+          sx={{
+            height: 737,
+            mb: '40px',
+            width: '100%',
+            '& .super-app-theme--header2': {
+              backgroundColor: colorsTable.colorCellHeader,
+              pl: '39px',
+            },
+            '& .super-app-theme--header': {
+              backgroundColor: colorsTable.colorCellHeader,
+            },
+          }}
+        >
+          <DataGrid
+            rows={rows}
+            columns={columns}
+            disableColumnMenu
+            initialState={{
+              pagination: { paginationModel: { pageSize: 10 } },
+            }}
+            pageSizeOptions={[5, 10, 25]}
+            slots={{ toolbar: QuickSearchToolbar }}
+            slotProps={{
+              toolbar: {
+                showQuickFilter: true,
+              },
+            }}
+            style={{
+              background: colorsTable.colorFondo,
+            }}
+          />
+        </Box>
+      </Grid>
     </>
   );
 }
 
-export default TableCliente;
+export default TableAdquisicionServicio;

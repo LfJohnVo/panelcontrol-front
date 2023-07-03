@@ -1,5 +1,4 @@
 import React from 'react';
-import { useState, useEffect } from 'react';
 import { colorsTable } from '../../common/color/color';
 import {
   Grid,
@@ -11,32 +10,13 @@ import {
 } from '@mui/material';
 import { DataGrid, GridToolbarQuickFilter } from '@mui/x-data-grid';
 import AddIcon from '@mui/icons-material/Add';
-import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import { Link as linkrouter, useNavigate } from 'react-router-dom';
 import Link from '@mui/material/Link';
-import {
-  deleteCatalogo,
-  getAllCatalogo,
-} from '../../services/catalogo/catalogo';
-import { useDispatch, useSelector } from 'react-redux';
-import {
-  changeTrue,
-  changeFalse,
-  selectLoading,
-} from '../../features/loading/loadingSlice';
-import { selectUser } from '../../features/login/loginSlice';
 import Loading from '../loading/Loading';
-import NotifyContainer from '../notify/NotifyContainer';
-import { catalogo } from '../../common/text/Notify';
-import { notifyMessage } from '../notify/NotifyMessage';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
+import { useGetCatalogs } from '../../hooks/catalogs';
 
-function QuickSearchToolbar() {
+const QuickSearchToolbar = () => {
   const navigate = useNavigate();
   return (
     <Box component={'div'}>
@@ -119,17 +99,11 @@ function QuickSearchToolbar() {
       </Grid>
     </Box>
   );
-}
+};
 
-function TableCatalogo() {
+const TableCatalog = () => {
+  const [loading, catalogs, handleGetCatalogs] = useGetCatalogs();
   const navigate = useNavigate();
-  //variables
-  const [data, setData] = useState([]);
-  const dispatch = useDispatch();
-  const loading = useSelector(selectLoading);
-  const token = useSelector(selectUser);
-  const [open, setOpen] = useState(false);
-  const [id, setId] = useState('');
 
   const columns = [
     {
@@ -155,12 +129,13 @@ function TableCatalogo() {
     {
       field: 'title',
       headerName: 'Nombre',
-      width: 350,
+      width: 550,
       headerClassName: 'super-app-theme--header',
     },
     {
       field: 'Opciones',
       headerClassName: 'super-app-theme--header',
+      width: 350,
       renderCell: cellValues => {
         return (
           <>
@@ -168,19 +143,10 @@ function TableCatalogo() {
               <IconButton
                 aria-label="edit"
                 onClick={async e => {
-                  handleClickEditCatalogo(e, cellValues);
+                  navigate(`/catalogo/${cellValues.row.id}/edit`);
                 }}
               >
                 <EditOutlinedIcon />
-              </IconButton>
-              <IconButton
-                aria-label="edit"
-                onClick={async e => {
-                  // handleClickDeleteCatalogo(e, cellValues);
-                  handleClickOpen(e, cellValues);
-                }}
-              >
-                <DeleteOutlinedIcon />
               </IconButton>
             </Stack>
           </>
@@ -189,67 +155,8 @@ function TableCatalogo() {
     },
   ];
 
-  //functions
-
-  const handleClickEditCatalogo = async (e, cellValues) => {
-    const id = cellValues.row.id;
-    navigate(`/catalogo/${id}/edit`);
-  };
-
-  const handleClickDeleteCatalogo = async () => {
-    await deleteCatalogo(id, token.token);
-    notifyMessage(catalogo.delete);
-    getCatalogo();
-    handleClose();
-  };
-
-  const handleClickOpen = (e, cellValues) => {
-    const id = cellValues.row.id;
-    setId(id);
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setId('');
-    setOpen(false);
-  };
-
-  const getCatalogo = async () => {
-    try {
-      dispatch(changeTrue());
-      const response = await getAllCatalogo(token.token);
-      setData(response);
-      dispatch(changeFalse());
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    getCatalogo();
-  }, []);
-
   return (
     <>
-      <NotifyContainer />
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            ¿Esta seguro que desea eliminar el servicio del catalogo?
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>Cancelar</Button>
-          <Button onClick={handleClickDeleteCatalogo} autoFocus>
-            Aceptar
-          </Button>
-        </DialogActions>
-      </Dialog>
       {loading ? (
         <Loading />
       ) : (
@@ -270,7 +177,7 @@ function TableCatalogo() {
             }}
           >
             <DataGrid
-              rows={data}
+              rows={catalogs}
               columns={columns}
               disableColumnMenu
               initialState={{
@@ -292,6 +199,6 @@ function TableCatalogo() {
       )}
     </>
   );
-}
+};
 
-export default TableCatalogo;
+export default TableCatalog;

@@ -1,11 +1,11 @@
-import { FormLayout, PaperLayout } from '../common/layouts';
-import { GeneralForm } from './generalForms';
-import { CreateUserModel } from '../../app/forms';
+import { FormLayout, PaperLayout } from '../../common/layouts';
+import { GeneralForm } from '../generalForms';
+import { CreateUserModel } from '../models/user';
 import { Button } from '@mui/material';
-import Loading from '../loading/Loading';
-import { useUpdateUser, useGetUser } from '../../hooks/user';
+import Loading from '../../loading/Loading';
+import { useUpdateUser, useGetUser } from '../../../hooks/user';
 
-const EditUserForm = () => {
+const UpdateClientForm = () => {
   const [clientCreated, handleCreate] = useUpdateUser();
   const [loading, user] = useGetUser();
   CreateUserModel.values = user;
@@ -15,7 +15,6 @@ const EditUserForm = () => {
         <Loading />
       ) : (
         <PaperLayout>
-          test
           <GeneralForm model={CreateUserModel} handleSubmit={handleCreate}>
             <Button
               type="submit"
@@ -32,4 +31,4 @@ const EditUserForm = () => {
   );
 };
 
-export default EditUserForm;
+export default UpdateClientForm;

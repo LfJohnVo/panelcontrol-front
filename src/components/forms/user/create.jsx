@@ -1,8 +1,8 @@
-import { FormLayout, PaperLayout } from '../common/layouts';
-import { GeneralForm } from './generalForms';
-import { CreateUserModel } from '../../app/forms';
+import { FormLayout, PaperLayout } from '../../common/layouts';
+import { GeneralForm } from '../generalForms';
+import { CreateUserModel } from '../models/user';
 import { Button } from '@mui/material';
-import { useCreateUser } from '../../hooks/user';
+import { useCreateUser } from '../../../hooks/user';
 
 const CreateUserForm = () => {
   const [clientCreated, handleCreate] = useCreateUser();

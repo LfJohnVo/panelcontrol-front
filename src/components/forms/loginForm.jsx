@@ -2,7 +2,7 @@ import { useLogin } from '../../hooks';
 import { FormLayout } from '../common/layouts';
 import { Grid, Box, Typography, Button, Link } from '@mui/material';
 import { GeneralForm } from './generalForms';
-import { SignInModel } from '../../app/forms';
+import { SignInModel } from './models/generals';
 
 /**
  *

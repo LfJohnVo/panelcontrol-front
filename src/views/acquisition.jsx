@@ -4,7 +4,7 @@ import TableDasboard from '../components/tables/dashboard';
 import { titleUser, titleUserTitle } from '../common/text/TextTitle';
 import { textBienvenida } from '../common/text/TextCardWellcome';
 
-const Dashboard = () => {
+const Acquisition = () => {
   const props = {
     navigateLink: '/dashboard',
     title: titleUser,
@@ -21,4 +21,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default Acquisition;

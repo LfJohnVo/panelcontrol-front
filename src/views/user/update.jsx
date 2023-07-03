@@ -1,6 +1,6 @@
 import React from 'react';
-import { Container, Grid } from '@mui/material';
-import EditUserForm from '../../components/forms/editUser';
+import { Container } from '@mui/material';
+import EditUserForm from '../../components/forms/user/update';
 import Bienvenida from '../../components/bienvenida/Bienvenida';
 import { titleUser, titleUserTitle } from '../../common/text/TextTitle';
 import { textBienvenida } from '../../common/text/TextCardWellcome';

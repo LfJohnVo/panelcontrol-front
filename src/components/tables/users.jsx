@@ -6,8 +6,7 @@ import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import { Link as linkrouter, useNavigate } from 'react-router-dom';
 import Link from '@mui/material/Link';
-import { sf } from '../../common/text/SF';
-import Loading from '../loading/Loading';
+import Loading from '../common/loading';
 import { BoxTableLayout, DataGridLayout, FormLayout } from '../common/layouts';
 import { ButtonCustom } from '../common/buttons';
 import { TypographyCustom } from '../common/Typographys';
@@ -152,7 +151,7 @@ const TableUser = () => {
       width: 400,
       headerClassName: 'super-app-theme--header',
       renderCell: cellValues => {
-        return cellValues.direccion ? cellValues.direccion : sf;
+        return cellValues.row.domicilio ?? 'Sin domicilio';
       },
     },
     {
