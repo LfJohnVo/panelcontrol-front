@@ -16,7 +16,7 @@ import { Link as linkrouter, useNavigate } from 'react-router-dom';
 import { deleteRecord } from '../../common/text/Notify';
 import { DialogCustom } from '../common/dialogs';
 import { BoxTableLayout, DataGridLayout, FormLayout } from '../common/layouts';
-import Loading from '../loading/Loading';
+import Loading from '../common/loading';
 import { useDeleteClient, useGetClients } from '../../hooks/clients';
 
 const QuickSearchToolbar = () => {
@@ -118,16 +118,14 @@ const TableCliente = () => {
       headerClassName: 'super-app-theme--header2',
       renderCell: cellValues => {
         return (
-          <>
-            <Link
-              component={linkrouter}
-              to={`/cliente/${cellValues.row.id}/details`}
-              underline="none"
-              sx={{ ml: '30px', textAlign: 'left' }}
-            >
-              {cellValues.row.id}
-            </Link>
-          </>
+          <Link
+            component={linkrouter}
+            to={`/cliente/${cellValues.row.id}/details`}
+            underline="none"
+            sx={{ ml: '30px', textAlign: 'left' }}
+          >
+            {cellValues.row.id}
+          </Link>
         );
       },
     },
@@ -156,26 +154,24 @@ const TableCliente = () => {
       headerClassName: 'super-app-theme--header',
       renderCell: cellValues => {
         return (
-          <>
-            <Stack direction="row" spacing={0.5}>
-              <IconButton
-                aria-label="edit"
-                onClick={async e => {
-                  navigate(`/cliente/${cellValues.row.id}/edit`);
-                }}
-              >
-                <EditOutlinedIcon />
-              </IconButton>
-              <IconButton
-                aria-label="delete"
-                onClick={async e => {
-                  handleOpenAlert(cellValues.row.id);
-                }}
-              >
-                <DeleteOutlinedIcon />
-              </IconButton>
-            </Stack>
-          </>
+          <Stack direction="row" spacing={0.5}>
+            <IconButton
+              aria-label="edit"
+              onClick={async e => {
+                navigate(`/cliente/${cellValues.row.id}/edit`);
+              }}
+            >
+              <EditOutlinedIcon />
+            </IconButton>
+            <IconButton
+              aria-label="delete"
+              onClick={async e => {
+                handleOpenAlert(cellValues.row.id);
+              }}
+            >
+              <DeleteOutlinedIcon />
+            </IconButton>
+          </Stack>
         );
       },
     },

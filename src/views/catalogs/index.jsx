@@ -3,7 +3,7 @@ import { Container } from '@mui/material';
 import { titleModulCatalogo } from '../../common/text/TextTitle';
 import { textBienvenida } from '../../common/text/TextCardWellcome';
 import Bienvenida from '../../components/bienvenida/Bienvenida';
-import TableCatalogo from '../../components/catalogo/TableCatalogo';
+import TableCatalog from '../../components/tables/catalogs';
 
 const Catalog = () => {
   const props = {
@@ -16,7 +16,7 @@ const Catalog = () => {
     <Container maxWidth="lg">
       <Bienvenida {...props} />
       <Container>
-        <TableCatalogo />
+        <TableCatalog />
       </Container>
     </Container>
   );

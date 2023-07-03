@@ -58,7 +58,7 @@ export const PrincipalMenu = () => {
         </ListItemButton>
       </Tooltip>
 
-      <Tooltip title="Catalogo">
+      <Tooltip title="Proyectos">
         <ListItemButton
           id="catalogo"
           onClick={() => {

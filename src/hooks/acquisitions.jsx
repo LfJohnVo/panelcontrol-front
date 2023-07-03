@@ -6,9 +6,10 @@ import { getCookie } from '../lib/cookies';
 
 /**
  * Usa este hook para obtener la lista
- * de todos los clientes
+ * de todos los usuarios
+ *
  */
-export const useGetClients = () => {
+export const useGetCatalogs = () => {
   const [loading, setLoading] = useState(false);
   const [clients, setClients] = useState([]);
   const token = getCookie('token');
@@ -17,7 +18,7 @@ export const useGetClients = () => {
     async (filters = [], pag = 1, order = 'ASC', orderby = 'id') => {
       try {
         setLoading(true);
-        const response = await client.get('/api/clients', {
+        const response = await client.get('/api/users', {
           headers: { Authorization: `Bearer ${token}` },
         });
         setClients(response.data.data);
@@ -37,11 +38,11 @@ export const useGetClients = () => {
 };
 
 /**
- * Usa este hook para eliminar a un cliente
+ * Usa este hook para eliminar a un usuario
  *
  * @returns
  */
-export const useDeleteClient = () => {
+export const useDeleteCatalog = () => {
   const [alert, setAlert] = useState(false);
   const [deleted, setDeleted] = useState(false);
   const [id, setId] = useState('');
@@ -73,6 +74,7 @@ export const useDeleteClient = () => {
       setDeleted(false);
     }
   });
+
   return [alert, handleOpenAlert, handleCloseAlert, handleDelete, deleted];
 };
 
@@ -81,16 +83,15 @@ export const useDeleteClient = () => {
  *
  * @returns
  */
-export const useCreateClient = () => {
+export const useCreateCatalog = () => {
   const [clientCreated, setClientCreated] = useState(false);
   const token = getCookie('token');
   const navigate = useNavigate();
 
   const handleCreate = useCallback(async values => {
-    alert('test');
     try {
       setClientCreated(true);
-      const resp = await client.post('/api/clients', values, {
+      const resp = await client.post('/api/users', values, {
         headers: { Authorization: `Bearer ${token}` },
       });
       notify(resp.data.status, resp.data.message);
@@ -105,4 +106,69 @@ export const useCreateClient = () => {
   });
 
   return [clientCreated, handleCreate];
+};
+
+/**
+ * Usa este hook para crear un usuario
+ *
+ * @returns
+ */
+export const useGetCatalog = () => {
+  const { id } = useParams();
+  const token = getCookie('token');
+  const [loading, setLoading] = useState(false);
+  const [user, setUser] = useState({});
+
+  const handleGetUser = useCallback(async () => {
+    try {
+      setLoading(true);
+
+      const resp = await client.get(`/api/users/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setUser(resp.data.data);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+
+      notify(error.response.data.status, error.response.data.message);
+    }
+  });
+
+  useEffect(() => {
+    handleGetUser();
+  }, []);
+
+  return [loading, user];
+};
+
+/**
+ * Usa este hook para actualizar un usuario
+ *
+ * @returns
+ */
+export const useUpdateCatalog = () => {
+  const { id } = useParams();
+  const [userUpdated, setUserUpdated] = useState(false);
+  const token = getCookie('token');
+  const navigate = useNavigate();
+
+  const handleUpdate = useCallback(async values => {
+    try {
+      setUserUpdated(true);
+      const resp = await client.put(`/api/users/${id}`, values, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      notify(resp.data.status, resp.data.message);
+      setUserUpdated(false);
+      setTimeout(() => {
+        navigate('/users');
+      }, 1000);
+    } catch (error) {
+      notify(error.response.data.status, error.response.data.message);
+      setUserUpdated(false);
+    }
+  });
+
+  return [userUpdated, handleUpdate];
 };

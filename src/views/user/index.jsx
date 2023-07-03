@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Divider, Grid } from '@mui/material';
+import { Container } from '@mui/material';
 import { titleUser, titleUserTitle } from '../../common/text/TextTitle';
 import { textBienvenida } from '../../common/text/TextCardWellcome';
 import Bienvenida from '../../components/bienvenida/Bienvenida';

@@ -17,10 +17,10 @@ import CreateCatalog from '../views/catalogs/create';
 import UpdateCatalog from '../views/catalogs/update';
 import ShowCatalog from '../views/catalogs/show';
 
-import AdquisicionServicio from '../views/adquisicion-servicio/AdquisicionServicio';
-import AdquisicionServicioCreate from '../views/adquisicion-servicio/AdquisicionServicioCreate';
-import EditAdquisicionServicio from '../views/adquisicion-servicio/EditAdquisicionServicio';
-import DetailAdquisicionServicio from '../views/adquisicion-servicio/DetailAdquisicionServicio';
+import Acquisition from '../views/acquisition';
+import AcquisitionCreate from '../views/acquisition/create';
+import UpdateAcquisition from '../views/acquisition/update';
+import ShowAcquisition from '../views/acquisition/show';
 
 import { PrincipalMenuLayout } from '../components/common/layouts';
 import { useDispatch } from 'react-redux';
@@ -124,22 +124,22 @@ export const indexRoute = createBrowserRouter([
           /*adquisicion servicio*/
           {
             path: '/adquisiciones',
-            element: <AdquisicionServicio />,
+            element: <Acquisition />,
             errorElement: <Error />,
           },
           {
             path: '/adquisicionCreate',
-            element: <AdquisicionServicioCreate />,
+            element: <AcquisitionCreate />,
             errorElement: <Error />,
           },
           {
             path: '/adquisicion/:id/edit',
-            element: <EditAdquisicionServicio />,
+            element: <UpdateAcquisition />,
             errorElement: <Error />,
           },
           {
             path: '/adquisicion/:id/details',
-            element: <DetailAdquisicionServicio />,
+            element: <ShowAcquisition />,
             errorElement: <Error />,
           },
 

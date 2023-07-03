@@ -11,7 +11,6 @@ import { PrincipalNavbar } from './navbar';
 import { PrincipalSidebar } from './sidebar';
 import { useCallback, useState } from 'react';
 import { Outlet } from 'react-router-dom';
-import TitleModule from './titles';
 
 export const PaperLayout = ({ children }) => {
   return (

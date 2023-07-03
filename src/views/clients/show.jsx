@@ -1,6 +1,5 @@
 import React from 'react';
 import { Container } from '@mui/material';
-import ClienteDetail from '../../components/cliente/ClienteDetail';
 import { titleModulCliente } from '../../common/text/TextTitle';
 
 const ShowClient = () => {
@@ -12,7 +11,7 @@ const ShowClient = () => {
   return (
     <Container maxWidth="lg">
       <Container>
-        <ClienteDetail {...props} />
+        <div>test</div>
       </Container>
     </Container>
   );

@@ -1,15 +1,3 @@
-/**
- *
- * Fichero deprecado cambiar al loading que se encuentra en
- * la carpeta scr/components/common/loading.jsx
- *
- *
- * No implementar
- *
- *
- *
- */
-
 import * as React from 'react';
 import { styled } from '@mui/material/styles';
 import { Box, Paper, Grid } from '@mui/material/';
@@ -30,7 +18,7 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   },
 }));
 
-export default function Loading() {
+const Loading = () => {
   return (
     <Grid
       item
@@ -63,4 +51,6 @@ export default function Loading() {
       </Paper>
     </Grid>
   );
-}
+};
+
+export default Loading;
