@@ -1,4 +1,5 @@
 import { useFormik } from 'formik';
+import { useMemo, useRef, useCallback } from 'react';
 
 /**
  * @author DamianDev
@@ -30,6 +31,8 @@ export const useValidate = (initialValues, onSubmit, validate) => {
  * @param {*} element
  * @param {*} setShow
  *
+ *
+ * 
 export const useLazyRender = () => {
   const [show, setShow] = useState(false);
   const element = useRef(null);
@@ -85,4 +88,30 @@ export const useLocalStorage = (key, initialValue) => {
   };
 
   return [storedValue, setLocalStorage];
+};
+
+export const useCallbackCreator = (callback, inputs) => {
+  const callbacks = useRef({});
+
+  useMemo(() => {
+    for (const id in callbacks.current) {
+      callbacks.current[id].func = (...args) =>
+        callback(
+          callbacks.current[id].id,
+          ...callbacks.current[id].savedArgs,
+          ...args
+        );
+    }
+  }, inputs);
+
+  return useCallback((id, ...savedArgs) => {
+    if (!callbacks.current[id]) {
+      callbacks.current[id] = {
+        id,
+        savedArgs,
+        func: (...args) => callback(id, ...savedArgs, ...args),
+      };
+    }
+    return callbacks.current[id].func;
+  }, inputs);
 };

@@ -20,6 +20,7 @@ export const PaperLayout = ({ children }) => {
         p: '61px 51px 64px 27px',
         display: 'flex',
         flexDirection: 'row',
+        justifyContent: 'center',
         height: 'auto',
         background: colorsTable.white,
         mb: '125px',
