@@ -1,15 +1,15 @@
 import { FormLayout, PaperLayout } from '../../common/layouts';
 import { GeneralForm } from '../generalForms';
-import { CreateUserModel } from '../models/user';
 import { Button } from '@mui/material';
-import { useCreateUser } from '../../../hooks/user';
+import { CreateCatalogModel } from '../models/catalog';
+import { useCreateCatalog } from '../../../hooks/catalogs';
 
 const CreateCatalogForm = () => {
-  const [clientCreated, handleCreate] = useCreateUser();
+  const [catalogCreated, handleCreate] = useCreateCatalog();
   return (
-    <FormLayout open={clientCreated}>
+    <FormLayout open={catalogCreated}>
       <PaperLayout>
-        <GeneralForm model={CreateUserModel} handleSubmit={handleCreate}>
+        <GeneralForm model={CreateCatalogModel} handleSubmit={handleCreate}>
           <Button
             type="submit"
             fullWidth

@@ -1,21 +1,21 @@
 import { FormLayout, PaperLayout } from '../../common/layouts';
 import { GeneralForm } from '../generalForms';
-import { CreateUserModel } from '../models/user';
+import { CreateCatalogModel } from '../models/catalog';
 import { Button } from '@mui/material';
 import Loading from '../../loading/Loading';
-import { useUpdateUser, useGetUser } from '../../../hooks/user';
+import { useUpdateCatalog, useGetCatalog } from '../../../hooks/catalogs';
 
 const UpdateCatalogForm = () => {
-  const [clientCreated, handleCreate] = useUpdateUser();
-  const [loading, user] = useGetUser();
-  CreateUserModel.values = user;
+  const [catalogCreated, handleUpdate] = useUpdateCatalog();
+  const [loading, catalog] = useGetCatalog();
+  CreateCatalogModel.values = catalog;
   return (
-    <FormLayout open={clientCreated}>
+    <FormLayout open={catalogCreated}>
       {loading ? (
         <Loading />
       ) : (
         <PaperLayout>
-          <GeneralForm model={CreateUserModel} handleSubmit={handleCreate}>
+          <GeneralForm model={CreateCatalogModel} handleSubmit={handleUpdate}>
             <Button
               type="submit"
               fullWidth

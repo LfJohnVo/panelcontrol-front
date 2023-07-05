@@ -43,28 +43,29 @@ export const useGetCatalogs = () => {
  * @returns
  */
 export const useCreateCatalog = () => {
-  const [clientCreated, setClientCreated] = useState(false);
+  const [catalogCreated, setCatalogCreated] = useState(false);
   const token = getCookie('token');
   const navigate = useNavigate();
 
   const handleCreate = useCallback(async values => {
     try {
-      setClientCreated(true);
-      const resp = await client.post('/api/users', values, {
+      // console.log(values);
+      setCatalogCreated(true);
+      const resp = await client.post('/api/projects', values, {
         headers: { Authorization: `Bearer ${token}` },
       });
       notify(resp.data.status, resp.data.message);
-      setClientCreated(false);
+      setCatalogCreated(false);
       setTimeout(() => {
-        navigate('/users');
+        navigate('/catalogo');
       }, 1000);
     } catch (error) {
       notify(error.response.data.status, error.response.data.message);
-      setClientCreated(false);
+      setCatalogCreated(false);
     }
   });
 
-  return [clientCreated, handleCreate];
+  return [catalogCreated, handleCreate];
 };
 
 /**
@@ -76,29 +77,27 @@ export const useGetCatalog = () => {
   const { id } = useParams();
   const token = getCookie('token');
   const [loading, setLoading] = useState(false);
-  const [user, setUser] = useState({});
+  const [catalog, setCatalog] = useState({});
 
-  const handleGetUser = useCallback(async () => {
+  const handleGetCatalog = useCallback(async () => {
     try {
       setLoading(true);
-
-      const resp = await client.get(`/api/users/${id}`, {
+      const resp = await client.get(`/api/projects/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      setUser(resp.data.data);
+      setCatalog(resp.data.data);
       setLoading(false);
     } catch (error) {
       setLoading(false);
-
       notify(error.response.data.status, error.response.data.message);
     }
   });
 
   useEffect(() => {
-    handleGetUser();
+    handleGetCatalog();
   }, []);
 
-  return [loading, user];
+  return [loading, catalog];
 };
 
 /**
@@ -108,26 +107,27 @@ export const useGetCatalog = () => {
  */
 export const useUpdateCatalog = () => {
   const { id } = useParams();
-  const [userUpdated, setUserUpdated] = useState(false);
+  const [catalogUpdated, setCatalogUpdated] = useState(false);
   const token = getCookie('token');
   const navigate = useNavigate();
 
   const handleUpdate = useCallback(async values => {
     try {
-      setUserUpdated(true);
-      const resp = await client.put(`/api/users/${id}`, values, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      notify(resp.data.status, resp.data.message);
-      setUserUpdated(false);
-      setTimeout(() => {
-        navigate('/users');
-      }, 1000);
+      console.log(values);
+      // setCatalogUpdated(true);
+      // const resp = await client.put(`/api/projects/${id}`, values, {
+      //   headers: { Authorization: `Bearer ${token}` },
+      // });
+      // notify(resp.data.status, resp.data.message);
+      // setCatalogUpdated(false);
+      // setTimeout(() => {
+      //   navigate('/users');
+      // }, 1000);
     } catch (error) {
       notify(error.response.data.status, error.response.data.message);
-      setUserUpdated(false);
+      setCatalogUpdated(false);
     }
   });
 
-  return [userUpdated, handleUpdate];
+  return [catalogUpdated, handleUpdate];
 };

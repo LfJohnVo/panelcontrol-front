@@ -7,8 +7,12 @@ import {
   TextField,
   FormControl,
   FormHelperText,
+  Chip,
+  Grid,
 } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
+import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
+import { useCallbackCreator } from '../../hooks/generals';
 
 export const TextInput = ({
   name,
@@ -71,6 +75,127 @@ export const PasswordInput = ({ value, name, onChange, error }) => {
   );
 };
 
+export const InputChip = ({
+  name,
+  variant = null,
+  value,
+  onChange,
+  placeholder,
+  label,
+  onClick,
+  onClick2,
+  onDelete,
+  chip,
+}) => {
+  return (
+    <FormControl sx={{ m: 1 }} fullWidth>
+      <TextField
+        label={label}
+        name={name}
+        value={value}
+        variant={variant || 'standard'}
+        onChange={onChange}
+        InputProps={{
+          endAdornment: (
+            <InputAdornment position="end">
+              <IconButton onClick={onClick}>
+                <AddCircleOutlineOutlinedIcon />
+              </IconButton>
+            </InputAdornment>
+          ),
+        }}
+      />
+      {chip.map((chip, index) => (
+        <Chip
+          key={index}
+          label={chip.title}
+          style={{
+            marginTop: '10px',
+            marginRight: '5px',
+          }}
+          onDelete={onDelete(chip)}
+          onClick={onClick2}
+        />
+      ))}
+    </FormControl>
+  );
+};
+
+export const MultipleChip = ({ onChange, arrayInputs }) => {
+  const [values, setValues] = useState([]);
+  const [value, setValue] = useState(arrayInputs.values);
+
+  const handleChange = useCallback(e => {
+    setValue({ ...value, [e.target.id]: e.target.value });
+  });
+
+  const handleClick = useCallback(() => {
+    if (value.title != '' && value.url != '') {
+      setValues([...values, value]);
+      onChange('modules', [...values, value]);
+      setValue(arrayInputs.values);
+    }
+  });
+
+  const handleAdd = useCallbackCreator(
+    index => {
+      const elements = values.filter(item => {
+        return values.indexOf(item) != index;
+      });
+      setValues(elements);
+    },
+    [values]
+  );
+
+  return (
+    <FormControl fullWidth>
+      {arrayInputs.inputs.map((input, index) => {
+        return (
+          <TextInput
+            key={index}
+            id={input.name}
+            name={input.name}
+            error={false}
+            value={value[input.name]}
+            onChange={handleChange}
+            placeholder={input.placeholder}
+            label={input.label}
+          />
+        );
+      })}
+      <Grid
+        container
+        spacing={2}
+        xs={{
+          display: 'flex',
+          flexDirection: 'row',
+          width: '100%',
+        }}
+      >
+        <Grid item xs={2}>
+          <IconButton onClick={handleClick}>
+            <AddCircleOutlineOutlinedIcon />
+          </IconButton>
+        </Grid>
+        <Grid item xs={8}>
+          {values.map((chip, index) => (
+            <Chip
+              id={index}
+              key={index}
+              label={chip.title}
+              style={{
+                marginTop: '10px',
+                marginRight: '5px',
+              }}
+              onDelete={handleAdd(index)}
+            />
+          ))}
+        </Grid>
+      </Grid>
+    </FormControl>
+  );
+};
+
 export const InputMaker = ({
   type,
   name,
@@ -80,6 +205,7 @@ export const InputMaker = ({
   error,
   values = [],
   label,
+  arrayInputs,
 }) => {
   switch (type) {
     case 'text':
@@ -106,6 +232,17 @@ export const InputMaker = ({
       return <div>Test</div>;
     case 'date':
       return <div>Aqui</div>;
+    case 'chip':
+      return <div>Chip</div>;
+    case 'multiplechip':
+      return (
+        <MultipleChip
+          onChange={onChange}
+          arrayInputs={arrayInputs}
+          value={value}
+          name={name}
+        />
+      );
   }
 };
 
