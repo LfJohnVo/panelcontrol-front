@@ -1,9 +1,8 @@
 import React from 'react';
-import { Container } from '@mui/material';
 import CatalogoDetail from '../../components/catalogo/CatalogoDetail';
 import { titleModulCatalogo } from '../../common/text/TextTitle';
 import { textBienvenida } from '../../common/text/TextCardWellcome';
-import Bienvenida from '../../components/bienvenida/Bienvenida';
+import { ViewLayout } from '../../components/common/layouts';
 
 const ShowCatalog = () => {
   const props = {
@@ -13,12 +12,9 @@ const ShowCatalog = () => {
     textCard: textBienvenida,
   };
   return (
-    <Container maxWidth="lg">
-      <Bienvenida {...props} />
-      <Container>
-        <CatalogoDetail {...props} />
-      </Container>
-    </Container>
+    <ViewLayout props={props}>
+      <CatalogoDetail {...props} />
+    </ViewLayout>
   );
 };
 

@@ -6,11 +6,14 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { DataGrid } from '@mui/x-data-grid';
 import { ToastContainer } from 'react-toastify';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { CssBaseline, Grid, Toolbar } from '@mui/material';
+import { Container, CssBaseline, Grid, Toolbar } from '@mui/material';
 import { PrincipalNavbar } from './navbar';
 import { PrincipalSidebar } from './sidebar';
 import { useCallback, useState } from 'react';
 import { Outlet } from 'react-router-dom';
+import 'react-toastify/dist/ReactToastify.min.css';
+import Loading from './loading';
+import Bienvenida from '../bienvenida/Bienvenida';
 
 export const PaperLayout = ({ children }) => {
   return (
@@ -22,6 +25,7 @@ export const PaperLayout = ({ children }) => {
         flexDirection: 'row',
         justifyContent: 'center',
         height: 'auto',
+        width: '100%',
         background: colorsTable.white,
         mb: '125px',
         border: `1px solid ${colorsTable.borderColor}`,
@@ -43,25 +47,30 @@ export const BackdropCustom = ({ open }) => {
   );
 };
 
-export const BoxTableLayout = ({ children }) => {
+export const TableLayout = ({ children, loading }) => {
   return (
-    <Box
-      component={'div'}
-      sx={{
-        height: 737,
-        mb: '40px',
-        width: '100%',
-        '& .super-app-theme--header2': {
-          backgroundColor: colorsTable.colorCellHeader,
-          pl: '39px',
-        },
-        '& .super-app-theme--header': {
-          backgroundColor: colorsTable.colorCellHeader,
-        },
-      }}
-    >
-      {children}
-    </Box>
+    <Container>
+      {loading ? (
+        <Loading />
+      ) : (
+        <Grid
+          item
+          sx={{
+            mb: '40px',
+            width: '100%',
+            '& .super-app-theme--header2': {
+              backgroundColor: colorsTable.colorCellHeader,
+              pl: '39px',
+            },
+            '& .super-app-theme--header': {
+              backgroundColor: colorsTable.colorCellHeader,
+            },
+          }}
+        >
+          {children}
+        </Grid>
+      )}
+    </Container>
   );
 };
 
@@ -97,28 +106,26 @@ export const DataGridLayout = ({ data, columns, quickSearchToolbar }) => {
  */
 export const FormLayout = ({ children, open }) => {
   return (
-    <Grid>
-      <ToastContainer
-        position="top-center"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss={false}
-        draggable={false}
-        pauseOnHover={false}
-        theme="light"
-        sx={{
-          zIndex: 99999999,
-        }}
-      />
+    <Grid container>
       <Backdrop
         sx={{ color: 'blue', zIndex: theme => theme.zIndex.drawer + 1 }}
         open={open}
       >
         <CircularProgress />
       </Backdrop>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        limit={1}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
       {children}
     </Grid>
   );
@@ -208,5 +215,16 @@ export const PrincipalMenuLayout = () => {
     <PrincipalAuthenticateLayout>
       <Outlet />
     </PrincipalAuthenticateLayout>
+  );
+};
+
+export const ViewLayout = ({ children, props }) => {
+  return (
+    <Container>
+      <Grid>
+        <Bienvenida {...props} />
+        {children}
+      </Grid>
+    </Container>
   );
 };

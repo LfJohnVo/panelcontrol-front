@@ -1,6 +1,6 @@
 export const validateRequired = (value, name) => {
   if (!value) return `El campo ${name} es requerido`;
-  return false;
+  return '';
 };
 
 export const validatePhone = value => {
@@ -38,5 +38,5 @@ export const validatePassword = value => {
   if (!/[!@#$%^&*]/.test(value)) {
     return 'La contraseña debe contener al menos un caracter especial !@#$%^&*';
   }
-  return false;
+  return '';
 };

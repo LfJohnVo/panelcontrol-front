@@ -1,7 +1,7 @@
 import React from 'react';
-import { Grid, Container } from '@mui/material';
 import UserDetail from '../../components/users/UserDetail';
 import { titleModulUser } from '../../common/text/TextTitle';
+import { ViewLayout } from '../../components/common/layouts';
 
 const ShowUser = () => {
   const props = {
@@ -10,13 +10,9 @@ const ShowUser = () => {
     text: titleModulUser.descriptionUserDetail,
   };
   return (
-    <Container maxWidth="lg">
-      <Grid container spacing={3} rowSpacing={0}>
-        <Grid item xs={12} md={12} lg={12}>
-          <UserDetail {...props} />
-        </Grid>
-      </Grid>
-    </Container>
+    <ViewLayout props={props}>
+      <UserDetail {...props} />
+    </ViewLayout>
   );
 };
 

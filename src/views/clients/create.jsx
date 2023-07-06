@@ -1,9 +1,8 @@
 import React from 'react';
-import { Container } from '@mui/material';
 import { titleModulCliente } from '../../common/text/TextTitle';
 import { textBienvenida } from '../../common/text/TextCardWellcome';
-import Bienvenida from '../../components/bienvenida/Bienvenida';
 import CreateClientForm from '../../components/forms/client/create';
+import { ViewLayout } from '../../components/common/layouts';
 
 const CreateClient = () => {
   const props = {
@@ -13,12 +12,9 @@ const CreateClient = () => {
     textCard: textBienvenida,
   };
   return (
-    <Container maxWidth="lg">
-      <Bienvenida {...props} />
-      <Container>
-        <CreateClientForm />
-      </Container>
-    </Container>
+    <ViewLayout props={props}>
+      <CreateClientForm />
+    </ViewLayout>
   );
 };
 

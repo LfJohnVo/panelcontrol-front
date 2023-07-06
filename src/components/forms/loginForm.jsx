@@ -3,6 +3,7 @@ import { FormLayout } from '../common/layouts';
 import { Grid, Box, Typography, Button, Link } from '@mui/material';
 import { GeneralForm } from './generalForms';
 import { SignInModel } from './models/generals';
+import { ToastContainer } from 'react-toastify';
 
 /**
  *
@@ -34,12 +35,16 @@ const LoginForm = () => {
             ENTRAR
           </Button>
         </GeneralForm>
-        <Grid container>
-          <Grid item>
-            <Link href="#" variant="body2">
-              He olvidado mi contraseña
-            </Link>
-          </Grid>
+        <Grid
+          container
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+          }}
+        >
+          <Link href="#" variant="body2">
+            He olvidado mi contraseña
+          </Link>
         </Grid>
       </Box>
     </FormLayout>
