@@ -27,6 +27,7 @@ function QuickSearchToolbar() {
         sx={{
           display: 'flex',
           flexDirection: 'row',
+          justifyContent: 'space-between',
           height: 'auto',
           background: '#FFFFF',
         }}
@@ -145,26 +146,24 @@ function TableAdquisicionServicio() {
       headerClassName: 'super-app-theme--header',
       renderCell: cellValues => {
         return (
-          <>
-            <Stack direction="row" spacing={0.5}>
-              <IconButton
-                aria-label="edit"
-                onClick={async e => {
-                  handleClickEditAdquisicionServicio(e, cellValues);
-                }}
-              >
-                <EditOutlinedIcon />
-              </IconButton>
-              <IconButton
-                aria-label="edit"
-                onClick={async e => {
-                  handleClickDeleteAdquisicionServicio(e, cellValues);
-                }}
-              >
-                <DeleteOutlinedIcon />
-              </IconButton>
-            </Stack>
-          </>
+          <Stack direction="row" spacing={2}>
+            <IconButton
+              aria-label="edit"
+              onClick={async e => {
+                handleClickEditAdquisicionServicio(e, cellValues);
+              }}
+            >
+              <EditOutlinedIcon />
+            </IconButton>
+            <IconButton
+              aria-label="edit"
+              onClick={async e => {
+                handleClickDeleteAdquisicionServicio(e, cellValues);
+              }}
+            >
+              <DeleteOutlinedIcon />
+            </IconButton>
+          </Stack>
         );
       },
     },
@@ -182,44 +181,42 @@ function TableAdquisicionServicio() {
   };
 
   return (
-    <>
-      <Grid item xs={12} md={12} lg={12}>
-        <Box
-          component={'div'}
-          sx={{
-            height: 737,
-            mb: '40px',
-            width: '100%',
-            '& .super-app-theme--header2': {
-              backgroundColor: colorsTable.colorCellHeader,
-              pl: '39px',
-            },
-            '& .super-app-theme--header': {
-              backgroundColor: colorsTable.colorCellHeader,
+    <Grid item xs={12} md={12} lg={12}>
+      <Box
+        component={'div'}
+        sx={{
+          height: 737,
+          mb: '40px',
+          width: '100%',
+          '& .super-app-theme--header2': {
+            backgroundColor: colorsTable.colorCellHeader,
+            pl: '39px',
+          },
+          '& .super-app-theme--header': {
+            backgroundColor: colorsTable.colorCellHeader,
+          },
+        }}
+      >
+        <DataGrid
+          rows={rows}
+          columns={columns}
+          disableColumnMenu
+          initialState={{
+            pagination: { paginationModel: { pageSize: 10 } },
+          }}
+          pageSizeOptions={[5, 10, 25]}
+          slots={{ toolbar: QuickSearchToolbar }}
+          slotProps={{
+            toolbar: {
+              showQuickFilter: true,
             },
           }}
-        >
-          <DataGrid
-            rows={rows}
-            columns={columns}
-            disableColumnMenu
-            initialState={{
-              pagination: { paginationModel: { pageSize: 10 } },
-            }}
-            pageSizeOptions={[5, 10, 25]}
-            slots={{ toolbar: QuickSearchToolbar }}
-            slotProps={{
-              toolbar: {
-                showQuickFilter: true,
-              },
-            }}
-            style={{
-              background: colorsTable.colorFondo,
-            }}
-          />
-        </Box>
-      </Grid>
-    </>
+          style={{
+            background: colorsTable.colorFondo,
+          }}
+        />
+      </Box>
+    </Grid>
   );
 }
 

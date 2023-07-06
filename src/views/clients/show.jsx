@@ -1,6 +1,6 @@
 import React from 'react';
-import { Container } from '@mui/material';
 import { titleModulCliente } from '../../common/text/TextTitle';
+import { ViewLayout } from '../../components/common/layouts';
 
 const ShowClient = () => {
   const props = {
@@ -9,11 +9,9 @@ const ShowClient = () => {
     text: titleModulCliente.descriptionClienteDetail,
   };
   return (
-    <Container maxWidth="lg">
-      <Container>
-        <div>test</div>
-      </Container>
-    </Container>
+    <ViewLayout props={props}>
+      <div>test</div>
+    </ViewLayout>
   );
 };
 

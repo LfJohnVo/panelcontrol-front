@@ -1,8 +1,8 @@
 import React from 'react';
-import { Container } from '@mui/material';
 import { titleModulAdquisicionServicio } from '../../common/text/TextTitle';
 import { textBienvenida } from '../../common/text/TextCardWellcome';
 import CreateAcquisitionForm from '../../components/forms/acquisition/create';
+import { ViewLayout } from '../../components/common/layouts';
 
 const AcquisitionCreate = () => {
   const props = {
@@ -12,12 +12,9 @@ const AcquisitionCreate = () => {
     textCard: textBienvenida,
   };
   return (
-    <Container maxWidth="lg">
-      <Bienvenida {...props} />
-      <Container>
-        <CreateAcquisitionForm />
-      </Container>
-    </Container>
+    <ViewLayout props={props}>
+      <CreateAcquisitionForm />
+    </ViewLayout>
   );
 };
 

@@ -1,9 +1,8 @@
 import React from 'react';
-import { Container } from '@mui/material';
 import CreateUserForm from '../../components/forms/user/create';
 import { titleUser, titleUserTitle } from '../../common/text/TextTitle';
 import { textBienvenida } from '../../common/text/TextCardWellcome';
-import Bienvenida from '../../components/bienvenida/Bienvenida';
+import { ViewLayout } from '../../components/common/layouts';
 
 const UserCreate = () => {
   const props = {
@@ -13,12 +12,9 @@ const UserCreate = () => {
     textCard: textBienvenida,
   };
   return (
-    <Container maxWidth="lg">
-      <Bienvenida {...props} />
-      <Container item xs={12} md={12} lg={12}>
-        <CreateUserForm />
-      </Container>
-    </Container>
+    <ViewLayout props={props}>
+      <CreateUserForm />
+    </ViewLayout>
   );
 };
 

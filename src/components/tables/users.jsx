@@ -1,99 +1,15 @@
 import React from 'react';
-import { Grid, Box, Stack, IconButton } from '@mui/material';
-import { GridToolbarQuickFilter } from '@mui/x-data-grid';
+import { Stack, IconButton, Button } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import { Link as linkrouter, useNavigate } from 'react-router-dom';
 import Link from '@mui/material/Link';
-import Loading from '../common/loading';
-import { BoxTableLayout, DataGridLayout, FormLayout } from '../common/layouts';
-import { ButtonCustom } from '../common/buttons';
-import { TypographyCustom } from '../common/Typographys';
+import { DataGridLayout, FormLayout, TableLayout } from '../common/layouts';
 import { deleteRecord } from '../../common/text/Notify';
 import { DialogCustom } from '../common/dialogs';
 import { useDeleteUser, useGetUsers } from '../../hooks/user';
-
-const QuickSearchToolbar = () => {
-  const navigate = useNavigate();
-  return (
-    <Box component={'div'}>
-      <Grid
-        item
-        sx={{
-          display: 'flex',
-          flexDirection: 'row',
-          height: 'auto',
-          background: '#FFFFF',
-        }}
-      >
-        <Grid item md={6}>
-          <Box
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'flex-start',
-            }}
-          >
-            <TypographyCustom
-              title="Usuarios creados"
-              component="h1"
-              variant="h5"
-              fontSize="20px"
-              sx={{ ml: '35px', mt: '26px' }}
-            />
-          </Box>
-        </Grid>
-      </Grid>
-      <Grid
-        item
-        xs={12}
-        sm={12}
-        md={12}
-        lg={12}
-        sx={{
-          display: 'flex',
-          flexDirection: 'row',
-          height: 'auto',
-          background: '#FFFFF',
-        }}
-      >
-        <Grid item md={6} xs={12} mt={'33px'} ml={'22px'} mb={'16px'}>
-          <Box
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'flex-start',
-            }}
-          >
-            <GridToolbarQuickFilter />
-          </Box>
-        </Grid>
-        <Grid item md={6} xs={12}>
-          <Box
-            sx={{
-              p: 1,
-              pb: 0,
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'flex-end',
-              background: '#FFFFF',
-            }}
-          >
-            <ButtonCustom
-              title="Crear usuario"
-              type="button"
-              onClick={() => {
-                navigate('/userCreate');
-              }}
-              startIcon={<AddIcon />}
-            />
-          </Box>
-        </Grid>
-      </Grid>
-    </Box>
-  );
-};
+import { TableSearchBar } from '../common/tales';
 
 const TableUser = () => {
   const [loading, clients, handleGetClients] = useGetUsers();
@@ -130,7 +46,7 @@ const TableUser = () => {
     {
       field: 'email',
       headerName: 'Correo',
-      width: 150,
+      width: 100,
       headerClassName: 'super-app-theme--header',
     },
     {
@@ -192,19 +108,27 @@ const TableUser = () => {
         text={deleteRecord}
       />
 
-      {loading ? (
-        <Loading />
-      ) : (
-        <Grid item xs={12} md={12} lg={12}>
-          <BoxTableLayout>
-            <DataGridLayout
-              data={clients}
-              columns={columns}
-              quickSearchToolbar={QuickSearchToolbar}
-            />
-          </BoxTableLayout>
-        </Grid>
-      )}
+      <TableLayout loading={loading}>
+        <DataGridLayout
+          data={clients}
+          columns={columns}
+          quickSearchToolbar={() => {
+            return (
+              <TableSearchBar tableTitle="Usuarios creados">
+                <Button
+                  variant="contained"
+                  startIcon={<AddIcon />}
+                  onClick={() => {
+                    navigate('/catalogoCreate');
+                  }}
+                >
+                  Crear servicio
+                </Button>
+              </TableSearchBar>
+            );
+          }}
+        />
+      </TableLayout>
     </FormLayout>
   );
 };

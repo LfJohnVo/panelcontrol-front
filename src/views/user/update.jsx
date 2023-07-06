@@ -1,9 +1,8 @@
 import React from 'react';
-import { Container } from '@mui/material';
 import EditUserForm from '../../components/forms/user/update';
-import Bienvenida from '../../components/bienvenida/Bienvenida';
 import { titleUser, titleUserTitle } from '../../common/text/TextTitle';
 import { textBienvenida } from '../../common/text/TextCardWellcome';
+import { ViewLayout } from '../../components/common/layouts';
 
 const UpdateUser = () => {
   const props = {
@@ -14,12 +13,9 @@ const UpdateUser = () => {
   };
 
   return (
-    <Container maxWidth="lg">
-      <Bienvenida {...props} />
-      <Container>
-        <EditUserForm />
-      </Container>
-    </Container>
+    <ViewLayout props={props}>
+      <EditUserForm />
+    </ViewLayout>
   );
 };
 

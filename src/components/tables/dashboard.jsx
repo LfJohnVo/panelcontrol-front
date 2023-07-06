@@ -78,38 +78,36 @@ function TableDasboard() {
   ];
 
   return (
-    <>
-      <Grid item xs={12} md={12} lg={12}>
-        <Box
-          component={'div'}
-          sx={{
-            height: 737,
-            mb: '40px',
-            width: '100%',
-            background: 'pink',
+    <Grid item xs={12} md={12} lg={12}>
+      <Box
+        component={'div'}
+        sx={{
+          height: 737,
+          mb: '40px',
+          width: '100%',
+          background: 'pink',
+        }}
+      >
+        <DataGrid
+          rows={rows}
+          columns={columns}
+          disableColumnMenu
+          initialState={{
+            pagination: { paginationModel: { pageSize: 10 } },
           }}
-        >
-          <DataGrid
-            rows={rows}
-            columns={columns}
-            disableColumnMenu
-            initialState={{
-              pagination: { paginationModel: { pageSize: 10 } },
-            }}
-            pageSizeOptions={[5, 10, 25]}
-            slots={{ toolbar: QuickSearchToolbar }}
-            slotProps={{
-              toolbar: {
-                showQuickFilter: true,
-              },
-            }}
-            style={{
-              background: colorsTable.colorFondo,
-            }}
-          />
-        </Box>
-      </Grid>
-    </>
+          pageSizeOptions={[5, 10, 25]}
+          slots={{ toolbar: QuickSearchToolbar }}
+          slotProps={{
+            toolbar: {
+              showQuickFilter: true,
+            },
+          }}
+          style={{
+            background: colorsTable.colorFondo,
+          }}
+        />
+      </Box>
+    </Grid>
   );
 }
 
