@@ -1,19 +1,20 @@
 import React from 'react';
 import UpdateAcquistionForm from '../../components/forms/acquisition/update';
-import { titleModulAdquisicionServicio } from '../../common/text/TextTitle';
-import { textBienvenida } from '../../common/text/TextCardWellcome';
 import { ViewLayout } from '../../components/common/layouts';
 
 const UpdateAcquisition = () => {
-  const props = {
-    navigateLink: '/adquisiciones',
-    title: titleModulAdquisicionServicio.titleAdquisicionServicioEdit,
-    text: titleModulAdquisicionServicio.descriptionAdquisicionServicioEdit,
-    textCard: textBienvenida,
-  };
-
+  const breadcrumbs = [
+    {
+      title: 'Adquisiciones',
+      link: '/acquisitions',
+    },
+    {
+      title: 'Actualizar',
+      link: '#',
+    },
+  ];
   return (
-    <ViewLayout props={props}>
+    <ViewLayout actualPage={'Adquisiciones'} breadcrumbs={breadcrumbs}>
       <UpdateAcquistionForm />
     </ViewLayout>
   );

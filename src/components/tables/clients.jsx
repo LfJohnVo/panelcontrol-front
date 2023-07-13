@@ -5,14 +5,13 @@ import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import { Button, IconButton, Stack } from '@mui/material';
 import Link from '@mui/material/Link';
 import { Link as linkrouter, useNavigate } from 'react-router-dom';
-import { deleteRecord } from '../../common/text/Notify';
 import { DialogCustom } from '../common/dialogs';
 import { DataGridLayout, FormLayout, TableLayout } from '../common/layouts';
 import { useDeleteClient, useGetClients } from '../../hooks/clients';
 import { TableSearchBar } from '../common/tales';
 
 const TableCliente = () => {
-  const [loading, clients, handleGetClients] = useGetClients();
+  const [loadingClientes, clients, handleGetClients] = useGetClients();
   const [alert, handleOpenAlert, handleCloseAlert, handleDelete, deleted] =
     useDeleteClient();
   const navigate = useNavigate();
@@ -27,7 +26,7 @@ const TableCliente = () => {
         return (
           <Link
             component={linkrouter}
-            to={`/cliente/${cellValues.row.id}/details`}
+            to={`/clients/${cellValues.row.id}`}
             underline="none"
             sx={{ ml: '30px', textAlign: 'left' }}
           >
@@ -65,7 +64,7 @@ const TableCliente = () => {
             <IconButton
               aria-label="edit"
               onClick={async e => {
-                navigate(`/cliente/${cellValues.row.id}/edit`);
+                navigate(`/clients/${cellValues.row.id}/update`);
               }}
             >
               <EditOutlinedIcon />
@@ -90,9 +89,9 @@ const TableCliente = () => {
         open={alert}
         handleClose={handleCloseAlert}
         handleClickDelete={handleDelete}
-        text={deleteRecord}
+        text="Desea eliminar este cliente"
       />
-      <TableLayout loading={loading}>
+      <TableLayout loading={loadingClientes}>
         <DataGridLayout
           data={clients}
           columns={columns}
@@ -103,7 +102,7 @@ const TableCliente = () => {
                   variant="contained"
                   startIcon={<AddIcon />}
                   onClick={() => {
-                    navigate('/clienteCreate');
+                    navigate('/clients/create');
                   }}
                 >
                   Crear Cliente

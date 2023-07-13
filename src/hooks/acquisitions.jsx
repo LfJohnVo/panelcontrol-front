@@ -1,174 +1,83 @@
 import { useCallback, useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { notify } from '../lib/notify';
 import { client } from '../lib/axios';
 import { getCookie } from '../lib/cookies';
 
 /**
  * Usa este hook para obtener la lista
- * de todos los usuarios
+ * de todos las adquisiciones
  *
  */
-export const useGetCatalogs = () => {
-  const [loading, setLoading] = useState(false);
-  const [clients, setClients] = useState([]);
+export const useGetAcquisitions = () => {
+  const [loadingAcquisitions, setLoadingAcquisitions] = useState(false);
+  const [acquisitions, setAcqusitions] = useState([]);
   const token = getCookie('token');
 
-  const handleGetClients = useCallback(
+  const handleGetAcqusitions = useCallback(
     async (filters = [], pag = 1, order = 'ASC', orderby = 'id') => {
       try {
-        setLoading(true);
-        const response = await client.get('/api/users', {
+        setLoadingAcquisitions(true);
+        const response = await client.get('/api/acquisitions', {
           headers: { Authorization: `Bearer ${token}` },
         });
-        setClients(response.data.data);
-        setLoading(false);
+        setAcqusitions(response.data.data);
+        setLoadingAcquisitions(false);
       } catch (error) {
         notify(error.response.data.status, error.response.data.message);
-        setLoading(false);
+        setLoadingAcquisitions(false);
       }
     }
   );
 
   useEffect(() => {
-    handleGetClients();
+    handleGetAcqusitions();
   }, []);
 
-  return [loading, clients, handleGetClients];
+  return [loadingAcquisitions, acquisitions, handleGetAcqusitions];
 };
 
-/**
- * Usa este hook para eliminar a un usuario
- *
- * @returns
- */
-export const useDeleteCatalog = () => {
-  const [alert, setAlert] = useState(false);
-  const [deleted, setDeleted] = useState(false);
-  const [id, setId] = useState('');
+export const useChangeStatusAcquisition = () => {
   const token = getCookie('token');
   const navigate = useNavigate();
-  const handleOpenAlert = useCallback(id => {
+  const [id, setId] = useState(null);
+  const [alert, setAlert] = useState(false);
+  const [deleted, setDeleted] = useState(false);
+
+  const handleOpenalert = useCallback((id, status) => {
     setId(id);
     setAlert(true);
   });
 
   const handleCloseAlert = useCallback(() => {
+    setId(null);
     setAlert(false);
   });
 
-  const handleDelete = useCallback(async () => {
-    setDeleted(true);
-    setAlert(false);
+  const handleUpdate = useCallback(async () => {
     try {
-      const resp = await client.delete(`/api/users/${id}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      setDeleted(true);
+      setAlert(false);
+      console.log(token, 'test');
+      const resp = await client.put(
+        `/api/acquisitions/${id}/status`,
+        {},
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
       notify(resp.data.status, resp.data.message);
       setTimeout(() => {
         setDeleted(false);
         navigate(0);
       }, 1000);
     } catch (error) {
-      notify(error.response.data.status, error.response.data.message);
+      console.log(error);
       setDeleted(false);
-    }
-  });
-
-  return [alert, handleOpenAlert, handleCloseAlert, handleDelete, deleted];
-};
-
-/**
- * Usa este hook para crear usuarios
- *
- * @returns
- */
-export const useCreateCatalog = () => {
-  const [clientCreated, setClientCreated] = useState(false);
-  const token = getCookie('token');
-  const navigate = useNavigate();
-
-  const handleCreate = useCallback(async values => {
-    try {
-      setClientCreated(true);
-      const resp = await client.post('/api/users', values, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      notify(resp.data.status, resp.data.message);
-      setClientCreated(false);
-      setTimeout(() => {
-        navigate('/users');
-      }, 1000);
-    } catch (error) {
       notify(error.response.data.status, error.response.data.message);
-      setClientCreated(false);
+      setLoadingAcquisitions(false);
     }
   });
 
-  return [clientCreated, handleCreate];
-};
-
-/**
- * Usa este hook para crear un usuario
- *
- * @returns
- */
-export const useGetCatalog = () => {
-  const { id } = useParams();
-  const token = getCookie('token');
-  const [loading, setLoading] = useState(false);
-  const [user, setUser] = useState({});
-
-  const handleGetUser = useCallback(async () => {
-    try {
-      setLoading(true);
-
-      const resp = await client.get(`/api/users/${id}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      setUser(resp.data.data);
-      setLoading(false);
-    } catch (error) {
-      setLoading(false);
-
-      notify(error.response.data.status, error.response.data.message);
-    }
-  });
-
-  useEffect(() => {
-    handleGetUser();
-  }, []);
-
-  return [loading, user];
-};
-
-/**
- * Usa este hook para actualizar un usuario
- *
- * @returns
- */
-export const useUpdateCatalog = () => {
-  const { id } = useParams();
-  const [userUpdated, setUserUpdated] = useState(false);
-  const token = getCookie('token');
-  const navigate = useNavigate();
-
-  const handleUpdate = useCallback(async values => {
-    try {
-      setUserUpdated(true);
-      const resp = await client.put(`/api/users/${id}`, values, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      notify(resp.data.status, resp.data.message);
-      setUserUpdated(false);
-      setTimeout(() => {
-        navigate('/users');
-      }, 1000);
-    } catch (error) {
-      notify(error.response.data.status, error.response.data.message);
-      setUserUpdated(false);
-    }
-  });
-
-  return [userUpdated, handleUpdate];
+  return [handleOpenalert, handleCloseAlert, alert, handleUpdate, deleted];
 };

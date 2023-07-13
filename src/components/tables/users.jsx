@@ -6,7 +6,6 @@ import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import { Link as linkrouter, useNavigate } from 'react-router-dom';
 import Link from '@mui/material/Link';
 import { DataGridLayout, FormLayout, TableLayout } from '../common/layouts';
-import { deleteRecord } from '../../common/text/Notify';
 import { DialogCustom } from '../common/dialogs';
 import { useDeleteUser, useGetUsers } from '../../hooks/user';
 import { TableSearchBar } from '../common/tales';
@@ -28,7 +27,7 @@ const TableUser = () => {
         return (
           <Link
             component={linkrouter}
-            to={`/user/${cellValues.row.id}/Details`}
+            to={`/users/${cellValues.row.id}`}
             underline="none"
             sx={{ ml: '30px', textAlign: 'left' }}
           >
@@ -80,7 +79,7 @@ const TableUser = () => {
             <IconButton
               aria-label="edit"
               onClick={async e => {
-                navigate(`/user/${cellValues.row.id}/edit`);
+                navigate(`/users/${cellValues.row.id}/update`);
               }}
             >
               <EditOutlinedIcon />
@@ -105,7 +104,7 @@ const TableUser = () => {
         open={alert}
         handleClose={handleCloseAlert}
         handleClickDelete={handleDelete}
-        text={deleteRecord}
+        text="Desea eliminar este usuario"
       />
 
       <TableLayout loading={loading}>
@@ -119,10 +118,10 @@ const TableUser = () => {
                   variant="contained"
                   startIcon={<AddIcon />}
                   onClick={() => {
-                    navigate('/catalogoCreate');
+                    navigate('/users/create');
                   }}
                 >
-                  Crear servicio
+                  Crear usuario
                 </Button>
               </TableSearchBar>
             );

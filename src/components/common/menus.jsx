@@ -48,7 +48,7 @@ export const PrincipalMenu = () => {
       <Tooltip title="Clientes">
         <ListItemButton
           onClick={() => {
-            navigate('/clientes');
+            navigate('/clients');
           }}
         >
           <ListItemIcon>
@@ -60,23 +60,21 @@ export const PrincipalMenu = () => {
 
       <Tooltip title="Proyectos">
         <ListItemButton
-          id="catalogo"
           onClick={() => {
-            navigate('/catalogo');
+            navigate('/projects');
           }}
         >
           <ListItemIcon>
             <ConnectWithoutContactOutlinedIcon />
           </ListItemIcon>
-          <ListItemText primary="Catalogo" />
+          <ListItemText primary="Proyectos" />
         </ListItemButton>
       </Tooltip>
 
       <Tooltip title="Adquisiciones">
         <ListItemButton
-          id="adquisiciones"
           onClick={() => {
-            navigate('/adquisiciones');
+            navigate('/acquisitions');
           }}
         >
           <ListItemIcon>

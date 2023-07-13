@@ -1,10 +1,10 @@
 import { useCallback, useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { notify } from '../lib/notify';
-import { addUser } from '../features/login/loginSlice';
 import { client } from '../lib/axios';
 import { setCookie, deleteCookie, getCookie } from '../lib/cookies';
+import { useAppContext } from '../context/app';
+import { useLocalStorage } from './generals';
 
 /**
  * Usa este hook para hacer login en la aplicacion
@@ -13,15 +13,18 @@ import { setCookie, deleteCookie, getCookie } from '../lib/cookies';
  */
 export const useLogin = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const [storedValue, setLocalStorage] = useLocalStorage('user', {});
+  const { setSession, setUser } = useAppContext();
   const [loading, setLoading] = useState(false);
   const handleSubmit = useCallback(async values => {
     try {
       setLoading(true);
       const resp = await client.post('/api/auth/login', values);
       notify(resp.data.status, resp.data.data.message);
-      dispatch(addUser(resp.data.data));
       setCookie('token', resp.data.data.token);
+      setSession(true);
+      setUser(resp.data.data.user);
+      setLocalStorage(resp.data.data.user);
       setLoading(false);
       setTimeout(() => {
         navigate('/dashboard');
@@ -41,7 +44,7 @@ export const useLogin = () => {
  */
 export const useLogout = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const { setSession } = useAppContext();
   const token = getCookie('token');
   const [loading, setLoading] = useState(false);
   const handleLogout = useCallback(async () => {
@@ -53,8 +56,8 @@ export const useLogout = () => {
       notify(resp.data.status, resp.data.message);
       setLoading(false);
       setTimeout(() => {
-        dispatch(addUser(null));
         deleteCookie('token');
+        setSession(false);
         navigate('/');
       }, 1000);
     } catch (error) {

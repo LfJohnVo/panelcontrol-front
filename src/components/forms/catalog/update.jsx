@@ -2,7 +2,7 @@ import { FormLayout, PaperLayout } from '../../common/layouts';
 import { GeneralForm } from '../generalForms';
 import { CreateCatalogModel } from '../models/catalog';
 import { Button } from '@mui/material';
-import Loading from '../../loading/Loading';
+import Loading from '../../common/loading';
 import { useUpdateCatalog, useGetCatalog } from '../../../hooks/catalogs';
 
 const UpdateCatalogForm = () => {

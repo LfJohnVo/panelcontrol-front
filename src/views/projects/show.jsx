@@ -1,13 +1,13 @@
 import React from 'react';
 import { ViewLayout } from '../../components/common/layouts';
 
-const ShowUser = () => {
+const ShowCatalog = () => {
   return (
     <ViewLayout>
       <div>Test</div>
-      {/*<UserDetail {...props} />*/}
+      {/*<CatalogoDetail {...props} />*/}
     </ViewLayout>
   );
 };
 
-export default ShowUser;
+export default ShowCatalog;
