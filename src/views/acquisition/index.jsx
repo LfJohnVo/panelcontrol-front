@@ -1,19 +1,17 @@
 import React from 'react';
-import { titleModulAdquisicionServicio } from '../../common/text/TextTitle';
-import { textBienvenida } from '../../common/text/TextCardWellcome';
-import TableAdquisicionServicio from '../../components/adquisicion-servicio/TableAdquisicionServicio';
 import { ViewLayout } from '../../components/common/layouts';
+import TableAcquisitions from '../../components/tables/acquisitions';
 
 const Acquisition = () => {
-  const props = {
-    navigateLink: '/adquisiciones',
-    title: titleModulAdquisicionServicio.titleAdquisicionServicioList,
-    text: titleModulAdquisicionServicio.descriptionAdquisicionServicioList,
-    textCard: textBienvenida,
-  };
+  const breadcrumbs = [
+    {
+      title: 'Adquisiciones',
+      link: '/acquisitions',
+    },
+  ];
   return (
-    <ViewLayout props={props}>
-      <TableAdquisicionServicio />
+    <ViewLayout actualPage={'Adquisiciones'} breadcrumbs={breadcrumbs}>
+      <TableAcquisitions />
     </ViewLayout>
   );
 };

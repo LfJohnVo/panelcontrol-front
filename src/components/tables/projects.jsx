@@ -8,7 +8,7 @@ import { useGetCatalogs } from '../../hooks/catalogs';
 import { TableSearchBar } from '../common/tales';
 import { DataGridLayout, TableLayout } from '../common/layouts';
 
-const TableCatalog = () => {
+const TableProjects = () => {
   const [loading, catalogs, handleGetCatalogs] = useGetCatalogs();
   const navigate = useNavigate();
 
@@ -22,7 +22,7 @@ const TableCatalog = () => {
         return (
           <Link
             component={linkrouter}
-            to={`/catalogo/${cellValues.row.id}/details`}
+            to={`/projects/${cellValues.row.id}`}
             underline="none"
             sx={{ ml: '30px', textAlign: 'left' }}
           >
@@ -47,7 +47,7 @@ const TableCatalog = () => {
             <IconButton
               aria-label="edit"
               onClick={async e => {
-                navigate(`/catalogo/${cellValues.row.id}/edit`);
+                navigate(`/projects/${cellValues.row.id}/update`);
               }}
             >
               <EditOutlinedIcon />
@@ -70,7 +70,7 @@ const TableCatalog = () => {
                 variant="contained"
                 startIcon={<AddIcon />}
                 onClick={() => {
-                  navigate('/catalogoCreate');
+                  navigate('/projects/create');
                 }}
               >
                 Crear servicio
@@ -83,4 +83,4 @@ const TableCatalog = () => {
   );
 };
 
-export default TableCatalog;
+export default TableProjects;

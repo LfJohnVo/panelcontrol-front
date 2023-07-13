@@ -1,18 +1,21 @@
-import TableDasboard from '../components/tables/dashboard';
-import { titleUser, titleUserTitle } from '../common/text/TextTitle';
-import { textBienvenida } from '../common/text/TextCardWellcome';
 import { ViewLayout } from '../components/common/layouts';
+import Welcome from '../components/common/welcome';
+import { DashboardCounters } from '../components/charts/dashboard';
+import TableAcquisitions from '../components/tables/acquisitions';
 
 const Dashboard = () => {
-  const props = {
-    navigateLink: '/dashboard',
-    title: titleUser,
-    text: titleUserTitle,
-    textCard: textBienvenida,
-  };
+  const breadcrumbs = [
+    {
+      title: 'Dashboard',
+      link: '/dashboard',
+    },
+  ];
+
   return (
-    <ViewLayout props={props}>
-      <TableDasboard />
+    <ViewLayout actualPage={'Dashboard'} breadcrumbs={breadcrumbs}>
+      <Welcome />
+      <DashboardCounters />
+      <TableAcquisitions />
     </ViewLayout>
   );
 };

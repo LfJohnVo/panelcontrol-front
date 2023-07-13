@@ -1,18 +1,20 @@
 import React from 'react';
-import { titleModulAdquisicionServicio } from '../../common/text/TextTitle';
-import { textBienvenida } from '../../common/text/TextCardWellcome';
 import CreateAcquisitionForm from '../../components/forms/acquisition/create';
 import { ViewLayout } from '../../components/common/layouts';
 
 const AcquisitionCreate = () => {
-  const props = {
-    navigateLink: '/adquisiciones',
-    title: titleModulAdquisicionServicio.titleAdquisicionServicioCreate,
-    text: titleModulAdquisicionServicio.descriptionAdquisicionServicioCreate,
-    textCard: textBienvenida,
-  };
+  const breadcrumbs = [
+    {
+      title: 'Adquisiciones',
+      link: '/acquisitions',
+    },
+    {
+      title: 'Crear',
+      link: '#',
+    },
+  ];
   return (
-    <ViewLayout props={props}>
+    <ViewLayout actualPage={'Adquisiciones'} breadcrumbs={breadcrumbs}>
       <CreateAcquisitionForm />
     </ViewLayout>
   );

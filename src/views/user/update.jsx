@@ -1,19 +1,20 @@
 import React from 'react';
 import EditUserForm from '../../components/forms/user/update';
-import { titleUser, titleUserTitle } from '../../common/text/TextTitle';
-import { textBienvenida } from '../../common/text/TextCardWellcome';
 import { ViewLayout } from '../../components/common/layouts';
 
 const UpdateUser = () => {
-  const props = {
-    navigateLink: '/users',
-    title: titleUser,
-    text: titleUserTitle,
-    textCard: textBienvenida,
-  };
-
+  const breadcrumbs = [
+    {
+      title: 'Usuarios',
+      link: '/users',
+    },
+    {
+      title: 'Actualizar',
+      link: '#',
+    },
+  ];
   return (
-    <ViewLayout props={props}>
+    <ViewLayout actualPage={'Usuarios'} breadcrumbs={breadcrumbs}>
       <EditUserForm />
     </ViewLayout>
   );

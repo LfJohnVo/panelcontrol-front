@@ -1,26 +1,37 @@
 import React from 'react';
-import { Grid, Typography } from '@mui/material';
+import { Breadcrumbs, Grid, Typography } from '@mui/material';
 import { Link as linkrouter } from 'react-router-dom';
 import Link from '@mui/material/Link';
-const TitleModule = ({ navigateLink, title, text }) => {
+
+export const PrincipalTitle = ({ actualPage, breadcrumbs }) => {
   return (
-    <Grid item xs={12} md={12} lg={12}>
-      <Grid container mt={'18px'} mb={'16px'}>
-        <Grid item md={6} xs={6}>
-          <Typography component="h1" variant="h1">
-            {title.text}
-          </Typography>
-        </Grid>
-        <Grid item style={{ textAlign: 'right' }} md={6} xs={6}>
-          <Link component={linkrouter} to={navigateLink} underline="none">
-            <Typography component="h1" variant="h2">
-              {text}
-            </Typography>
-          </Link>
-        </Grid>
+    <Grid container mt={'18px'} mb={'16px'}>
+      <Grid item md={6} xs={6}>
+        <Typography variant="breadcrumbs">{actualPage}</Typography>
+      </Grid>
+      <Grid
+        item
+        md={6}
+        sx={{
+          display: 'flex',
+          justifyContent: 'flex-end',
+        }}
+      >
+        <Breadcrumbs aria-label="breadcrumb">
+          {breadcrumbs.map((item, index) => {
+            return (
+              <Link
+                component={linkrouter}
+                to={item.link}
+                underline="none"
+                key={index}
+              >
+                {item.title}
+              </Link>
+            );
+          })}
+        </Breadcrumbs>
       </Grid>
     </Grid>
   );
 };
-
-export default TitleModule;

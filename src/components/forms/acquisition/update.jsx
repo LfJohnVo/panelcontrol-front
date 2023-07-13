@@ -2,7 +2,7 @@ import { FormLayout, PaperLayout } from '../../common/layouts';
 import { GeneralForm } from '../generalForms';
 import { CreateUserModel } from '../models/user';
 import { Button } from '@mui/material';
-import Loading from '../../loading/Loading';
+import Loading from '../../common/loading';
 import { useUpdateUser, useGetUser } from '../../../hooks/user';
 
 const UpdateAcquistionForm = () => {

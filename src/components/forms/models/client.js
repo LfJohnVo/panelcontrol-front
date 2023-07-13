@@ -1,4 +1,4 @@
-import { validatePassword, validateRequired } from '../../../lib/validations';
+import { validateRequired } from '../../../lib/validations';
 
 export const CreateClientModel = {
   values: {

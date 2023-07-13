@@ -1,8 +1,9 @@
 import React from 'react';
-import { Toolbar, IconButton, Typography } from '@mui/material';
+import { Toolbar, IconButton, Typography, Avatar, Box } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import MuiAppBar from '@mui/material/AppBar';
 import MenuIcon from '@mui/icons-material/Menu';
+import useAppContext from '../../context/app';
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: prop => prop !== 'open',
@@ -22,44 +23,16 @@ const AppBar = styled(MuiAppBar, {
   }),
 }));
 
-const test = () => {
-  <AppBar position="absolute" open={true} theme={theme}>
-    <Toolbar
-      sx={{
-        pr: '24px',
-      }}
-    >
-      <IconButton
-        edge="start"
-        color="inherit"
-        aria-label="open drawer"
-        onClick={toggleDrawer}
-        sx={{
-          marginRight: '36px',
-          ...(open && { display: 'none' }),
-        }}
-      >
-        <MenuIcon />
-      </IconButton>
-      <Typography
-        component="h1"
-        variant="h6"
-        color="inherit"
-        noWrap
-        sx={{ flexGrow: 1 }}
-      >
-        {/* Dashboard */}
-      </Typography>
-    </Toolbar>
-  </AppBar>;
-};
-
 export const PrincipalNavbar = ({ open, handleChange }) => {
+  const { user } = useAppContext();
   return (
     <AppBar position="absolute" open={open}>
       <Toolbar
         sx={{
-          pr: '24px', // keep right padding when drawer closed
+          pr: '24px',
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'space-between',
         }}
       >
         <IconButton
@@ -74,6 +47,31 @@ export const PrincipalNavbar = ({ open, handleChange }) => {
         >
           <MenuIcon />
         </IconButton>
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            paddingRight: '1em',
+          }}
+        >
+          <Avatar
+            sx={{
+              justifySelf: 'flex-end',
+              marginRight: '10px',
+            }}
+            variant="dot"
+          >
+            {user.name.charAt(0)}
+          </Avatar>
+          <Box>
+            <Typography component="p" variant="avatarName">
+              {user?.name || ''}
+            </Typography>
+            <Typography component="strong" variant="avatarType">
+              {user?.email || ''}
+            </Typography>
+          </Box>
+        </Box>
       </Toolbar>
     </AppBar>
   );

@@ -9,22 +9,22 @@ import { getCookie } from '../lib/cookies';
  * de todos los clientes
  */
 export const useGetClients = () => {
-  const [loading, setLoading] = useState(false);
+  const [loadingClientes, setLoadingClientes] = useState(false);
   const [clients, setClients] = useState([]);
   const token = getCookie('token');
 
   const handleGetClients = useCallback(
     async (filters = [], pag = 1, order = 'ASC', orderby = 'id') => {
       try {
-        setLoading(true);
+        setLoadingClientes(true);
         const response = await client.get('/api/clients', {
           headers: { Authorization: `Bearer ${token}` },
         });
         setClients(response.data.data);
-        setLoading(false);
+        setLoadingClientes(false);
       } catch (error) {
         notify(error.response.data.status, error.response.data.message);
-        setLoading(false);
+        setLoadingClientes(false);
       }
     }
   );
@@ -33,7 +33,7 @@ export const useGetClients = () => {
     handleGetClients();
   }, []);
 
-  return [loading, clients, handleGetClients];
+  return [loadingClientes, clients, handleGetClients];
 };
 
 /**
@@ -87,7 +87,6 @@ export const useCreateClient = () => {
   const navigate = useNavigate();
 
   const handleCreate = useCallback(async values => {
-    alert('test');
     try {
       setClientCreated(true);
       const resp = await client.post('/api/clients', values, {
@@ -96,7 +95,7 @@ export const useCreateClient = () => {
       notify(resp.data.status, resp.data.message);
       setClientCreated(false);
       setTimeout(() => {
-        navigate('/users');
+        navigate('/clients');
       }, 1000);
     } catch (error) {
       notify(error.response.data.status, error.response.data.message);

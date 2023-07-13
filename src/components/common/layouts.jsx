@@ -1,4 +1,3 @@
-import { colorsTable } from '../../common/color/color';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import Backdrop from '@mui/material/Backdrop';
@@ -13,25 +12,26 @@ import { useCallback, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.min.css';
 import Loading from './loading';
-import Bienvenida from '../bienvenida/Bienvenida';
+import { PrincipalTitle } from './titles';
 
-export const PaperLayout = ({ children }) => {
+export const PaperLayout = ({
+  children,
+  color = '#FFFFFF',
+  loading = false,
+}) => {
   return (
     <Paper
-      elevation={0}
       sx={{
-        p: '61px 51px 64px 27px',
+        p: '20px',
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'center',
-        height: 'auto',
         width: '100%',
-        background: colorsTable.white,
-        mb: '125px',
-        border: `1px solid ${colorsTable.borderColor}`,
+        background: color,
+        marginBottom: '1em',
       }}
     >
-      {children}
+      {loading ? <Loading /> : <Grid container>{children}</Grid>}
     </Paper>
   );
 };
@@ -58,13 +58,7 @@ export const TableLayout = ({ children, loading }) => {
           sx={{
             mb: '40px',
             width: '100%',
-            '& .super-app-theme--header2': {
-              backgroundColor: colorsTable.colorCellHeader,
-              pl: '39px',
-            },
-            '& .super-app-theme--header': {
-              backgroundColor: colorsTable.colorCellHeader,
-            },
+            background: 'white',
           }}
         >
           {children}
@@ -89,9 +83,6 @@ export const DataGridLayout = ({ data, columns, quickSearchToolbar }) => {
         toolbar: {
           showQuickFilter: true,
         },
-      }}
-      style={{
-        background: colorsTable.colorFondo,
       }}
     />
   );
@@ -161,13 +152,56 @@ export const PrincipalLayout = ({ children }) => {
 
 export const PrincipalAuthenticateLayout = ({ children }) => {
   const theme = createTheme({
-    components: {
-      MuiCssBaseline: {
-        styleOverrides: `
-        h1 {
-          color: #2567AE;
-        }
-      `,
+    palette: {
+      secondary: {
+        light: '#ff7961',
+        main: '#f44336',
+        dark: '#ba000d',
+        contrastText: '#000',
+      },
+    },
+    typography: {
+      h1: {
+        fontSize: 25,
+        color: '#2567AE',
+      },
+      h2: {
+        fontSize: 20,
+        color: '#2567AE',
+      },
+      h3: {
+        fontSize: 15,
+        color: '#2567AE',
+      },
+      h1Ligth: {
+        fontSize: 30,
+        color: '#FFFF',
+      },
+      subtitleLigth: {
+        fontSize: 20,
+        color: '#FFFF',
+      },
+      textLigth: {
+        fontSize: 12,
+        color: '#FFFF',
+      },
+      breadcrumbs: {
+        fontSize: 30,
+        color: '#2567AE',
+      },
+      avatarName: {
+        fontSize: 12,
+      },
+      avatarType: {
+        fontSize: 10,
+      },
+      statusActive: {
+        fontSize: 10,
+        color: '#17B265',
+      },
+      statusPausado: {
+        fontSize: 10,
+        color: '#FF0000',
       },
     },
   });
@@ -218,13 +252,11 @@ export const PrincipalMenuLayout = () => {
   );
 };
 
-export const ViewLayout = ({ children, props }) => {
+export const ViewLayout = ({ children, actualPage, breadcrumbs }) => {
   return (
     <Container>
-      <Grid>
-        <Bienvenida {...props} />
-        {children}
-      </Grid>
+      <PrincipalTitle actualPage={actualPage} breadcrumbs={breadcrumbs} />
+      {children}
     </Container>
   );
 };

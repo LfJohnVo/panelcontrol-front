@@ -1,5 +1,4 @@
 import React from 'react';
-import { colorsTable } from '../../common/color/color';
 import { Grid, Typography, Box } from '@mui/material';
 import { DataGrid, GridToolbarQuickFilter } from '@mui/x-data-grid';
 
@@ -85,7 +84,7 @@ function TableDasboard() {
           height: 737,
           mb: '40px',
           width: '100%',
-          background: 'pink',
+          background: 'white',
         }}
       >
         <DataGrid
@@ -101,9 +100,6 @@ function TableDasboard() {
             toolbar: {
               showQuickFilter: true,
             },
-          }}
-          style={{
-            background: colorsTable.colorFondo,
           }}
         />
       </Box>

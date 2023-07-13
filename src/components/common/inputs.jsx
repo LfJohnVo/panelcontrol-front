@@ -9,11 +9,29 @@ import {
   FormHelperText,
   Chip,
   Grid,
+  Select,
+  MenuItem,
+  FormGroup,
+  FormControlLabel,
+  Checkbox,
 } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 import { useCallbackCreator } from '../../hooks/generals';
 
+/**
+ * Usa este componente para renderizar un input del
+ * tipo texto
+ *
+ * @param {String} name
+ * @param {String} variant
+ * @param {State} error
+ * @param {State} value
+ * @param {Callback} onChange
+ * @param {String} placeholder
+ * @param {String} label
+ * @returns
+ */
 export const TextInput = ({
   name,
   variant = null,
@@ -40,6 +58,17 @@ export const TextInput = ({
     </FormControl>
   );
 };
+
+/**
+ * Implementa este componente para renderizar un input del
+ * tipo password
+ *
+ * @param {State} values
+ * @param {String} name
+ * @param {Callback} onChange
+ * @param {State} error
+ * @returns
+ */
 export const PasswordInput = ({ value, name, onChange, error }) => {
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = useCallback(() => {
@@ -75,52 +104,14 @@ export const PasswordInput = ({ value, name, onChange, error }) => {
   );
 };
 
-export const InputChip = ({
-  name,
-  variant = null,
-  value,
-  onChange,
-  placeholder,
-  label,
-  onClick,
-  onClick2,
-  onDelete,
-  chip,
-}) => {
-  return (
-    <FormControl sx={{ m: 1 }} fullWidth>
-      <TextField
-        label={label}
-        name={name}
-        value={value}
-        variant={variant || 'standard'}
-        onChange={onChange}
-        InputProps={{
-          endAdornment: (
-            <InputAdornment position="end">
-              <IconButton onClick={onClick}>
-                <AddCircleOutlineOutlinedIcon />
-              </IconButton>
-            </InputAdornment>
-          ),
-        }}
-      />
-      {chip.map((chip, index) => (
-        <Chip
-          key={index}
-          label={chip.title}
-          style={{
-            marginTop: '10px',
-            marginRight: '5px',
-          }}
-          onDelete={onDelete(chip)}
-          onClick={onClick2}
-        />
-      ))}
-    </FormControl>
-  );
-};
-
+/**
+ *  Usa este componente para renderizar un selector tipo
+ *  Chip que implemnenta 1 o n inputs de configuracion
+ *
+ * @param {Callback} onChange
+ * @param {Array} arrayInput
+ * @returns
+ */
 export const MultipleChip = ({ onChange, arrayInputs }) => {
   const [values, setValues] = useState([]);
   const [value, setValue] = useState(arrayInputs.values);
@@ -132,7 +123,7 @@ export const MultipleChip = ({ onChange, arrayInputs }) => {
   const handleClick = useCallback(() => {
     if (value.title != '' && value.url != '') {
       setValues([...values, value]);
-      onChange('modules', [...values, value]);
+      onChange([...values, value]);
       setValue(arrayInputs.values);
     }
   });
@@ -196,6 +187,71 @@ export const MultipleChip = ({ onChange, arrayInputs }) => {
   );
 };
 
+/**
+ * Usa este componente para renderizar un input del tipo select
+ *
+ * @param {State} value
+ * @param {Callback} onChange
+ * @param {Array} items
+ * @param {String} name
+ * @param {String} label
+ * @param {String} id
+ * @returns
+ */
+export const SelectInput = ({ value, onChange, items, name, label, id }) => {
+  return (
+    <FormControl fullWidth>
+      <InputLabel id={name}>{label}</InputLabel>
+      <Select
+        value={value || ''}
+        label={label}
+        onChange={onChange}
+        name={name}
+        labelId={name}
+        id={id}
+      >
+        {items.map((item, index) => {
+          return (
+            <MenuItem key={index} value={item?.id || ''}>
+              {item?.name || item?.title}
+            </MenuItem>
+          );
+        })}
+      </Select>
+    </FormControl>
+  );
+};
+
+/**
+ * Usa este componente para renderizar un componente del tipo checkbox
+ *
+ * @param {String} label
+ * @param {Array} items
+ * @param {Callback} onChange
+ * @param {String} name
+ * @returns
+ */
+export const CheckboxInput = ({ label, items, onChange, name }) => {
+  const [values, setValues] = useState([]);
+  const handleCheck = useCallbackCreator((index, item) => {
+    console.log(item);
+  }, items);
+  return (
+    <FormControl label={label}>
+      <FormGroup>
+        {items.map((item, index) => {
+          return (
+            <FormControlLabel
+              control={<Checkbox onChange={handleCheck(index, item)} />}
+              label={item.title}
+            />
+          );
+        })}
+      </FormGroup>
+    </FormControl>
+  );
+};
+
 export const InputMaker = ({
   type,
   name,
@@ -203,9 +259,10 @@ export const InputMaker = ({
   value,
   onChange,
   error,
-  values = [],
+  items = [],
   label,
   arrayInputs,
+  id,
 }) => {
   switch (type) {
     case 'text':
@@ -229,11 +286,29 @@ export const InputMaker = ({
         />
       );
     case 'select':
-      return <div>Test</div>;
+      return (
+        <SelectInput
+          value={value}
+          onChange={onChange}
+          items={items}
+          name={name}
+          label={label}
+          id={id}
+        />
+      );
     case 'date':
       return <div>Aqui</div>;
-    case 'chip':
-      return <div>Chip</div>;
+    case 'checkbox':
+      return (
+        <CheckboxInput
+          value={value}
+          onChange={onChange}
+          items={items}
+          name={name}
+          label={label}
+          id={id}
+        />
+      );
     case 'multiplechip':
       return (
         <MultipleChip
@@ -244,55 +319,4 @@ export const InputMaker = ({
         />
       );
   }
-};
-
-export const SelectInput = () => {
-  return (
-    <div>
-      <input type="text" />
-    </div>
-  );
-};
-
-export const InputPassword = ({ name, variant, register, errors, options }) => {
-  const [showPassword, setShowPassword] = useState();
-  const handleClickShowPassword = () => setShowPassword(show => !show);
-  const handleMouseDownPassword = event => {
-    event.preventDefault();
-  };
-
-  return (
-    <Fragment>
-      <FormControl
-        variant={variant || 'outlined'}
-        fullWidth
-        {...register(name, options)}
-        error={!!errors?.[name]}
-        helpertext={errors?.[name] ? errors?.[name].message : null}
-      >
-        <InputLabel htmlFor="outlined-adornment-password">{name}</InputLabel>
-        <OutlinedInput
-          id="outlined-adornment-password"
-          label={name}
-          name={name}
-          type={showPassword ? 'text' : 'password'}
-          endAdornment={
-            <InputAdornment position="end">
-              <IconButton
-                aria-label="toggle password visibility"
-                onClick={handleClickShowPassword}
-                onMouseDown={handleMouseDownPassword}
-                edge="end"
-              >
-                {showPassword ? <VisibilityOff /> : <Visibility />}
-              </IconButton>
-            </InputAdornment>
-          }
-        />
-        <FormHelperText>
-          {errors?.[name] ? options.required : null}
-        </FormHelperText>
-      </FormControl>
-    </Fragment>
-  );
 };

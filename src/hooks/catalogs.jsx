@@ -10,7 +10,7 @@ import { getCookie } from '../lib/cookies';
  *
  */
 export const useGetCatalogs = () => {
-  const [loading, setLoading] = useState(false);
+  const [loadingCatalog, setLoading] = useState(false);
   const [catalogs, setCatalogs] = useState([]);
   const token = getCookie('token');
 
@@ -34,7 +34,7 @@ export const useGetCatalogs = () => {
     handleGetCatalogs();
   }, []);
 
-  return [loading, catalogs, handleGetCatalogs];
+  return [loadingCatalog, catalogs, handleGetCatalogs];
 };
 
 /**
@@ -57,7 +57,7 @@ export const useCreateCatalog = () => {
       notify(resp.data.status, resp.data.message);
       setCatalogCreated(false);
       setTimeout(() => {
-        navigate('/catalogo');
+        navigate('/projects');
       }, 1000);
     } catch (error) {
       notify(error.response.data.status, error.response.data.message);
@@ -121,7 +121,7 @@ export const useUpdateCatalog = () => {
       // notify(resp.data.status, resp.data.message);
       // setCatalogUpdated(false);
       // setTimeout(() => {
-      //   navigate('/users');
+      //   navigate('/projects');
       // }, 1000);
     } catch (error) {
       notify(error.response.data.status, error.response.data.message);

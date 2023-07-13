@@ -1,126 +1,50 @@
-import React from 'react';
-import { colorsTable } from '../../common/color/color';
-import {
-  Grid,
-  Typography,
-  Box,
-  Button,
-  Stack,
-  IconButton,
-} from '@mui/material';
-import { DataGrid, GridToolbarQuickFilter } from '@mui/x-data-grid';
+import React, { useState } from 'react';
 import AddIcon from '@mui/icons-material/Add';
-import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
-import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
-import { Link as linkrouter, useNavigate } from 'react-router-dom';
+import { Button, Stack, Typography } from '@mui/material';
 import Link from '@mui/material/Link';
+import { Link as linkrouter, useNavigate } from 'react-router-dom';
+import { DataGridLayout, FormLayout, TableLayout } from '../common/layouts';
+import { TableSearchBar } from '../common/tales';
+import {
+  useChangeStatusAcquisition,
+  useGetAcquisitions,
+} from '../../hooks/acquisitions';
+import { StatusItem, SwitchItem } from '../common/items';
+import { useCallbackCreator } from '../../hooks/generals';
+import { DialogCustom } from '../common/dialogs';
 
-function QuickSearchToolbar() {
+const TableAcquisitions = () => {
+  const [loadingAcquisitions, acquisitions, handleGetAcqusitions] =
+    useGetAcquisitions();
   const navigate = useNavigate();
-  return (
-    <Box component={'div'}>
-      <Grid
-        item
-        xs={12}
-        md={12}
-        lg={12}
-        sx={{
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          height: 'auto',
-          background: '#FFFFF',
-        }}
-      >
-        <Grid item md={6}>
-          <Box
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'flex-start',
-            }}
-          >
-            <Typography
-              component="h1"
-              variant="h5"
-              fontSize={'20px'}
-              ml={'35px'}
-              mt={'26px'}
-            >
-              Servicios Adquiridos creados
-            </Typography>
-          </Box>
-        </Grid>
-      </Grid>
-      <Grid
-        item
-        xs={12}
-        md={12}
-        lg={12}
-        sx={{
-          display: 'flex',
-          flexDirection: 'row',
-          height: 'auto',
-          background: '#FFFFF',
-        }}
-      >
-        <Grid item md={6} mt={'33px'} ml={'22px'} mb={'16px'}>
-          <Box
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'flex-start',
-            }}
-          >
-            <GridToolbarQuickFilter />
-          </Box>
-        </Grid>
-        <Grid item md={6}>
-          <Box
-            sx={{
-              p: 1,
-              pb: 0,
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'flex-end',
-            }}
-          >
-            <Button
-              variant="contained"
-              startIcon={<AddIcon />}
-              onClick={() => {
-                navigate('/adquisicionCreate');
-              }}
-            >
-              Crear Adquisicion
-            </Button>
-          </Box>
-        </Grid>
-      </Grid>
-    </Box>
+  const [handleOpenalert, handleCloseAlert, alert, handleUpdate, deleted] =
+    useChangeStatusAcquisition();
+
+  const [dialog, setDialog] = useState('');
+
+  const handleChangeStatus = useCallbackCreator(
+    (id, status) => {
+      setDialog(
+        status
+          ? '¿Desea desactivar esta adquisicion?'
+          : '¿Desea activar esta adquisicion?'
+      );
+      handleOpenalert(id, status);
+    },
+    [acquisitions]
   );
-}
-
-function TableAdquisicionServicio() {
-  const navigate = useNavigate();
-  //variables
-  const rows = [
-    { id: 1, title: 'Hello', description: 'World' },
-    { id: 2, title: 'DataGridPro', description: 'is Awesome' },
-    { id: 3, title: 'MUI', description: 'is Amazing' },
-  ];
 
   const columns = [
     {
       field: 'id',
       headerName: 'ID',
-      width: 150,
+      width: 10,
       headerClassName: 'super-app-theme--header2',
       renderCell: cellValues => {
         return (
           <Link
             component={linkrouter}
-            to={`/adquisicion/${cellValues.row.id}/details`}
+            to={`/clients/${cellValues.row.id}`}
             underline="none"
             sx={{ ml: '30px', textAlign: 'left' }}
           >
@@ -129,95 +53,109 @@ function TableAdquisicionServicio() {
         );
       },
     },
+
     {
-      field: 'title',
-      headerName: 'Nombre',
-      width: 350,
+      field: 'client_name',
+      headerName: 'Cliente',
+      width: 80,
       headerClassName: 'super-app-theme--header',
     },
     {
-      field: 'description',
-      headerName: 'Description',
-      width: 550,
+      field: 'client_email',
+      headerName: 'Correo',
+      width: 150,
       headerClassName: 'super-app-theme--header',
     },
     {
-      field: 'Opciones',
+      field: 'proyect',
+      headerName: 'Proyecto',
+      width: 100,
+      headerClassName: 'super-app-theme--header',
+    },
+    {
+      field: 'buy_modules',
+      headerName: 'Modulos comprados',
+      width: 200,
       headerClassName: 'super-app-theme--header',
       renderCell: cellValues => {
         return (
-          <Stack direction="row" spacing={2}>
-            <IconButton
-              aria-label="edit"
-              onClick={async e => {
-                handleClickEditAdquisicionServicio(e, cellValues);
-              }}
-            >
-              <EditOutlinedIcon />
-            </IconButton>
-            <IconButton
-              aria-label="edit"
-              onClick={async e => {
-                handleClickDeleteAdquisicionServicio(e, cellValues);
-              }}
-            >
-              <DeleteOutlinedIcon />
-            </IconButton>
+          <Stack direction="column" spacing={0.5}>
+            {cellValues.row.buy_modules.map((item, index) => {
+              return (
+                <Typography component="p" key={index}>
+                  {item.module.title}
+                </Typography>
+              );
+            })}
+          </Stack>
+        );
+      },
+    },
+    {
+      field: 'is_active',
+      headerName: 'Estatus',
+      width: 80,
+      headerClassName: 'super-app-theme--header',
+      renderCell: cellValues => {
+        return (
+          <Stack direction="column" spacing={1}>
+            <StatusItem status={cellValues.row.is_active} />
+          </Stack>
+        );
+      },
+    },
+    {
+      field: 'acciones',
+      headerName: 'Des/Act',
+      width: 150,
+      headerClassName: 'super-app-theme--header',
+      renderCell: cellValues => {
+        return (
+          <Stack direction="column" spacing={1}>
+            <SwitchItem
+              status={cellValues.row.is_active}
+              onChange={handleChangeStatus(
+                cellValues.row.id,
+                cellValues.row.is_active
+              )}
+            />
           </Stack>
         );
       },
     },
   ];
 
-  //functions
-
-  const handleClickEditAdquisicionServicio = async (e, cellValues) => {
-    const id = cellValues.row.id;
-    navigate(`/adquisicion/${id}/edit`);
-  };
-
-  const handleClickDeleteAdquisicionServicio = async (e, cellValues) => {
-    console.log(cellValues);
-  };
-
   return (
-    <Grid item xs={12} md={12} lg={12}>
-      <Box
-        component={'div'}
-        sx={{
-          height: 737,
-          mb: '40px',
-          width: '100%',
-          '& .super-app-theme--header2': {
-            backgroundColor: colorsTable.colorCellHeader,
-            pl: '39px',
-          },
-          '& .super-app-theme--header': {
-            backgroundColor: colorsTable.colorCellHeader,
-          },
-        }}
-      >
-        <DataGrid
-          rows={rows}
+    <FormLayout open={deleted}>
+      <TableLayout loading={loadingAcquisitions}>
+        <DialogCustom
+          open={alert}
+          handleClose={handleCloseAlert}
+          handleClickDelete={handleUpdate}
+          text={dialog}
+        />
+        <DataGridLayout
+          data={acquisitions}
           columns={columns}
-          disableColumnMenu
-          initialState={{
-            pagination: { paginationModel: { pageSize: 10 } },
-          }}
-          pageSizeOptions={[5, 10, 25]}
-          slots={{ toolbar: QuickSearchToolbar }}
-          slotProps={{
-            toolbar: {
-              showQuickFilter: true,
-            },
-          }}
-          style={{
-            background: colorsTable.colorFondo,
+          quickSearchToolbar={() => {
+            return (
+              <TableSearchBar tableTitle="Lista de adquisiciones">
+                <Button
+                  variant="contained"
+                  startIcon={<AddIcon />}
+                  onClick={() => {
+                    navigate('/acquisitions/create');
+                  }}
+                >
+                  Realizar adquisicion
+                </Button>
+              </TableSearchBar>
+            );
           }}
         />
-      </Box>
-    </Grid>
+      </TableLayout>
+    </FormLayout>
   );
-}
+};
 
-export default TableAdquisicionServicio;
+export default TableAcquisitions;
