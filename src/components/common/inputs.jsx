@@ -112,9 +112,9 @@ export const PasswordInput = ({ value, name, onChange, error }) => {
  * @param {Array} arrayInput
  * @returns
  */
-export const MultipleChip = ({ onChange, arrayInputs }) => {
-  const [values, setValues] = useState([]);
-  const [value, setValue] = useState(arrayInputs.values);
+export const MultipleChip = ({ onChange, arrayInputs, value1 }) => {
+  const [values, setValues] = useState(value1 || []);
+  const [value, setValue] = useState(arrayInputs.values || []);
 
   const handleChange = useCallback(e => {
     setValue({ ...value, [e.target.id]: e.target.value });
@@ -234,12 +234,14 @@ export const SelectInput = ({ value, onChange, items, name, label, id }) => {
 export const CheckboxInput = ({ label, items, onChange, name }) => {
   const [values, setValues] = useState([]);
 
-
-  const handleCheck = useCallbackCreator((index, item) => {
-    const newValues = [...values, item]
-    setValues(newValues)
-    onChange(newValues)
-  }, [items, values]);
+  const handleCheck = useCallbackCreator(
+    (index, item) => {
+      const newValues = [...values, item];
+      setValues(newValues);
+      onChange(newValues);
+    },
+    [items, values]
+  );
   return (
     <FormControl label={label}>
       <FormGroup>
@@ -318,7 +320,7 @@ export const InputMaker = ({
         <MultipleChip
           onChange={onChange}
           arrayInputs={arrayInputs}
-          value={value}
+          value1={value}
           name={name}
         />
       );

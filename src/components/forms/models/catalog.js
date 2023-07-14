@@ -4,7 +4,7 @@ export const CreateCatalogModel = {
   values: {
     title: '',
     url_base: '',
-    modules: [],
+    modulos: [],
   },
   form: [
     {
@@ -29,7 +29,7 @@ export const CreateCatalogModel = {
     {
       type: 'multiplechip',
       size: 12,
-      name: 'modules',
+      name: 'modulos',
       arrayInputs: {
         values: {
           title: '',
