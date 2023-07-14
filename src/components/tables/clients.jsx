@@ -20,7 +20,9 @@ const TableCliente = () => {
     {
       field: 'id',
       headerName: 'ID',
-      width: 10,
+      width: 100,
+      headerAlign: 'center',
+      align: 'center',
       headerClassName: 'super-app-theme--header2',
       renderCell: cellValues => {
         return (
@@ -28,35 +30,37 @@ const TableCliente = () => {
             component={linkrouter}
             to={`/clients/${cellValues.row.id}`}
             underline="none"
-            sx={{ ml: '30px', textAlign: 'left' }}
           >
             {cellValues.row.id}
           </Link>
         );
       },
     },
-
     {
       field: 'name',
       headerName: 'Nombre',
-      width: 200,
+      flex: true,
+      minWidth: 150,
       headerClassName: 'super-app-theme--header',
     },
     {
       field: 'email',
       headerName: 'Correo',
-      width: 200,
+      flex: true,
+      minWidth: 150,
       headerClassName: 'super-app-theme--header',
     },
     {
-      field: 'col3',
+      field: 'razon_social',
       headerName: 'Razon social',
-      width: 200,
+      flex: true,
+      minWidth: 150,
       headerClassName: 'super-app-theme--header',
     },
     {
       field: 'Opciones',
-      width: 200,
+      flex: true,
+      minWidth: 100,
       headerClassName: 'super-app-theme--header',
       renderCell: cellValues => {
         return (

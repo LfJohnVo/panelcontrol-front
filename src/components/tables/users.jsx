@@ -20,7 +20,9 @@ const TableUser = () => {
     {
       field: 'id',
       headerName: 'ID',
-      width: 10,
+      headerAlign: 'center',
+      align: 'center',
+      width: 100,
       textAlign: 'center',
       headerClassName: 'super-app-theme--header2',
       renderCell: cellValues => {
@@ -29,7 +31,6 @@ const TableUser = () => {
             component={linkrouter}
             to={`/users/${cellValues.row.id}`}
             underline="none"
-            sx={{ ml: '30px', textAlign: 'left' }}
           >
             {cellValues.row.id}
           </Link>
@@ -39,31 +40,35 @@ const TableUser = () => {
     {
       field: 'name',
       headerName: 'Nombre',
-      width: 100,
+      flex: true,
+      minWidth: 150,
       headerClassName: 'super-app-theme--header',
     },
     {
       field: 'email',
       headerName: 'Correo',
-      width: 100,
-      headerClassName: 'super-app-theme--header',
+      flex: true,
+      minWidth: 150,
     },
     {
       field: 'razon_social',
       headerName: 'Razon social',
-      width: 150,
+      flex: true,
+      minWidth: 150,
       headerClassName: 'super-app-theme--header',
     },
     {
       field: 'contacto',
       headerName: 'Contacto',
-      width: 150,
+      flex: true,
+      minWidth: 150,
       headerClassName: 'super-app-theme--header',
     },
     {
       field: 'domicilio',
       headerName: 'Domicilio',
-      width: 400,
+      flex: true,
+      minWidth: 200,
       headerClassName: 'super-app-theme--header',
       renderCell: cellValues => {
         return cellValues.row.domicilio ?? 'Sin domicilio';
@@ -71,7 +76,8 @@ const TableUser = () => {
     },
     {
       field: 'Opciones',
-      width: 100,
+      flex: true,
+      minWidth: 100,
       headerClassName: 'super-app-theme--header',
       renderCell: cellValues => {
         return (

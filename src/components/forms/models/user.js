@@ -77,3 +77,14 @@ export const CreateUserModel = {
     return errors;
   },
 };
+
+export const UserValuesReset = {
+  values: {
+    name: '',
+    email: '',
+    password: '',
+    domicilio: '',
+    razon_social: '',
+    contacto: '',
+  },
+};

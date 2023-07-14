@@ -1,5 +1,6 @@
 import React from 'react';
 import { ViewLayout } from '../../components/common/layouts';
+import DetailAcquisition from '../../components/details/acquisition';
 
 const ShowAcquisition = () => {
   const breadcrumbs = [
@@ -14,8 +15,7 @@ const ShowAcquisition = () => {
   ];
   return (
     <ViewLayout actualPage={'Adquisiciones'} breadcrumbs={breadcrumbs}>
-      <div>Hola mundo</div>
-      {/*<AdquisicionServicioDetail {...props} />*/}
+      <DetailAcquisition />
     </ViewLayout>
   );
 };

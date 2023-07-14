@@ -1,11 +1,21 @@
 import React from 'react';
 import { ViewLayout } from '../../components/common/layouts';
+import DetailCatalog from '../../components/details/proyect';
 
 const ShowCatalog = () => {
+  const breadcrumbs = [
+    {
+      title: 'Proyectos',
+      link: '/projects',
+    },
+    {
+      title: 'Detalle',
+      link: '#',
+    },
+  ];
   return (
-    <ViewLayout>
-      <div>Test</div>
-      {/*<CatalogoDetail {...props} />*/}
+    <ViewLayout actualPage={'Proyectos'} breadcrumbs={breadcrumbs}>
+      <DetailCatalog />
     </ViewLayout>
   );
 };

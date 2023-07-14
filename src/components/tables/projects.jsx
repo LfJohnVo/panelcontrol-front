@@ -16,7 +16,9 @@ const TableProjects = () => {
     {
       field: 'id',
       headerName: 'ID',
-      width: 150,
+      headerAlign: 'center',
+      align: 'center',
+      width: 100,
       headerClassName: 'super-app-theme--header2',
       renderCell: cellValues => {
         return (
@@ -24,7 +26,6 @@ const TableProjects = () => {
             component={linkrouter}
             to={`/projects/${cellValues.row.id}`}
             underline="none"
-            sx={{ ml: '30px', textAlign: 'left' }}
           >
             {cellValues.row.id}
           </Link>
@@ -34,13 +35,15 @@ const TableProjects = () => {
     {
       field: 'title',
       headerName: 'Nombre',
-      width: 550,
+      flex: true,
+      minWidth: 150,
       headerClassName: 'super-app-theme--header',
     },
     {
       field: 'Opciones',
       headerClassName: 'super-app-theme--header',
-      width: 350,
+      flex: true,
+      minWidth: 100,
       renderCell: cellValues => {
         return (
           <Stack direction="row" spacing={2}>

@@ -60,3 +60,11 @@ export const CreateCatalogModel = {
     return errors;
   },
 };
+
+export const CreateCatalogReset = {
+  values: {
+    title: '',
+    url_base: '',
+    modules: [],
+  },
+};

@@ -58,6 +58,7 @@ export const TableLayout = ({ children, loading }) => {
           sx={{
             mb: '40px',
             width: '100%',
+            height: '600px',
             background: 'white',
           }}
         >
@@ -73,6 +74,7 @@ export const DataGridLayout = ({ data, columns, quickSearchToolbar }) => {
     <DataGrid
       rows={data}
       columns={columns}
+      getRowHeight={() => 'auto'}
       disableColumnMenu
       initialState={{
         pagination: { paginationModel: { pageSize: 10 } },
@@ -82,6 +84,11 @@ export const DataGridLayout = ({ data, columns, quickSearchToolbar }) => {
       slotProps={{
         toolbar: {
           showQuickFilter: true,
+        },
+      }}
+      sx={{
+        '&.MuiDataGrid-root--densityStandard .MuiDataGrid-cell': {
+          py: '15px',
         },
       }}
     />

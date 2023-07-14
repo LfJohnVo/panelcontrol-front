@@ -105,3 +105,62 @@ export const useCreateClient = () => {
 
   return [clientCreated, handleCreate];
 };
+
+/**
+ * Usa este hook para actualizar clientes
+ */
+export const useUpdateClient = () => {
+  const { id } = useParams();
+  const [clientUpdated, setClientUpdated] = useState(false);
+  const token = getCookie('token');
+  const navigate = useNavigate();
+
+  const handleUpdate = useCallback(async values => {
+    try {
+      setClientUpdated(true);
+      const resp = await client.put(`/api/clients/${id}`, values, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      notify(resp.data.status, resp.data.message);
+      setClientUpdated(false);
+      setTimeout(() => {
+        navigate('/clients');
+      }, 1000);
+    } catch (error) {
+      notify(error.response.data.status, error.response.data.message);
+      setClientUpdated(false);
+    }
+  });
+
+  return [clientUpdated, handleUpdate];
+};
+
+/**
+ * Usa este hook para obtener a un usuario
+ */
+export const useGetClient = () => {
+  const { id } = useParams();
+  const token = getCookie('token');
+  const [loading, setLoading] = useState(false);
+  const [cliente, setCliente] = useState({});
+
+  const handleGetClient = useCallback(async () => {
+    try {
+      setLoading(true);
+      const resp = await client.get(`/api/clients/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setCliente(resp.data.data);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      notify(error.response.data.status, error.response.data.message);
+    }
+  });
+
+  useEffect(() => {
+    handleGetClient();
+  }, []);
+
+  return [loading, cliente];
+};
