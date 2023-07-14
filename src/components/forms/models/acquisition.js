@@ -8,7 +8,7 @@ export const CreateAcquisitionModel = {
     {
       type: 'select',
       size: 12,
-      name: 'client_id',
+      name: 'cliente_id',
       label: 'Cliente',
       items: [],
     },
@@ -17,7 +17,7 @@ export const CreateAcquisitionModel = {
       depends: true,
       callback: null,
       size: 12,
-      name: 'project_id',
+      name: 'proyect_id',
       label: 'Proyecto',
       items: [],
     },

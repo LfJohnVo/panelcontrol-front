@@ -233,9 +233,13 @@ export const SelectInput = ({ value, onChange, items, name, label, id }) => {
  */
 export const CheckboxInput = ({ label, items, onChange, name }) => {
   const [values, setValues] = useState([]);
+
+
   const handleCheck = useCallbackCreator((index, item) => {
-    console.log(item);
-  }, items);
+    const newValues = [...values, item]
+    setValues(newValues)
+    onChange(newValues)
+  }, [items, values]);
   return (
     <FormControl label={label}>
       <FormGroup>

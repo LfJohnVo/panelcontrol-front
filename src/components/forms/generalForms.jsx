@@ -16,6 +16,9 @@ export const GeneralForm = ({ children, model, handleSubmit }) => {
           }
           formik.handleChange(e);
           break;
+        case 'checkbox':
+          formik.setFieldValue(item.name, e);
+          break;
         default:
           formik.handleChange(e);
           break;

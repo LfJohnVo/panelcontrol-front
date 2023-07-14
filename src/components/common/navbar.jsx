@@ -61,7 +61,7 @@ export const PrincipalNavbar = ({ open, handleChange }) => {
             }}
             variant="dot"
           >
-            {user.name.charAt(0)}
+            {user?.name.charAt(0)}
           </Avatar>
           <Box>
             <Typography component="p" variant="avatarName">

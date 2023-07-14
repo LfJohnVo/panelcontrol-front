@@ -59,7 +59,6 @@ export const useChangeStatusAcquisition = () => {
     try {
       setDeleted(true);
       setAlert(false);
-      console.log(token, 'test');
       const resp = await client.put(
         `/api/acquisitions/${id}/status`,
         {},
@@ -73,7 +72,6 @@ export const useChangeStatusAcquisition = () => {
         navigate(0);
       }, 1000);
     } catch (error) {
-      console.log(error);
       setDeleted(false);
       notify(error.response.data.status, error.response.data.message);
       setLoadingAcquisitions(false);
@@ -122,16 +120,15 @@ export const useCreateAcquisition = () => {
 
   const handleCreate = useCallback(async values => {
     try {
-      console.log(values);
-      // setAcquisitionCreated(true);
-      // const resp = await client.post('/api/acquisitions', values, {
-      //   headers: { Authorization: `Bearer ${token}` },
-      // });
-      // notify(resp.data.status, resp.data.message);
-      // setAcquisitionCreated(false);
-      // setTimeout(() => {
-      //   navigate('/acquisitions');
-      // }, 1000);
+      setAcquisitionCreated(true);
+      const resp = await client.post('/api/acquisitions', values, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      notify(resp.data.status, resp.data.message);
+      setAcquisitionCreated(false);
+      setTimeout(() => {
+        navigate('/acquisitions');
+      }, 1000);
     } catch (error) {
       notify(error.response.data.status, error.response.data.message);
       setAcquisitionCreated(false);
