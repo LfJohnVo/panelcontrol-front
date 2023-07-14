@@ -1,10 +1,21 @@
 import React from 'react';
 import { ViewLayout } from '../../components/common/layouts';
+import DetailClient from '../../components/details/client';
 
 const ShowClient = () => {
+  const breadcrumbs = [
+    {
+      title: 'Clientes',
+      link: '/clients',
+    },
+    {
+      title: 'Detalle',
+      link: '#',
+    },
+  ];
   return (
-    <ViewLayout>
-      <div>test</div>
+    <ViewLayout actualPage={'Clientes'} breadcrumbs={breadcrumbs}>
+      <DetailClient />
     </ViewLayout>
   );
 };

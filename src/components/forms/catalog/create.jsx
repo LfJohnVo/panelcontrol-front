@@ -1,11 +1,12 @@
 import { FormLayout, PaperLayout } from '../../common/layouts';
 import { GeneralForm } from '../generalForms';
 import { Button } from '@mui/material';
-import { CreateCatalogModel } from '../models/catalog';
+import { CreateCatalogModel, CreateCatalogReset } from '../models/catalog';
 import { useCreateCatalog } from '../../../hooks/catalogs';
 
 const CreateCatalogForm = () => {
   const [catalogCreated, handleCreate] = useCreateCatalog();
+  CreateCatalogModel.values = CreateCatalogReset.values;
   return (
     <FormLayout open={catalogCreated}>
       <PaperLayout>

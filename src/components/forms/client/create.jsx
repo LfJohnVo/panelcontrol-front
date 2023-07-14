@@ -1,11 +1,12 @@
 import { FormLayout, PaperLayout } from '../../common/layouts';
 import { GeneralForm } from '../generalForms';
-import { CreateClientModel } from '../models/client';
+import { CreateClientModel, CreateClientReset } from '../models/client';
 import { Button } from '@mui/material';
 import { useCreateClient } from '../../../hooks/clients';
 
 const CreateClientForm = () => {
   const [clientCreated, handleCreate] = useCreateClient();
+  CreateClientModel.values = CreateClientReset.values;
   return (
     <FormLayout open={clientCreated}>
       <PaperLayout>

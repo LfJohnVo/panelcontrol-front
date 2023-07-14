@@ -38,44 +38,48 @@ const TableAcquisitions = () => {
     {
       field: 'id',
       headerName: 'ID',
-      width: 10,
+      width: 100,
+      headerAlign: 'center',
+      align: 'center',
       headerClassName: 'super-app-theme--header2',
       renderCell: cellValues => {
         return (
           <Link
             component={linkrouter}
-            to={`/clients/${cellValues.row.id}`}
+            to={`/acquisitions/${cellValues.row.id}`}
             underline="none"
-            sx={{ ml: '30px', textAlign: 'left' }}
           >
             {cellValues.row.id}
           </Link>
         );
       },
     },
-
     {
       field: 'client_name',
       headerName: 'Cliente',
-      width: 80,
+      flex: true,
+      minWidth: 150,
       headerClassName: 'super-app-theme--header',
     },
     {
       field: 'client_email',
       headerName: 'Correo',
-      width: 150,
+      flex: true,
+      minWidth: 150,
       headerClassName: 'super-app-theme--header',
     },
     {
       field: 'proyect',
       headerName: 'Proyecto',
-      width: 100,
+      flex: true,
+      minWidth: 150,
       headerClassName: 'super-app-theme--header',
     },
     {
       field: 'buy_modules',
       headerName: 'Modulos comprados',
-      width: 200,
+      flex: true,
+      minWidth: 200,
       headerClassName: 'super-app-theme--header',
       renderCell: cellValues => {
         return (
@@ -94,7 +98,8 @@ const TableAcquisitions = () => {
     {
       field: 'is_active',
       headerName: 'Estatus',
-      width: 80,
+      flex: true,
+      minWidth: 80,
       headerClassName: 'super-app-theme--header',
       renderCell: cellValues => {
         return (
@@ -107,7 +112,8 @@ const TableAcquisitions = () => {
     {
       field: 'acciones',
       headerName: 'Des/Act',
-      width: 150,
+      flex: true,
+      minWidth: 150,
       headerClassName: 'super-app-theme--header',
       renderCell: cellValues => {
         return (

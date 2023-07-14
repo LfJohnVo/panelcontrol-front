@@ -1,14 +1,15 @@
 import { FormLayout, PaperLayout } from '../../common/layouts';
 import { GeneralForm } from '../generalForms';
 import { Button } from '@mui/material';
-import { useCreateUser } from '../../../hooks/user';
 import { useGetClients } from '../../../hooks/clients';
 import { useGetCatalogs } from '../../../hooks/catalogs';
 import { CreateAcquisitionModel } from '../models/acquisition';
 import { useCallback, useState } from 'react';
+import { useCreateAcquisition } from '../../../hooks/acquisitions';
 
 const CreateAcquisitionForm = () => {
-  const [clientCreated, handleCreate] = useCreateUser();
+  // const [clientCreated, handleCreate] = useCreateUser();
+  const [acquisitionCreated, handleCreate] = useCreateAcquisition();
   const [loadingClientes, clients, handleGetClients] = useGetClients();
   const [loadingCatalog, catalogs, handleGetCatalogs] = useGetCatalogs();
   const [modules, setModules] = useState([]);
@@ -27,7 +28,7 @@ const CreateAcquisitionForm = () => {
   CreateAcquisitionModel.form[1].callback = handleChangeProject;
 
   return (
-    <FormLayout open={clientCreated}>
+    <FormLayout open={acquisitionCreated}>
       <PaperLayout loading={loadingCatalog && loadingClientes}>
         <GeneralForm model={CreateAcquisitionModel} handleSubmit={handleCreate}>
           <Button

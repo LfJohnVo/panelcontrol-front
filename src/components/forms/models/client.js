@@ -157,3 +157,19 @@ export const CreateClientModel = {
     return errors;
   },
 };
+
+export const CreateClientReset = {
+  values: {
+    name: '',
+    email: '',
+    contacto: '',
+    razon_social: '',
+    representante: '',
+    representante_email: '',
+    representante_telefono: '',
+    consultor: '',
+    consultor_email: '',
+    consultor_telefono: '',
+    domicilio: '',
+  },
+};

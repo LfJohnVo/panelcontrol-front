@@ -69,7 +69,7 @@ export const useCreateCatalog = () => {
 };
 
 /**
- * Usa este hook para crear un usuario
+ * Usa este hook para ontener un proyecto por id
  *
  * @returns
  */
