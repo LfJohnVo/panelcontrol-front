@@ -41,7 +41,7 @@ export const useLogin = () => {
  * Usa este hook para hacer logout en la aplicación
  *
  * @returns
- */
+ 
 export const useLogout = () => {
   const navigate = useNavigate();
   const { setSession } = useAppContext();
@@ -68,3 +68,4 @@ export const useLogout = () => {
 
   return [loading, handleLogout];
 };
+*/

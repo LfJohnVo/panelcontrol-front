@@ -3,15 +3,24 @@ import { PrincipalLayout } from '../components/common/layouts';
 import '../styles/index.css';
 import img from '../assets/login/logo-s4b.png';
 import img2 from '../assets/login/5143312.png';
-import { Grid, Box, Typography } from '@mui/material';
+import { Grid, Box, Typography, LinearProgress } from '@mui/material';
 import LoginForm from '../components/forms/loginForm';
+import { useAuthValid } from '../hooks/auth';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
+  const [isLogin, token] = useAuthValid();
+  const navigate = useNavigate();
+  if (isLogin) {
+    navigate('/dashboard');
+  }
+
   return (
     <PrincipalLayout>
       <div className="fondo">
         <img src={img2} alt="Pruebas" />
       </div>
+      <LinearProgress variant="indeterminate" />
       <Grid
         container
         item
@@ -71,9 +80,7 @@ const Login = () => {
             alignItems: 'left',
             justifyContent: 'center',
           }}
-        >
-          <LoginForm />
-        </Grid>
+        ></Grid>
       </Grid>
     </PrincipalLayout>
   );

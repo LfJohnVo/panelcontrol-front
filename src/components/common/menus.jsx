@@ -6,14 +6,14 @@ import {
   ListItemText,
   Tooltip,
 } from '@mui/material';
-import { FaCogs, FaUsers, FaBookOpen } from 'react-icons/fa';
+import { FaCogs, FaUsers } from 'react-icons/fa';
 import DashboardOutlinedIcon from '@mui/icons-material/DashboardOutlined';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import ConnectWithoutContactOutlinedIcon from '@mui/icons-material/ConnectWithoutContactOutlined';
 import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { FormLayout } from './layouts';
-import { useLogout } from '../../hooks';
+import { useLogout } from '../../hooks/auth';
 
 export const PrincipalMenu = () => {
   const navigate = useNavigate();
